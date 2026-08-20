@@ -20,7 +20,7 @@ import Base from '../layouts/Base.astro';
       Todavía no hay encuestas cargadas. ¡Pronto va a haber algo para votar!
     </div>
 
-    <section id="polls-list" class="polls-list stagger" hidden></section>
+    <section id="polls-list" class="polls-list" hidden></section>
   </main>
 </Base>
 
@@ -60,7 +60,41 @@ import Base from '../layouts/Base.astro';
   .polls-list {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 2.25rem;
+  }
+
+  :global(.category-section) {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    opacity: 0;
+    animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  :global(.category-head) {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  :global(.category-title) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+
+  :global(.category-count) {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+
+  :global(.category-polls) {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
   }
 
   :global(.poll-card) {
@@ -192,7 +226,7 @@ import Base from '../layouts/Base.astro';
 
     const { data: polls, error: pollsError } = await supabase
       .from('polls')
-      .select('id, title, description, status, created_at, poll_options(id, label, sort_order)')
+      .select('id, title, description, status, category, created_at, poll_options(id, label, sort_order)')
       .order('created_at', { ascending: true })
       .order('sort_order', { foreignTable: 'poll_options', ascending: true });
 
@@ -221,16 +255,46 @@ import Base from '../layouts/Base.astro';
 
     list.hidden = false;
 
-    const sorted = [...polls].sort((a, b) => {
-      if (a.status === b.status) return 0;
-      if (a.status === 'open') return -1;
-      if (b.status === 'open') return 1;
-      return 0;
+    const CATEGORY_ORDER = ['Liga', 'Participantes', 'Alineaciones', 'Mercado', 'Primas', 'Premium'];
+    const categories = new Map<string, any[]>();
+    for (const poll of polls) {
+      const key = poll.category ?? 'Otras';
+      if (!categories.has(key)) categories.set(key, []);
+      categories.get(key)!.push(poll);
+    }
+
+    const orderedKeys = [...categories.keys()].sort((a, b) => {
+      const ia = CATEGORY_ORDER.indexOf(a);
+      const ib = CATEGORY_ORDER.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
     });
 
-    for (const poll of sorted) {
-      list.appendChild(renderPoll(poll, votes ?? [], player));
-    }
+    orderedKeys.forEach((key, i) => {
+      const pollsInCategory = categories.get(key)!;
+      const section = document.createElement('section');
+      section.className = 'category-section';
+      section.style.animationDelay = `${i * 0.06}s`;
+
+      const head = document.createElement('div');
+      head.className = 'category-head';
+      head.innerHTML = `
+        <span class="category-title">${key}</span>
+        <span class="category-count">${pollsInCategory.length} ${pollsInCategory.length === 1 ? 'encuesta' : 'encuestas'}</span>
+      `;
+      section.appendChild(head);
+
+      const pollsWrap = document.createElement('div');
+      pollsWrap.className = 'category-polls';
+      for (const poll of pollsInCategory) {
+        pollsWrap.appendChild(renderPoll(poll, votes ?? [], player));
+      }
+      section.appendChild(pollsWrap);
+
+      list.appendChild(section);
+    });
   }
 
   function renderPoll(poll: any, allVotes: any[], player: { id: string; name: string; emoji: string }) {

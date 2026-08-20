@@ -25,6 +25,7 @@ export interface Poll {
   title: string;
   description: string | null;
   status: PollStatus;
+  category: string | null;
   created_at: string;
   poll_options: PollOption[];
 }
