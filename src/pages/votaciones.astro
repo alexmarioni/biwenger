@@ -1,0 +1,317 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Votaciones">
+  <main class="wrap votaciones">
+    <header class="top-bar animate-in">
+      <div>
+        <p class="hello" id="hello-msg">Hola 👋</p>
+        <h1>Encuestas de la liga</h1>
+      </div>
+      <button id="change-player" class="btn btn-ghost" type="button">Cambiar de jugador</button>
+    </header>
+
+    <div id="state-loading" class="state-msg">Cargando encuestas…</div>
+    <div id="state-error" class="state-msg error" hidden>
+      No se pudo conectar con la base. Revisá tu conexión o probá de nuevo en un rato.
+    </div>
+    <div id="state-empty" class="state-msg" hidden>
+      Todavía no hay encuestas cargadas. ¡Pronto va a haber algo para votar!
+    </div>
+
+    <section id="polls-list" class="polls-list stagger" hidden></section>
+  </main>
+</Base>
+
+<style>
+  .votaciones {
+    gap: 1.75rem;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hello {
+    color: var(--text-dim);
+    margin: 0 0 0.15rem;
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .state-msg {
+    color: var(--text-dim);
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .state-msg.error {
+    color: var(--danger);
+  }
+
+  .polls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  :global(.poll-card) {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  :global(.poll-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  :global(.poll-title) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+
+  :global(.poll-desc) {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin: 0.25rem 0 1rem;
+  }
+
+  :global(.options) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  :global(.option-btn) {
+    appearance: none;
+    width: 100%;
+    text-align: left;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.18s ease, transform 0.12s ease;
+  }
+
+  :global(.option-btn:hover) {
+    border-color: var(--accent-dim);
+  }
+
+  :global(.option-btn:active) {
+    transform: scale(0.985);
+  }
+
+  :global(.option-btn.selected) {
+    border-color: var(--accent);
+  }
+
+  :global(.option-row) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    gap: 0.75rem;
+  }
+
+  :global(.option-label) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  :global(.option-pct) {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.option-bar) {
+    position: absolute;
+    inset: 0;
+    width: 0%;
+    background: var(--accent-soft);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
+  }
+
+  :global(.option-btn.selected .option-bar) {
+    background: rgba(53, 214, 143, 0.22);
+  }
+
+  :global(.check) {
+    color: var(--accent);
+    font-weight: 700;
+  }
+</style>
+
+<script>
+  import { supabase } from '../lib/supabase';
+  import { getStoredPlayer, clearStoredPlayer } from '../lib/identity';
+
+  const base = import.meta.env.BASE_URL;
+
+  const player = getStoredPlayer();
+  if (!player) {
+    window.location.href = `${base}identidad`;
+  } else {
+    document.getElementById('hello-msg')!.textContent = `Hola, ${player.emoji} ${player.name}`;
+    document.getElementById('change-player')!.addEventListener('click', () => {
+      clearStoredPlayer();
+      window.location.href = `${base}identidad`;
+    });
+    init(player);
+  }
+
+  async function init(player: { id: string; name: string; emoji: string }) {
+    const loading = document.getElementById('state-loading')!;
+    const errorMsg = document.getElementById('state-error')!;
+    const empty = document.getElementById('state-empty')!;
+    const list = document.getElementById('polls-list')!;
+
+    const { data: polls, error: pollsError } = await supabase
+      .from('polls')
+      .select('id, title, description, status, created_at, poll_options(id, label, sort_order)')
+      .order('created_at', { ascending: true })
+      .order('sort_order', { foreignTable: 'poll_options', ascending: true });
+
+    if (pollsError || !polls) {
+      loading.hidden = true;
+      errorMsg.hidden = false;
+      return;
+    }
+
+    if (polls.length === 0) {
+      loading.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+
+    const { data: votes, error: votesError } = await supabase
+      .from('votes')
+      .select('id, poll_id, option_id, player_id');
+
+    loading.hidden = true;
+
+    if (votesError) {
+      errorMsg.hidden = false;
+      return;
+    }
+
+    list.hidden = false;
+
+    const sorted = [...polls].sort((a, b) => {
+      if (a.status === b.status) return 0;
+      if (a.status === 'open') return -1;
+      if (b.status === 'open') return 1;
+      return 0;
+    });
+
+    for (const poll of sorted) {
+      list.appendChild(renderPoll(poll, votes ?? [], player));
+    }
+  }
+
+  function renderPoll(poll: any, allVotes: any[], player: { id: string; name: string; emoji: string }) {
+    const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
+    const totalVotes = pollVotes.length;
+    const myVote = pollVotes.find((v) => v.player_id === player.id);
+    const isOpen = poll.status === 'open';
+
+    const card = document.createElement('article');
+    card.className = 'poll-card';
+
+    const head = document.createElement('div');
+    head.className = 'poll-head';
+    head.innerHTML = `
+      <span class="poll-title">${poll.title}</span>
+      <span class="badge ${isOpen ? '' : 'badge-closed'}">${isOpen ? 'Abierta' : 'Cerrada'}</span>
+    `;
+    card.appendChild(head);
+
+    if (poll.description) {
+      const desc = document.createElement('p');
+      desc.className = 'poll-desc';
+      desc.textContent = poll.description;
+      card.appendChild(desc);
+    }
+
+    const options = document.createElement('div');
+    options.className = 'options';
+
+    const options_sorted = [...(poll.poll_options ?? [])].sort((a, b) => a.sort_order - b.sort_order);
+
+    for (const option of options_sorted) {
+      const count = pollVotes.filter((v) => v.option_id === option.id).length;
+      const pct = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
+      const isMine = myVote?.option_id === option.id;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `option-btn${isMine ? ' selected' : ''}`;
+      btn.disabled = !isOpen;
+      btn.innerHTML = `
+        <span class="option-bar"></span>
+        <span class="option-row">
+          <span class="option-label">${isMine ? '<span class="check">✓</span>' : ''}${option.label}</span>
+          <span class="option-pct">${pct}% · ${count}</span>
+        </span>
+      `;
+
+      if (isOpen) {
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          const { error } = await supabase
+            .from('votes')
+            .upsert(
+              { poll_id: poll.id, option_id: option.id, player_id: player.id },
+              { onConflict: 'poll_id,player_id' }
+            );
+          if (!error) {
+            const updatedVotes = pollVotes.filter((v) => v.player_id !== player.id);
+            updatedVotes.push({ poll_id: poll.id, option_id: option.id, player_id: player.id });
+            const newCard = renderPoll(
+              { ...poll },
+              [...allVotes.filter((v) => v.poll_id !== poll.id), ...updatedVotes],
+              player
+            );
+            card.replaceWith(newCard);
+          } else {
+            btn.disabled = false;
+          }
+        });
+      }
+
+      options.appendChild(btn);
+
+      requestAnimationFrame(() => {
+        const bar = btn.querySelector('.option-bar') as HTMLElement;
+        if (bar) bar.style.width = `${pct}%`;
+      });
+    }
+
+    card.appendChild(options);
+    return card;
+  }
+</script>

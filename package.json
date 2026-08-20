@@ -1,0 +1,16 @@
+{
+  "name": "biwenger-votaciones",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "astro": "^4.16.7"
+  }
+}
