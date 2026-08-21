@@ -279,6 +279,7 @@ import Base from '../layouts/Base.astro';
   import { getStoredPlayer, clearStoredPlayer } from '../lib/identity';
   import { redirectIfMaintenance } from '../lib/maintenance';
   import { computePollLeader } from '../lib/pollSummary';
+  import { playerAvatarHtml } from '../lib/playerAvatar';
 
   const base = import.meta.env.BASE_URL;
 
@@ -291,7 +292,7 @@ import Base from '../layouts/Base.astro';
     if (!player) {
       window.location.href = `${base}identidad`;
     } else {
-      document.getElementById('hello-msg')!.textContent = `Hola, ${player.emoji} ${player.name}`;
+      document.getElementById('hello-msg')!.innerHTML = `Hola, ${playerAvatarHtml(player, base)} ${player.name}`;
       document.getElementById('change-player')!.addEventListener('click', () => {
         clearStoredPlayer();
         window.location.href = `${base}identidad`;
@@ -320,7 +321,7 @@ import Base from '../layouts/Base.astro';
     const errorMsg = document.getElementById('state-error')!;
 
     const [playersRes, pollsRes, votesRes] = await Promise.all([
-      supabase.from('players').select('id, name, emoji').order('name', { ascending: true }),
+      supabase.from('players').select('id, name, emoji, full_name, avatar_url').order('name', { ascending: true }),
       supabase
         .from('polls')
         .select('id, title, status, poll_type, category, created_at, empty_label, poll_options(id, label, sort_order)')
@@ -359,7 +360,7 @@ import Base from '../layouts/Base.astro';
       const summary = document.createElement('summary');
       summary.className = 'player-summary';
       summary.innerHTML = `
-        <span class="player-name">${p.emoji} ${p.name}</span>
+        <span class="player-name">${playerAvatarHtml(p, base)} ${p.name}</span>
         <span class="player-progress">${pollsAnswered}/${polls.length} votos</span>
       `;
       details.appendChild(summary);

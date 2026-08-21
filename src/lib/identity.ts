@@ -4,6 +4,7 @@ export interface StoredPlayer {
   id: string;
   name: string;
   emoji: string;
+  avatar_url?: string | null;
 }
 
 export function getStoredPlayer(): StoredPlayer | null {

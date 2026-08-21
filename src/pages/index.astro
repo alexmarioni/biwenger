@@ -52,6 +52,14 @@ const base = import.meta.env.BASE_URL;
         </div>
         <div id="palmares-mini" class="palmares-mini"></div>
       </section>
+
+      <section id="participants-widget" class="widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">👥 Participantes</span>
+          <span class="widget-counter" id="participants-count"></span>
+        </div>
+        <div id="participants-list" class="participants-list"></div>
+      </section>
     </div>
 
     <div class="float-shapes" aria-hidden="true">
@@ -68,6 +76,7 @@ const base = import.meta.env.BASE_URL;
   import { redirectIfMaintenance } from '../lib/maintenance';
   import { renderPollCard, type PollCardPlayer } from '../lib/pollCard';
   import { computePollLeader } from '../lib/pollSummary';
+  import { playerAvatarHtml } from '../lib/playerAvatar';
 
   const base = import.meta.env.BASE_URL;
 
@@ -89,7 +98,7 @@ const base = import.meta.env.BASE_URL;
     const errorMsg = document.getElementById('widgets-error')!;
     const widgets = document.getElementById('widgets')!;
 
-    const [pollsRes, votesRes, palmaresRes] = await Promise.all([
+    const [pollsRes, votesRes, palmaresRes, playersRes] = await Promise.all([
       supabase
         .from('polls')
         .select(
@@ -99,9 +108,10 @@ const base = import.meta.env.BASE_URL;
         .order('sort_order', { foreignTable: 'poll_options', ascending: true }),
       supabase.from('votes').select('id, poll_id, option_id, text_value, player_id'),
       supabase.from('palmares').select('season, position, name, image_url').order('position', { ascending: true }),
+      supabase.from('players').select('id, name, emoji, full_name, avatar_url').order('name', { ascending: true }),
     ]);
 
-    if (pollsRes.error || votesRes.error || palmaresRes.error) {
+    if (pollsRes.error || votesRes.error || palmaresRes.error || playersRes.error) {
       loading.hidden = true;
       errorMsg.hidden = false;
       return;
@@ -121,6 +131,7 @@ const base = import.meta.env.BASE_URL;
     setupPollWidget(player);
     setupResultsWidget();
     renderPalmaresMini(palmaresRes.data ?? []);
+    renderParticipants(playersRes.data ?? []);
   }
 
   function setupPollWidget(player: PollCardPlayer) {
@@ -267,6 +278,33 @@ const base = import.meta.env.BASE_URL;
           </div>
           <span class="palmares-mini-medal">${MEDALS[e.position] ?? ''}</span>
           <span class="palmares-mini-name">${e.name}</span>
+        </div>
+      `
+      )
+      .join('');
+  }
+
+  function renderParticipants(players: any[]) {
+    const widget = document.getElementById('participants-widget')!;
+    const list = document.getElementById('participants-list')!;
+    const count = document.getElementById('participants-count')!;
+
+    if (players.length === 0) {
+      widget.hidden = true;
+      return;
+    }
+
+    widget.hidden = false;
+    count.textContent = `${players.length}`;
+    list.innerHTML = players
+      .map(
+        (p) => `
+        <div class="participant-row">
+          ${playerAvatarHtml(p, base, 'participant-avatar')}
+          <div class="participant-names">
+            <span class="participant-nick">${p.name}</span>
+            ${p.full_name ? `<span class="participant-full">${p.full_name}</span>` : ''}
+          </div>
         </div>
       `
       )
@@ -503,6 +541,57 @@ const base = import.meta.env.BASE_URL;
     font-size: 0.72rem;
     font-weight: 600;
     max-width: 5.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.participants-list) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  :global(.participant-row) {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  :global(.participant-row:first-child) {
+    border-top: none;
+  }
+
+  :global(.participant-avatar.player-avatar-img) {
+    width: 2.2rem;
+    height: 2.2rem;
+    flex-shrink: 0;
+  }
+
+  :global(.participant-avatar.player-avatar-emoji) {
+    font-size: 1.5rem;
+    width: 2.2rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  :global(.participant-names) {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  :global(.participant-nick) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  :global(.participant-full) {
+    color: var(--text-dim);
+    font-size: 0.75rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

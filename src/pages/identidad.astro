@@ -78,12 +78,29 @@ import Base from '../layouts/Base.astro';
   :global(.player-emoji) {
     font-size: 2.2rem;
   }
+
+  :global(.player-card .player-avatar-img) {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  :global(.player-card .player-avatar-emoji) {
+    font-size: 2.2rem;
+  }
+
+  :global(.player-full-name) {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
 </style>
 
 <script>
   import { supabase } from '../lib/supabase';
   import { getStoredPlayer, setStoredPlayer } from '../lib/identity';
   import { redirectIfMaintenance } from '../lib/maintenance';
+  import { playerAvatarHtml } from '../lib/playerAvatar';
 
   const base = import.meta.env.BASE_URL;
 
@@ -107,7 +124,7 @@ import Base from '../layouts/Base.astro';
 
     const { data, error } = await supabase
       .from('players')
-      .select('id, name, emoji')
+      .select('id, name, emoji, full_name, avatar_url')
       .order('name', { ascending: true });
 
     loading.hidden = true;
@@ -125,11 +142,17 @@ import Base from '../layouts/Base.astro';
       card.type = 'button';
       card.className = 'player-card';
       card.innerHTML = `
-        <span class="player-emoji">${player.emoji ?? '⚽'}</span>
+        ${playerAvatarHtml(player, base)}
         <span>${player.name}</span>
+        ${player.full_name ? `<span class="player-full-name">${player.full_name}</span>` : ''}
       `;
       card.addEventListener('click', () => {
-        setStoredPlayer({ id: player.id, name: player.name, emoji: player.emoji ?? '⚽' });
+        setStoredPlayer({
+          id: player.id,
+          name: player.name,
+          emoji: player.emoji ?? '⚽',
+          avatar_url: player.avatar_url ?? null,
+        });
         window.location.href = `${base}votaciones`;
       });
       grid.appendChild(card);

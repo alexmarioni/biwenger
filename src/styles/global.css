@@ -339,3 +339,18 @@ a {
   font-size: 0.82rem;
   margin: 0.5rem 0 0;
 }
+
+/* ---------- player avatar (crest image or emoji fallback) ---------- */
+
+.player-avatar-img {
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  border: 1px solid var(--border);
+}
+
+.player-avatar-emoji {
+  vertical-align: middle;
+}
