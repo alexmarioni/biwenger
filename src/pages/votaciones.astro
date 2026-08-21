@@ -192,6 +192,12 @@ import Base from '../layouts/Base.astro';
     font-size: 1.15rem;
   }
 
+  :global(.poll-badges) {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
   :global(.poll-desc) {
     color: var(--text-dim);
     font-size: 0.9rem;
@@ -313,7 +319,7 @@ import Base from '../layouts/Base.astro';
 
     const { data: polls, error: pollsError } = await supabase
       .from('polls')
-      .select('id, title, description, status, category, created_at, poll_options(id, label, hint, sort_order)')
+      .select('id, title, description, status, poll_type, category, created_at, poll_options(id, label, hint, sort_order)')
       .order('created_at', { ascending: true })
       .order('sort_order', { foreignTable: 'poll_options', ascending: true });
 
@@ -432,7 +438,10 @@ import Base from '../layouts/Base.astro';
   function renderPoll(poll: any, allVotes: any[], player: { id: string; name: string; emoji: string }) {
     const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
     const totalVotes = pollVotes.length;
-    const myVote = pollVotes.find((v) => v.player_id === player.id);
+    const isMulti = poll.poll_type === 'multi';
+    const myOptionIds = new Set(
+      pollVotes.filter((v) => v.player_id === player.id).map((v) => v.option_id)
+    );
     const isOpen = poll.status === 'open';
 
     const card = document.createElement('article');
@@ -442,7 +451,10 @@ import Base from '../layouts/Base.astro';
     head.className = 'poll-head';
     head.innerHTML = `
       <span class="poll-title">${poll.title}</span>
-      <span class="badge ${isOpen ? '' : 'badge-closed'}">${isOpen ? 'Abierta' : 'Cerrada'}</span>
+      <span class="poll-badges">
+        ${isMulti ? '<span class="badge">Elegí varias</span>' : ''}
+        <span class="badge ${isOpen ? '' : 'badge-closed'}">${isOpen ? 'Abierta' : 'Cerrada'}</span>
+      </span>
     `;
     card.appendChild(head);
 
@@ -461,7 +473,7 @@ import Base from '../layouts/Base.astro';
     for (const option of options_sorted) {
       const count = pollVotes.filter((v) => v.option_id === option.id).length;
       const pct = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
-      const isMine = myVote?.option_id === option.id;
+      const isMine = myOptionIds.has(option.id);
 
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -479,21 +491,51 @@ import Base from '../layouts/Base.astro';
       if (isOpen) {
         btn.addEventListener('click', async () => {
           btn.disabled = true;
-          const { error } = await supabase
-            .from('votes')
-            .upsert(
-              { poll_id: poll.id, option_id: option.id, player_id: player.id },
-              { onConflict: 'poll_id,player_id' }
-            );
-          if (!error) {
-            allVotesState = [
-              ...allVotesState.filter((v) => !(v.poll_id === poll.id && v.player_id === player.id)),
-              { poll_id: poll.id, option_id: option.id, player_id: player.id },
-            ];
-            renderAll(player);
+
+          if (isMulti) {
+            if (isMine) {
+              const { error } = await supabase
+                .from('votes')
+                .delete()
+                .eq('poll_id', poll.id)
+                .eq('option_id', option.id)
+                .eq('player_id', player.id);
+              if (!error) {
+                allVotesState = allVotesState.filter(
+                  (v) => !(v.poll_id === poll.id && v.option_id === option.id && v.player_id === player.id)
+                );
+                renderAll(player);
+                return;
+              }
+            } else {
+              const { error } = await supabase
+                .from('votes')
+                .insert({ poll_id: poll.id, option_id: option.id, player_id: player.id });
+              if (!error) {
+                allVotesState = [
+                  ...allVotesState,
+                  { poll_id: poll.id, option_id: option.id, player_id: player.id },
+                ];
+                renderAll(player);
+                return;
+              }
+            }
           } else {
-            btn.disabled = false;
+            await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player.id);
+            const { error } = await supabase
+              .from('votes')
+              .insert({ poll_id: poll.id, option_id: option.id, player_id: player.id });
+            if (!error) {
+              allVotesState = [
+                ...allVotesState.filter((v) => !(v.poll_id === poll.id && v.player_id === player.id)),
+                { poll_id: poll.id, option_id: option.id, player_id: player.id },
+              ];
+              renderAll(player);
+              return;
+            }
           }
+
+          btn.disabled = false;
         });
       }
 

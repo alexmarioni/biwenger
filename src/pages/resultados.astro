@@ -342,6 +342,7 @@ import Base from '../layouts/Base.astro';
 
     for (const p of players) {
       const myVotes = votes.filter((v) => v.player_id === p.id);
+      const pollsAnswered = new Set(myVotes.map((v) => v.poll_id)).size;
 
       const details = document.createElement('details');
       details.className = 'player-card';
@@ -350,7 +351,7 @@ import Base from '../layouts/Base.astro';
       summary.className = 'player-summary';
       summary.innerHTML = `
         <span class="player-name">${p.emoji} ${p.name}</span>
-        <span class="player-progress">${myVotes.length}/${polls.length} votos</span>
+        <span class="player-progress">${pollsAnswered}/${polls.length} votos</span>
       `;
       details.appendChild(summary);
 
@@ -372,14 +373,19 @@ import Base from '../layouts/Base.astro';
           votesWrap.appendChild(catGroup);
         }
 
-        const myVote = myVotes.find((v) => v.poll_id === poll.id);
-        const option = (poll.poll_options ?? []).find((o: any) => o.id === myVote?.option_id);
+        const myPollVotes = myVotes.filter((v) => v.poll_id === poll.id);
+        const chosenOptions = myPollVotes
+          .map((v) => (poll.poll_options ?? []).find((o: any) => o.id === v.option_id))
+          .filter(Boolean);
+        const answerText = chosenOptions.length > 0
+          ? chosenOptions.map((o: any) => o.label).join(', ')
+          : 'Sin votar';
 
         const row = document.createElement('div');
         row.className = 'player-vote-row';
         row.innerHTML = `
           <span class="player-vote-poll">${poll.title}</span>
-          <span class="player-vote-answer${option ? '' : ' is-empty'}">${option ? option.label : 'Sin votar'}</span>
+          <span class="player-vote-answer${chosenOptions.length > 0 ? '' : ' is-empty'}">${answerText}</span>
         `;
         catGroup!.appendChild(row);
       }
