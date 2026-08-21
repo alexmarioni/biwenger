@@ -1,0 +1,29 @@
+name: Update prediction results
+
+on:
+  schedule:
+    # Every 3 hours — catches finished matches reasonably promptly and
+    # keeps the Clasificación live-standings snapshot fresh.
+    - cron: '0 */3 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve results
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: node scripts/fetch-results.mjs

@@ -861,6 +861,67 @@ a {
   white-space: nowrap;
 }
 
+/* ---------- puntaje leaderboard ---------- */
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem 1.1rem;
+}
+
+.score-row.is-first {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(242, 193, 78, 0.14);
+}
+
+.score-rank {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  width: 2rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.score-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+
+.score-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.score-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.score-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.score-total {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
 /* ---------- responsive list grids (Jornada / Fichajes / Minijuegos) ----------
    Shared across pages so every list of cards behaves the same way instead
    of each page hand-rolling its own breakpoint. Mobile: one full-width
