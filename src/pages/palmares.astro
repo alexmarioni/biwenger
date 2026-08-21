@@ -1,7 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-
-const base = import.meta.env.BASE_URL;
 ---
 
 <Base title="Palmarés">
@@ -10,10 +8,6 @@ const base = import.meta.env.BASE_URL;
       <div>
         <p class="hello">🏆</p>
         <h1>Palmarés de la liga</h1>
-      </div>
-      <div class="top-actions">
-        <a class="btn btn-ghost" href={`${base}votaciones`}>Votar</a>
-        <a class="btn btn-ghost" href={`${base}resultados`}>Resultados</a>
       </div>
     </header>
 
