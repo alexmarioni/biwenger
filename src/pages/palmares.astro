@@ -93,27 +93,22 @@ import Base from '../layouts/Base.astro';
   :global(.podium-avatar) {
     width: 5.5rem;
     height: 5.5rem;
-    border-radius: 50%;
-    background: var(--bg-card);
-    border: 2px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    overflow: hidden;
   }
 
   :global(.podium-spot-1 .podium-avatar) {
     width: 7rem;
     height: 7rem;
-    border-color: var(--gold);
     font-size: 2.5rem;
   }
 
   :global(.podium-avatar img) {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   :global(.podium-medal) {
