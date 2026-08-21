@@ -13,10 +13,13 @@ const base = import.meta.env.BASE_URL;
         Balance inicial, modo de juego, reglas especiales... en vez de discutirlo
         en el grupo, lo votamos acá. Elegí quién sos y metele tu voto.
       </p>
-      <a class="btn btn-primary" href={`${base}identidad`} data-astro-prefetch>
-        Entrar a votar
-        <span aria-hidden="true">→</span>
-      </a>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={`${base}identidad`} data-astro-prefetch>
+          Entrar a votar
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href={`${base}palmares`}>🏆 Palmarés</a>
+      </div>
     </div>
 
     <div class="float-shapes" aria-hidden="true">
@@ -58,6 +61,13 @@ const base = import.meta.env.BASE_URL;
   .lead {
     color: var(--text-dim);
     font-size: 1.05rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .float-shapes {

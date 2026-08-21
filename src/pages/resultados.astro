@@ -11,6 +11,7 @@ import Base from '../layouts/Base.astro';
       </div>
       <div class="top-actions">
         <a class="btn btn-ghost" href={`${import.meta.env.BASE_URL}votaciones`}>Volver a votar</a>
+        <a class="btn btn-ghost" href={`${import.meta.env.BASE_URL}palmares`}>🏆 Palmarés</a>
         <button id="change-player" class="btn btn-ghost" type="button">Cambiar de jugador</button>
       </div>
     </header>
@@ -321,7 +322,7 @@ import Base from '../layouts/Base.astro';
       supabase.from('players').select('id, name, emoji').order('name', { ascending: true }),
       supabase
         .from('polls')
-        .select('id, title, status, poll_type, category, created_at, poll_options(id, label, sort_order)')
+        .select('id, title, status, poll_type, category, created_at, empty_label, poll_options(id, label, sort_order)')
         .order('sort_order', { foreignTable: 'poll_options', ascending: true }),
       supabase.from('votes').select('id, poll_id, option_id, text_value, player_id'),
     ]);
@@ -386,8 +387,10 @@ import Base from '../layouts/Base.astro';
 
         if (poll.poll_type === 'text') {
           const textVote = myPollVotes[0];
-          hasAnswer = !!textVote?.text_value;
-          answerText = hasAnswer ? textVote.text_value : 'Sin votar';
+          hasAnswer = !!textVote;
+          answerText = hasAnswer
+            ? textVote.text_value || poll.empty_label || 'Sin especificar'
+            : 'Sin votar';
         } else {
           const chosenOptions = myPollVotes
             .map((v) => (poll.poll_options ?? []).find((o: any) => o.id === v.option_id))
@@ -427,11 +430,13 @@ import Base from '../layouts/Base.astro';
       if (isText) {
         const map = new Map<string, number>();
         for (const v of pollVotes) {
-          if (!v.text_value) continue;
-          const key = v.text_value.trim();
+          const key = (v.text_value ?? '').trim();
           map.set(key, (map.get(key) ?? 0) + 1);
         }
-        counts = [...map.entries()].map(([label, count]) => ({ label, count }));
+        counts = [...map.entries()].map(([value, count]) => ({
+          label: value === '' ? poll.empty_label ?? 'Sin especificar' : value,
+          count,
+        }));
       } else {
         const options = poll.poll_options ?? [];
         counts = options.map((opt: any) => ({

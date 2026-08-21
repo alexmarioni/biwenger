@@ -31,6 +31,11 @@ export interface Poll {
   category: string | null;
   created_at: string;
   poll_options: PollOption[];
+  placeholder: string | null;
+  min_value: number | null;
+  max_value: number | null;
+  allow_empty: boolean;
+  empty_label: string | null;
 }
 
 export interface Vote {
@@ -39,4 +44,12 @@ export interface Vote {
   option_id: string | null;
   text_value: string | null;
   player_id: string;
+}
+
+export interface PalmaresEntry {
+  id: string;
+  season: string;
+  position: number;
+  name: string;
+  image_url: string | null;
 }
