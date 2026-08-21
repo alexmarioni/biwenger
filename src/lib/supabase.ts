@@ -38,6 +38,7 @@ export interface Poll {
   max_value: number | null;
   allow_empty: boolean;
   empty_label: string | null;
+  featured: boolean;
 }
 
 export interface Vote {
