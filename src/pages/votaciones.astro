@@ -181,7 +181,7 @@ import Base from '../layouts/Base.astro';
 
   const base = import.meta.env.BASE_URL;
 
-  start();
+  document.addEventListener('astro:page-load', start);
 
   async function start() {
     if (await redirectIfMaintenance(base)) return;

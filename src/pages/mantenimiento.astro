@@ -56,37 +56,42 @@ import Base from '../layouts/Base.astro';
   import { supabase } from '../lib/supabase';
 
   const base = import.meta.env.BASE_URL;
-  const button = document.getElementById('refresh') as HTMLButtonElement;
-  const stillMsg = document.getElementById('still-msg')!;
-  const messageEl = document.getElementById('message')!;
 
-  async function loadMessage() {
-    const { data } = await supabase
-      .from('site_settings')
-      .select('maintenance, message')
-      .eq('id', 1)
-      .maybeSingle();
+  document.addEventListener('astro:page-load', start);
 
-    if (data?.message) {
-      messageEl.textContent = data.message;
+  function start() {
+    const button = document.getElementById('refresh') as HTMLButtonElement;
+    const stillMsg = document.getElementById('still-msg')!;
+    const messageEl = document.getElementById('message')!;
+
+    async function loadMessage() {
+      const { data } = await supabase
+        .from('site_settings')
+        .select('maintenance, message')
+        .eq('id', 1)
+        .maybeSingle();
+
+      if (data?.message) {
+        messageEl.textContent = data.message;
+      }
+
+      return data?.maintenance ?? true;
     }
 
-    return data?.maintenance ?? true;
+    loadMessage();
+
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      stillMsg.hidden = true;
+
+      const stillOn = await loadMessage();
+
+      if (!stillOn) {
+        window.location.href = base;
+      } else {
+        stillMsg.hidden = false;
+        button.disabled = false;
+      }
+    });
   }
-
-  loadMessage();
-
-  button.addEventListener('click', async () => {
-    button.disabled = true;
-    stillMsg.hidden = true;
-
-    const stillOn = await loadMessage();
-
-    if (!stillOn) {
-      window.location.href = base;
-    } else {
-      stillMsg.hidden = false;
-      button.disabled = false;
-    }
-  });
 </script>
