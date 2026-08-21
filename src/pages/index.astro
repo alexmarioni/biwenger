@@ -47,6 +47,27 @@ const base = import.meta.env.BASE_URL;
         </div>
       </section>
 
+      <section id="minijuegos-widget" class="widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">🎮 Minijuegos</span>
+        </div>
+        <div class="poll-widget-viewport">
+          <div id="minijuegos-widget-body"></div>
+        </div>
+        <div class="widget-nav">
+          <button id="minijuegos-prev" class="widget-nav-btn" type="button" aria-label="Anterior">‹</button>
+          <span id="minijuegos-counter" class="widget-counter"></span>
+          <button id="minijuegos-next" class="widget-nav-btn" type="button" aria-label="Siguiente">›</button>
+        </div>
+      </section>
+
+      <section id="jornada-widget" class="widget jornada-widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">⚽ Jornada</span>
+        </div>
+        <div id="jornada-widget-body"></div>
+      </section>
+
       <section id="palmares-widget" class="widget" hidden>
         <div class="widget-head">
           <span class="widget-title">🏆 Palmarés</span>
@@ -90,8 +111,6 @@ const base = import.meta.env.BASE_URL;
   }
 
   let allVotesState: any[] = [];
-  let pendingPolls: any[] = [];
-  let pollWidgetIdx = 0;
   let allPollsForResults: any[] = [];
   let resultsIdx = 0;
 
@@ -124,109 +143,191 @@ const base = import.meta.env.BASE_URL;
 
     allVotesState = votesRes.data ?? [];
     allPollsForResults = pollsRes.data ?? [];
-    pendingPolls = player
-      ? allPollsForResults.filter(
-          (poll) =>
-            !poll.featured &&
-            poll.status === 'open' &&
-            !allVotesState.some((v) => v.poll_id === poll.id && v.player_id === player.id)
-        )
-      : [];
 
-    setupPollWidget(player);
+    encuestasCarousel.setup(player);
+    minijuegosCarousel.setup(player);
+    setupJornadaWidget(player);
     setupResultsWidget();
     renderPalmaresMini(palmaresRes.data ?? []);
     renderParticipants(playersRes.data ?? []);
     renderPinned(allPollsForResults.filter((poll) => poll.featured), player);
   }
 
-  function setupPollWidget(player: PollCardPlayer) {
-    const widget = document.getElementById('poll-widget')!;
+  /** A "show one pending poll at a time, slide out on vote" mini carousel,
+   * reused for both the Encuestas and Minijuegos widgets. */
+  function createPendingCarousel(config: {
+    widgetId: string;
+    bodyId: string;
+    counterId: string;
+    prevId: string;
+    nextId: string;
+    loginPrompt: string;
+    doneHtml: string;
+    filterFn: (poll: any) => boolean;
+  }) {
+    let idx = 0;
+    let items: any[] = [];
 
-    if (!player) {
+    function computeItems(player: PollCardPlayer) {
+      items = player
+        ? allPollsForResults.filter(
+            (poll) =>
+              config.filterFn(poll) &&
+              poll.status === 'open' &&
+              !allVotesState.some((v) => v.poll_id === poll.id && v.player_id === player.id)
+          )
+        : [];
+    }
+
+    function setup(player: PollCardPlayer) {
+      const widget = document.getElementById(config.widgetId)!;
+      const total = allPollsForResults.filter(config.filterFn).length;
+
+      if (total === 0) {
+        widget.hidden = true;
+        return;
+      }
+
+      if (!player) {
+        widget.hidden = false;
+        document.getElementById(config.bodyId)!.innerHTML = `
+          <div class="widget-empty">
+            <p>${config.loginPrompt}</p>
+            <a class="btn btn-primary btn-small" href="${base}identidad">Entrar</a>
+          </div>
+        `;
+        (document.querySelector(`#${config.widgetId} .widget-nav`) as HTMLElement).hidden = true;
+        return;
+      }
+
       widget.hidden = false;
-      const body = document.getElementById('poll-widget-body')!;
-      body.innerHTML = `
-        <div class="widget-empty">
-          <p>Elegí tu nombre para ver y votar las encuestas pendientes.</p>
-          <a class="btn btn-primary btn-small" href="${base}identidad">Entrar</a>
-        </div>
-      `;
-      (document.querySelector('#poll-widget .widget-nav') as HTMLElement).hidden = true;
+      computeItems(player);
+      render(player);
+
+      document.getElementById(config.prevId)!.addEventListener('click', () => {
+        if (items.length === 0) return;
+        idx = (idx - 1 + items.length) % items.length;
+        render(player);
+      });
+      document.getElementById(config.nextId)!.addEventListener('click', () => {
+        if (items.length === 0) return;
+        idx = (idx + 1) % items.length;
+        render(player);
+      });
+    }
+
+    function render(player: PollCardPlayer) {
+      const body = document.getElementById(config.bodyId)!;
+      const counter = document.getElementById(config.counterId)!;
+      const nav = document.querySelector(`#${config.widgetId} .widget-nav`) as HTMLElement;
+
+      if (items.length === 0) {
+        nav.hidden = true;
+        body.innerHTML = config.doneHtml;
+        return;
+      }
+
+      nav.hidden = items.length <= 1;
+      if (idx >= items.length) idx = 0;
+      const poll = items[idx];
+
+      body.innerHTML = '';
+      body.appendChild(
+        renderPollCard(
+          poll,
+          allVotesState,
+          player,
+          (updated) => {
+            allVotesState = updated;
+            advance(poll, player);
+          },
+          { selfUpdate: false }
+        )
+      );
+
+      counter.textContent = `${idx + 1} / ${items.length}`;
+    }
+
+    function advance(votedPoll: any, player: PollCardPlayer) {
+      const body = document.getElementById(config.bodyId)!;
+      const card = body.firstElementChild as HTMLElement | null;
+
+      items = items.filter((p) => p.id !== votedPoll.id);
+
+      if (!card) {
+        render(player);
+        return;
+      }
+
+      card.classList.add('slide-out');
+      card.addEventListener('transitionend', () => render(player), { once: true });
+    }
+
+    return { setup };
+  }
+
+  const encuestasCarousel = createPendingCarousel({
+    widgetId: 'poll-widget',
+    bodyId: 'poll-widget-body',
+    counterId: 'poll-counter',
+    prevId: 'poll-prev',
+    nextId: 'poll-next',
+    loginPrompt: 'Elegí tu nombre para ver y votar las encuestas pendientes.',
+    doneHtml: `
+      <div class="widget-empty">
+        <p>🎉 ¡Votaste todo lo que está abierto!</p>
+        <a class="btn btn-ghost btn-small" href="${base}resultados">Ver resultados</a>
+      </div>
+    `,
+    filterFn: (poll) => !poll.featured && poll.category !== 'Minijuegos' && poll.category !== 'Jornada',
+  });
+
+  const minijuegosCarousel = createPendingCarousel({
+    widgetId: 'minijuegos-widget',
+    bodyId: 'minijuegos-widget-body',
+    counterId: 'minijuegos-counter',
+    prevId: 'minijuegos-prev',
+    nextId: 'minijuegos-next',
+    loginPrompt: 'Elegí tu nombre para participar de los minijuegos.',
+    doneHtml: `
+      <div class="widget-empty">
+        <p>🎉 ¡Ya predijiste todo lo que hay!</p>
+      </div>
+    `,
+    filterFn: (poll) => poll.category === 'Minijuegos',
+  });
+
+  function setupJornadaWidget(player: PollCardPlayer) {
+    const widget = document.getElementById('jornada-widget')!;
+    const body = document.getElementById('jornada-widget-body')!;
+    const matches = allPollsForResults.filter((poll) => poll.category === 'Jornada' && poll.status === 'open');
+
+    if (matches.length === 0) {
+      widget.hidden = true;
       return;
     }
 
     widget.hidden = false;
-    renderCurrentPending(player);
 
-    document.getElementById('poll-prev')!.addEventListener('click', () => {
-      if (pendingPolls.length === 0) return;
-      pollWidgetIdx = (pollWidgetIdx - 1 + pendingPolls.length) % pendingPolls.length;
-      renderCurrentPending(player);
-    });
-    document.getElementById('poll-next')!.addEventListener('click', () => {
-      if (pendingPolls.length === 0) return;
-      pollWidgetIdx = (pollWidgetIdx + 1) % pendingPolls.length;
-      renderCurrentPending(player);
-    });
-  }
-
-  function renderCurrentPending(player: PollCardPlayer) {
-    const body = document.getElementById('poll-widget-body')!;
-    const counter = document.getElementById('poll-counter')!;
-    const nav = document.querySelector('#poll-widget .widget-nav') as HTMLElement;
-
-    if (pendingPolls.length === 0) {
-      nav.hidden = true;
+    if (!player) {
       body.innerHTML = `
         <div class="widget-empty">
-          <p>🎉 ¡Votaste todo lo que está abierto!</p>
-          <a class="btn btn-ghost btn-small" href="${base}resultados">Ver resultados</a>
+          <p>Elegí tu nombre para pronosticar los partidos.</p>
+          <a class="btn btn-primary btn-small" href="${base}identidad">Entrar</a>
         </div>
       `;
       return;
     }
 
-    nav.hidden = pendingPolls.length <= 1;
-    if (pollWidgetIdx >= pendingPolls.length) pollWidgetIdx = 0;
-    const poll = pendingPolls[pollWidgetIdx];
-
     body.innerHTML = '';
-    body.appendChild(
-      renderPollCard(
-        poll,
-        allVotesState,
-        player,
-        (updated) => {
+    body.className = 'jornada-list';
+    for (const poll of matches) {
+      body.appendChild(
+        renderPollCard(poll, allVotesState, player, (updated) => {
           allVotesState = updated;
-          advanceAfterVote(poll, player);
-        },
-        { selfUpdate: false }
-      )
-    );
-
-    counter.textContent = `${pollWidgetIdx + 1} / ${pendingPolls.length}`;
-  }
-
-  function advanceAfterVote(votedPoll: any, player: PollCardPlayer) {
-    const body = document.getElementById('poll-widget-body')!;
-    const card = body.firstElementChild as HTMLElement | null;
-
-    pendingPolls = pendingPolls.filter((p) => p.id !== votedPoll.id);
-
-    if (!card) {
-      renderCurrentPending(player);
-      return;
+        })
+      );
     }
-
-    card.classList.add('slide-out');
-    card.addEventListener(
-      'transitionend',
-      () => {
-        renderCurrentPending(player);
-      },
-      { once: true }
-    );
   }
 
   function setupResultsWidget() {
@@ -433,6 +534,12 @@ const base = import.meta.env.BASE_URL;
 
   :global(.widget .poll-card) {
     padding: 1.1rem;
+  }
+
+  :global(.jornada-list) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
   }
 
   .pinned-widget {
@@ -716,6 +823,16 @@ const base = import.meta.env.BASE_URL;
       align-items: start;
       gap: 1.75rem;
       max-width: 100%;
+    }
+
+    :global(.jornada-widget) {
+      grid-column: 1 / -1;
+    }
+
+    :global(.jornada-list) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 1rem;
     }
 
     :global(.widget) {
