@@ -60,6 +60,11 @@ export function renderPollCard(
     return card;
   }
 
+  if (poll.poll_type === 'autocomplete') {
+    renderAutocomplete(card, poll, allVotes, canVote, player, onVote, options);
+    return card;
+  }
+
   const optionsEl = document.createElement('div');
   optionsEl.className = 'options';
 
@@ -253,4 +258,110 @@ function renderTextAnswer(
       }
     });
   }
+}
+
+function renderAutocomplete(
+  card: HTMLElement,
+  poll: any,
+  allVotes: any[],
+  canVote: boolean,
+  player: PollCardPlayer,
+  onVote: (updatedVotes: any[]) => void,
+  options: PollCardOptions
+) {
+  const selfUpdate = options.selfUpdate ?? true;
+  const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
+  const myVote = player ? pollVotes.find((v) => v.player_id === player.id) : undefined;
+  const allOptions = [...(poll.poll_options ?? [])].sort((a, b) => a.sort_order - b.sort_order);
+  const myOption = myVote ? allOptions.find((o) => o.id === myVote.option_id) : undefined;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'autocomplete-wrap';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'autocomplete-input text-answer-input';
+  input.placeholder = 'Escribí para buscar…';
+  input.autocomplete = 'off';
+  input.value = myOption?.label ?? '';
+  input.disabled = !canVote;
+
+  const list = document.createElement('div');
+  list.className = 'autocomplete-list';
+  list.hidden = true;
+
+  wrap.appendChild(input);
+  wrap.appendChild(list);
+  card.appendChild(wrap);
+
+  const note = document.createElement('p');
+  note.className = 'text-answer-note';
+  note.textContent = `${pollVotes.length} ${pollVotes.length === 1 ? 'persona respondió' : 'personas respondieron'} hasta ahora.`;
+  card.appendChild(note);
+
+  if (!canVote) return;
+
+  function closeList() {
+    list.hidden = true;
+    list.innerHTML = '';
+  }
+
+  async function selectOption(option: any) {
+    input.value = option.label;
+    closeList();
+    input.disabled = true;
+
+    await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player!.id);
+    const { error } = await supabase
+      .from('votes')
+      .insert({ poll_id: poll.id, option_id: option.id, player_id: player!.id });
+
+    if (!error) {
+      const updated = [
+        ...allVotes.filter((v) => !(v.poll_id === poll.id && v.player_id === player!.id)),
+        { poll_id: poll.id, option_id: option.id, player_id: player!.id },
+      ];
+      onVote(updated);
+      if (selfUpdate) card.replaceWith(renderPollCard(poll, updated, player, onVote, options));
+    } else {
+      input.disabled = false;
+    }
+  }
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+    if (!query) {
+      closeList();
+      return;
+    }
+
+    const matches = allOptions.filter((o) => o.label.toLowerCase().includes(query)).slice(0, 8);
+    if (matches.length === 0) {
+      list.innerHTML = `<div class="autocomplete-empty">Sin resultados</div>`;
+      list.hidden = false;
+      return;
+    }
+
+    list.innerHTML = '';
+    for (const option of matches) {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'autocomplete-item';
+      item.textContent = option.label;
+      item.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        selectOption(option);
+      });
+      list.appendChild(item);
+    }
+    list.hidden = false;
+  });
+
+  input.addEventListener('focus', () => {
+    if (input.value.trim()) input.dispatchEvent(new Event('input'));
+  });
+
+  input.addEventListener('blur', () => {
+    setTimeout(closeList, 150);
+  });
 }
