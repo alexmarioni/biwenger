@@ -13,8 +13,10 @@ export function renderRankingComparison(poll: any, allVotes: any[], players: any
   const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
   const parsed = pollVotes
     .map((v) => {
+      if (!v.text_value) return null;
       try {
-        return { playerId: v.player_id, order: JSON.parse(v.text_value) as string[] };
+        const order = JSON.parse(v.text_value);
+        return Array.isArray(order) ? { playerId: v.player_id, order: order as string[] } : null;
       } catch {
         return null;
       }

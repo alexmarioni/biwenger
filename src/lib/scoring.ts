@@ -72,7 +72,9 @@ export function computeScores(polls: any[], results: any[], votes: any[], player
         if (!vote.text_value) continue;
         let order: string[];
         try {
-          order = JSON.parse(vote.text_value);
+          const parsed = JSON.parse(vote.text_value);
+          if (!Array.isArray(parsed)) continue;
+          order = parsed;
         } catch {
           continue;
         }

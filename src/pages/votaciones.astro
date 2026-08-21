@@ -238,7 +238,13 @@ import Base from '../layouts/Base.astro';
 
     // Las encuestas "featured" tienen su propio widget fijo aparte (home) y
     // no se mezclan acá.
-    allPolls = polls.filter((p) => !p.featured && p.category !== 'Minijuegos' && p.category !== 'Jornada');
+    // 'ranking' (Clasificación) needs its own drag-and-drop UI — rendering
+    // it through the generic single-choice poll card here let people
+    // accidentally vote a single team option_id instead of a JSON-array
+    // prediction, corrupting their real ranking vote.
+    allPolls = polls.filter(
+      (p) => !p.featured && p.category !== 'Minijuegos' && p.category !== 'Jornada' && p.poll_type !== 'ranking'
+    );
     allVotesState = votes ?? [];
 
     renderAll(player);
