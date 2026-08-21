@@ -350,12 +350,38 @@ a {
   width: 100%;
 }
 
-.autocomplete-list {
+.autocomplete-input.has-crest {
+  padding-left: 2.6rem;
+}
+
+.autocomplete-crest-badge {
   position: absolute;
-  top: calc(100% + 0.35rem);
-  left: 0;
-  right: 0;
-  z-index: 10;
+  left: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.6em;
+  height: 1.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.autocomplete-crest-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.autocomplete-crest-fallback {
+  font-size: 1.2rem;
+}
+
+/* position/left/top/width are set inline via JS (fixed to the viewport) so
+   the dropdown can escape ancestors with overflow:hidden (e.g. the home
+   widget carousels clip horizontally for the slide-out vote animation). */
+.autocomplete-list {
+  z-index: 50;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -372,7 +398,7 @@ a {
   background: transparent;
   border: none;
   border-radius: 8px;
-  padding: 0.6rem 0.7rem;
+  padding: 0.5rem 0.7rem;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.92rem;
@@ -381,6 +407,24 @@ a {
 
 .autocomplete-item:hover {
   background: var(--bg-elevated);
+}
+
+.autocomplete-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.autocomplete-item-crest {
+  width: 1.5em;
+  height: 1.5em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.autocomplete-item-crest-fallback {
+  font-size: 1.15rem;
+  flex-shrink: 0;
 }
 
 .autocomplete-empty {
@@ -515,4 +559,191 @@ a {
   .featured-badge {
     animation: none;
   }
+}
+
+/* ---------- ranking card (Clasificación drag-and-drop prediction) ---------- */
+
+.ranking-hint {
+  margin-top: -0.4rem;
+}
+
+.ranking-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.rank-row {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.55rem 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  touch-action: pan-y;
+}
+
+.rank-row.dragging {
+  opacity: 0.55;
+  border-color: var(--accent);
+}
+
+.rank-pos {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.9rem;
+  width: 1.8rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.rank-crest {
+  width: 1.9rem;
+  height: 1.9rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.rank-crest-fallback {
+  font-size: 1.4rem;
+}
+
+.rank-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  flex-shrink: 0;
+}
+
+.rank-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+.rank-btn:hover {
+  background: var(--bg-card);
+  color: var(--text);
+}
+
+.rank-handle {
+  cursor: grab;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  padding: 0.3rem 0.35rem;
+  touch-action: none;
+  user-select: none;
+}
+
+.rank-row.dragging .rank-handle {
+  cursor: grabbing;
+}
+
+.rank-detail {
+  width: 100%;
+  order: 99;
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--border);
+}
+
+.rank-detail-title {
+  margin: 0 0 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.rank-detail-empty {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+.rank-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.rank-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rank-bar-pos {
+  width: 1.8rem;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-family: var(--font-display);
+}
+
+.rank-bar-track {
+  flex: 1;
+  min-width: 3rem;
+  height: 0.5rem;
+  background: var(--bg-card);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.rank-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  border-radius: 999px;
+}
+
+.rank-bar-count {
+  width: 1.2rem;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.rank-bar-voters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.rank-bar-voters .rank-voter-avatar {
+  width: 1.3em;
+  height: 1.3em;
+}
+
+.rank-save-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+}
+
+.rank-save-status {
+  color: var(--text-dim);
+  font-size: 0.85rem;
 }

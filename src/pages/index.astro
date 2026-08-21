@@ -50,6 +50,7 @@ const base = import.meta.env.BASE_URL;
       <section id="minijuegos-widget" class="widget" hidden>
         <div class="widget-head">
           <span class="widget-title">🎮 Minijuegos</span>
+          <a class="widget-link" href={`${base}predicciones`}>Ver todas →</a>
         </div>
         <div class="poll-widget-viewport">
           <div id="minijuegos-widget-body"></div>
@@ -64,8 +65,16 @@ const base = import.meta.env.BASE_URL;
       <section id="jornada-widget" class="widget jornada-widget" hidden>
         <div class="widget-head">
           <span class="widget-title">⚽ Jornada</span>
+          <a class="widget-link" href={`${base}predicciones`}>Ver todas →</a>
         </div>
         <div id="jornada-widget-body"></div>
+      </section>
+
+      <section id="clasificacion-widget" class="widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">🏆 Clasificación</span>
+        </div>
+        <div id="clasificacion-widget-body"></div>
       </section>
 
       <section id="palmares-widget" class="widget" hidden>
@@ -148,6 +157,7 @@ const base = import.meta.env.BASE_URL;
     encuestasCarousel.setup(player);
     minijuegosCarousel.setup(player);
     setupJornadaWidget(player);
+    setupClasificacionWidget(player);
     setupResultsWidget();
     renderPalmaresMini(palmaresRes.data ?? []);
     renderParticipants(playersRes.data ?? []);
@@ -337,6 +347,37 @@ const base = import.meta.env.BASE_URL;
         )
       );
     }
+  }
+
+  function setupClasificacionWidget(player: PollCardPlayer) {
+    const widget = document.getElementById('clasificacion-widget')!;
+    const poll = allPollsForResults.find((poll) => poll.category === 'Clasificación');
+
+    if (!poll) {
+      widget.hidden = true;
+      return;
+    }
+
+    widget.hidden = false;
+    const body = document.getElementById('clasificacion-widget-body')!;
+
+    if (!player) {
+      body.innerHTML = `
+        <div class="widget-empty">
+          <p>Elegí tu nombre para armar tu pronóstico de la tabla.</p>
+          <a class="btn btn-primary btn-small" href="${base}identidad">Entrar</a>
+        </div>
+      `;
+      return;
+    }
+
+    const myVote = allVotesState.some((v) => v.poll_id === poll.id && v.player_id === player.id);
+    body.innerHTML = `
+      <div class="widget-empty">
+        <p>${myVote ? 'Ya armaste tu pronóstico de la tabla. ¿Lo querés retocar?' : 'Arrastrá los 20 equipos y armá tu pronóstico de la tabla final.'}</p>
+        <a class="btn btn-primary btn-small" href="${base}predicciones#clasificacion">${myVote ? 'Editar pronóstico' : 'Armar pronóstico'} →</a>
+      </div>
+    `;
   }
 
   function setupResultsWidget() {

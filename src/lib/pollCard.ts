@@ -1,6 +1,20 @@
 import { supabase } from './supabase';
+import { crestPath } from './crests';
 
 export type PollCardPlayer = { id: string; name: string; emoji: string } | null;
+
+const base = import.meta.env.BASE_URL;
+
+/** Team-related autocomplete options are either a bare team name ("Arsenal")
+ * or end with "(Team Name)" (e.g. a coach's option "Mikel Arteta (Arsenal)").
+ * Returns the resolvable crest team name, or null if this option isn't
+ * team-related. */
+function resolveTeamName(label: string): string | null {
+  if (crestPath(label)) return label;
+  const match = label.match(/\(([^)]+)\)\s*$/);
+  if (match && crestPath(match[1])) return match[1];
+  return null;
+}
 
 export interface PollCardOptions {
   /** When true (default) the card swaps itself in place after a vote. Set
@@ -274,13 +288,26 @@ function renderAutocomplete(
   const myVote = player ? pollVotes.find((v) => v.player_id === player.id) : undefined;
   const allOptions = [...(poll.poll_options ?? [])].sort((a, b) => a.sort_order - b.sort_order);
   const myOption = myVote ? allOptions.find((o) => o.id === myVote.option_id) : undefined;
+  const isTeamRelated = allOptions.some((o) => resolveTeamName(o.label));
 
   const wrap = document.createElement('div');
   wrap.className = 'autocomplete-wrap';
 
+  const crestBadge = document.createElement('span');
+  crestBadge.className = 'autocomplete-crest-badge';
+
+  function updateCrestBadge(label: string | null) {
+    if (!isTeamRelated) return;
+    const team = label ? resolveTeamName(label) : null;
+    const path = team ? crestPath(team) : null;
+    crestBadge.innerHTML = path
+      ? `<img src="${base}${path}" alt="${team}" />`
+      : `<span class="autocomplete-crest-fallback">⚽</span>`;
+  }
+
   const input = document.createElement('input');
   input.type = 'text';
-  input.className = 'autocomplete-input text-answer-input';
+  input.className = `autocomplete-input text-answer-input${isTeamRelated ? ' has-crest' : ''}`;
   input.placeholder = 'Escribí para buscar…';
   input.autocomplete = 'off';
   input.value = myOption?.label ?? '';
@@ -290,9 +317,22 @@ function renderAutocomplete(
   list.className = 'autocomplete-list';
   list.hidden = true;
 
+  if (isTeamRelated) {
+    updateCrestBadge(myOption?.label ?? null);
+    wrap.appendChild(crestBadge);
+  }
   wrap.appendChild(input);
   wrap.appendChild(list);
   card.appendChild(wrap);
+
+  function positionList() {
+    const rect = input.getBoundingClientRect();
+    list.style.position = 'fixed';
+    list.style.left = `${rect.left}px`;
+    list.style.top = `${rect.bottom + 6}px`;
+    list.style.width = `${rect.width}px`;
+    list.style.right = 'auto';
+  }
 
   const note = document.createElement('p');
   note.className = 'text-answer-note';
@@ -308,6 +348,7 @@ function renderAutocomplete(
 
   async function selectOption(option: any) {
     input.value = option.label;
+    updateCrestBadge(option.label);
     closeList();
     input.disabled = true;
 
@@ -336,6 +377,7 @@ function renderAutocomplete(
     }
 
     const matches = allOptions.filter((o) => o.label.toLowerCase().includes(query)).slice(0, 8);
+    positionList();
     if (matches.length === 0) {
       list.innerHTML = `<div class="autocomplete-empty">Sin resultados</div>`;
       list.hidden = false;
@@ -344,10 +386,23 @@ function renderAutocomplete(
 
     list.innerHTML = '';
     for (const option of matches) {
+      const team = resolveTeamName(option.label);
+      const path = team ? crestPath(team) : null;
       const item = document.createElement('button');
       item.type = 'button';
       item.className = 'autocomplete-item';
-      item.textContent = option.label;
+      item.innerHTML = `
+        <span class="autocomplete-item-row">
+          ${
+            path
+              ? `<img class="autocomplete-item-crest" src="${base}${path}" alt="${team}" />`
+              : isTeamRelated
+                ? '<span class="autocomplete-item-crest-fallback">⚽</span>'
+                : ''
+          }
+          <span>${option.label}</span>
+        </span>
+      `;
       item.addEventListener('mousedown', (e) => {
         e.preventDefault();
         selectOption(option);
@@ -360,6 +415,14 @@ function renderAutocomplete(
   input.addEventListener('focus', () => {
     if (input.value.trim()) input.dispatchEvent(new Event('input'));
   });
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!list.hidden) closeList();
+    },
+    { capture: true, passive: true }
+  );
 
   input.addEventListener('blur', () => {
     setTimeout(closeList, 150);
