@@ -2,48 +2,56 @@
 import Base from '../layouts/Base.astro';
 
 const base = import.meta.env.BASE_URL;
-
-const sections = [
-  {
-    href: `${base}identidad`,
-    icon: '🗳️',
-    title: 'Votar',
-    desc: 'Elegí tu nombre y metele tu voto a las encuestas pendientes.',
-  },
-  {
-    href: `${base}resultados`,
-    icon: '📊',
-    title: 'Resultados',
-    desc: 'Quién votó qué, y cómo va quedando la configuración de la liga.',
-  },
-  {
-    href: `${base}palmares`,
-    icon: '🏆',
-    title: 'Palmarés',
-    desc: 'El podio de la temporada pasada.',
-  },
-];
 ---
 
 <Base title="Bienvenida">
   <main class="wrap home">
     <div class="hero-content animate-in">
       <span class="badge">⚽ Liga Biwenger</span>
-      <h1>Decidamos entre todos<br />cómo se juega esta liga.</h1>
-      <p class="lead">
-        Balance inicial, modo de juego, reglas especiales... en vez de discutirlo
-        en el grupo, lo votamos acá.
-      </p>
+      <h1>Decidamos entre todos cómo se juega esta liga.</h1>
     </div>
 
-    <div class="cards-grid stagger">
-      {sections.map((s) => (
-        <a class="home-card" href={s.href} data-astro-prefetch>
-          <span class="home-card-icon">{s.icon}</span>
-          <span class="home-card-title">{s.title}</span>
-          <span class="home-card-desc">{s.desc}</span>
-        </a>
-      ))}
+    <div id="widgets-loading" class="state-msg">Cargando…</div>
+    <div id="widgets-error" class="state-msg error" hidden>
+      No se pudo conectar con la base. Revisá tu conexión o probá de nuevo en un rato.
+    </div>
+
+    <div id="widgets" class="widgets stagger" hidden>
+      <section id="poll-widget" class="widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">🗳️ Encuestas</span>
+          <a class="widget-link" href={`${base}votaciones`}>Ver todas →</a>
+        </div>
+        <div class="poll-widget-viewport">
+          <div id="poll-widget-body"></div>
+        </div>
+        <div class="widget-nav">
+          <button id="poll-prev" class="widget-nav-btn" type="button" aria-label="Anterior">‹</button>
+          <span id="poll-counter" class="widget-counter"></span>
+          <button id="poll-next" class="widget-nav-btn" type="button" aria-label="Siguiente">›</button>
+        </div>
+      </section>
+
+      <section id="results-widget" class="widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">📊 Resultados</span>
+          <a class="widget-link" href={`${base}resultados`}>Ver todos →</a>
+        </div>
+        <div id="results-widget-body" class="result-mini"></div>
+        <div class="widget-nav">
+          <button id="results-prev" class="widget-nav-btn" type="button" aria-label="Anterior">‹</button>
+          <span id="results-counter" class="widget-counter"></span>
+          <button id="results-next" class="widget-nav-btn" type="button" aria-label="Siguiente">›</button>
+        </div>
+      </section>
+
+      <section id="palmares-widget" class="widget" hidden>
+        <div class="widget-head">
+          <span class="widget-title">🏆 Palmarés</span>
+          <a class="widget-link" href={`${base}palmares`}>Ver completo →</a>
+        </div>
+        <div id="palmares-mini" class="palmares-mini"></div>
+      </section>
     </div>
 
     <div class="float-shapes" aria-hidden="true">
@@ -55,9 +63,215 @@ const sections = [
 </Base>
 
 <script>
+  import { supabase } from '../lib/supabase';
+  import { getStoredPlayer } from '../lib/identity';
   import { redirectIfMaintenance } from '../lib/maintenance';
+  import { renderPollCard, type PollCardPlayer } from '../lib/pollCard';
+  import { computePollLeader } from '../lib/pollSummary';
 
-  redirectIfMaintenance(import.meta.env.BASE_URL);
+  const base = import.meta.env.BASE_URL;
+
+  start();
+
+  async function start() {
+    if (await redirectIfMaintenance(base)) return;
+    init(getStoredPlayer());
+  }
+
+  let allVotesState: any[] = [];
+  let pendingPolls: any[] = [];
+  let pollWidgetIdx = 0;
+  let allPollsForResults: any[] = [];
+  let resultsIdx = 0;
+
+  async function init(player: PollCardPlayer) {
+    const loading = document.getElementById('widgets-loading')!;
+    const errorMsg = document.getElementById('widgets-error')!;
+    const widgets = document.getElementById('widgets')!;
+
+    const [pollsRes, votesRes, palmaresRes] = await Promise.all([
+      supabase
+        .from('polls')
+        .select(
+          'id, title, description, status, poll_type, category, created_at, placeholder, min_value, max_value, allow_empty, empty_label, poll_options(id, label, hint, sort_order)'
+        )
+        .order('created_at', { ascending: true })
+        .order('sort_order', { foreignTable: 'poll_options', ascending: true }),
+      supabase.from('votes').select('id, poll_id, option_id, text_value, player_id'),
+      supabase.from('palmares').select('season, position, name, image_url').order('position', { ascending: true }),
+    ]);
+
+    if (pollsRes.error || votesRes.error || palmaresRes.error) {
+      loading.hidden = true;
+      errorMsg.hidden = false;
+      return;
+    }
+
+    loading.hidden = true;
+    widgets.hidden = false;
+
+    allVotesState = votesRes.data ?? [];
+    allPollsForResults = pollsRes.data ?? [];
+    pendingPolls = player
+      ? allPollsForResults.filter(
+          (poll) => poll.status === 'open' && !allVotesState.some((v) => v.poll_id === poll.id && v.player_id === player.id)
+        )
+      : [];
+
+    setupPollWidget(player);
+    setupResultsWidget();
+    renderPalmaresMini(palmaresRes.data ?? []);
+  }
+
+  function setupPollWidget(player: PollCardPlayer) {
+    const widget = document.getElementById('poll-widget')!;
+
+    if (!player) {
+      widget.hidden = false;
+      const body = document.getElementById('poll-widget-body')!;
+      body.innerHTML = `
+        <div class="widget-empty">
+          <p>Elegí tu nombre para ver y votar las encuestas pendientes.</p>
+          <a class="btn btn-primary btn-small" href="${base}identidad">Entrar</a>
+        </div>
+      `;
+      (document.querySelector('#poll-widget .widget-nav') as HTMLElement).hidden = true;
+      return;
+    }
+
+    widget.hidden = false;
+    renderCurrentPending(player);
+
+    document.getElementById('poll-prev')!.addEventListener('click', () => {
+      if (pendingPolls.length === 0) return;
+      pollWidgetIdx = (pollWidgetIdx - 1 + pendingPolls.length) % pendingPolls.length;
+      renderCurrentPending(player);
+    });
+    document.getElementById('poll-next')!.addEventListener('click', () => {
+      if (pendingPolls.length === 0) return;
+      pollWidgetIdx = (pollWidgetIdx + 1) % pendingPolls.length;
+      renderCurrentPending(player);
+    });
+  }
+
+  function renderCurrentPending(player: PollCardPlayer) {
+    const body = document.getElementById('poll-widget-body')!;
+    const counter = document.getElementById('poll-counter')!;
+    const nav = document.querySelector('#poll-widget .widget-nav') as HTMLElement;
+
+    if (pendingPolls.length === 0) {
+      nav.hidden = true;
+      body.innerHTML = `
+        <div class="widget-empty">
+          <p>🎉 ¡Votaste todo lo que está abierto!</p>
+          <a class="btn btn-ghost btn-small" href="${base}resultados">Ver resultados</a>
+        </div>
+      `;
+      return;
+    }
+
+    nav.hidden = pendingPolls.length <= 1;
+    if (pollWidgetIdx >= pendingPolls.length) pollWidgetIdx = 0;
+    const poll = pendingPolls[pollWidgetIdx];
+
+    body.innerHTML = '';
+    body.appendChild(
+      renderPollCard(
+        poll,
+        allVotesState,
+        player,
+        (updated) => {
+          allVotesState = updated;
+          advanceAfterVote(poll, player);
+        },
+        { selfUpdate: false }
+      )
+    );
+    counter.textContent = `${pollWidgetIdx + 1} / ${pendingPolls.length}`;
+  }
+
+  function advanceAfterVote(votedPoll: any, player: PollCardPlayer) {
+    const body = document.getElementById('poll-widget-body')!;
+    const card = body.firstElementChild as HTMLElement | null;
+
+    pendingPolls = pendingPolls.filter((p) => p.id !== votedPoll.id);
+
+    if (!card) {
+      renderCurrentPending(player);
+      return;
+    }
+
+    card.classList.add('slide-out');
+    card.addEventListener(
+      'transitionend',
+      () => {
+        renderCurrentPending(player);
+      },
+      { once: true }
+    );
+  }
+
+  function setupResultsWidget() {
+    const widget = document.getElementById('results-widget')!;
+    if (allPollsForResults.length === 0) {
+      widget.hidden = true;
+      return;
+    }
+    widget.hidden = false;
+    renderCurrentResult();
+
+    document.getElementById('results-prev')!.addEventListener('click', () => {
+      resultsIdx = (resultsIdx - 1 + allPollsForResults.length) % allPollsForResults.length;
+      renderCurrentResult();
+    });
+    document.getElementById('results-next')!.addEventListener('click', () => {
+      resultsIdx = (resultsIdx + 1) % allPollsForResults.length;
+      renderCurrentResult();
+    });
+  }
+
+  function renderCurrentResult() {
+    const body = document.getElementById('results-widget-body')!;
+    const counter = document.getElementById('results-counter')!;
+    const poll = allPollsForResults[resultsIdx];
+    const leader = computePollLeader(poll, allVotesState);
+
+    body.innerHTML = `
+      <span class="result-mini-cat">${poll.category ?? 'Otras'}</span>
+      <span class="result-mini-title">${poll.title}</span>
+      <div class="result-mini-leader">
+        <span class="result-mini-leader-label ${leader.className}">${leader.label}</span>
+        <span class="result-mini-leader-pct">${leader.pctText}</span>
+      </div>
+    `;
+    counter.textContent = `${resultsIdx + 1} / ${allPollsForResults.length}`;
+  }
+
+  function renderPalmaresMini(entries: any[]) {
+    const widget = document.getElementById('palmares-widget')!;
+    const mini = document.getElementById('palmares-mini')!;
+
+    if (entries.length === 0) {
+      widget.hidden = true;
+      return;
+    }
+
+    widget.hidden = false;
+    const MEDALS: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
+    mini.innerHTML = entries
+      .map(
+        (e) => `
+        <div class="palmares-mini-item">
+          <div class="palmares-mini-avatar">
+            ${e.image_url ? `<img src="${base}${e.image_url}" alt="${e.name}" />` : MEDALS[e.position] ?? '⚽'}
+          </div>
+          <span class="palmares-mini-medal">${MEDALS[e.position] ?? ''}</span>
+          <span class="palmares-mini-name">${e.name}</span>
+        </div>
+      `
+      )
+      .join('');
+  }
 </script>
 
 <style>
@@ -77,72 +291,221 @@ const sections = [
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
-    max-width: 30rem;
+    max-width: 28rem;
     z-index: 1;
   }
 
   h1 {
-    font-size: clamp(1.25rem, 4.2vw, 2.1rem);
+    font-size: clamp(1.25rem, 4.2vw, 1.9rem);
   }
 
-  .lead {
+  .state-msg {
     color: var(--text-dim);
-    font-size: clamp(0.85rem, 2.4vw, 1rem);
+    padding: 2rem 0;
+    text-align: center;
   }
 
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(0.5rem, 2vw, 1rem);
+  .state-msg.error {
+    color: var(--danger);
+  }
+
+  .widgets {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
     width: 100%;
-    max-width: 40rem;
+    max-width: 32rem;
     z-index: 1;
   }
 
-  :global(.home-card) {
+  :global(.widget) {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem;
+    box-shadow: var(--shadow);
+    text-align: left;
+  }
+
+  :global(.widget-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  :global(.widget-title) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  :global(.widget-link) {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  :global(.poll-widget-viewport) {
+    overflow: hidden;
+  }
+
+  :global(.widget .poll-card) {
+    padding: 1.1rem;
+  }
+
+  :global(.slide-out) {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(-115%);
+    opacity: 0;
+  }
+
+  :global(.widget-empty) {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.6rem;
     text-align: center;
-    gap: 0.4rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: clamp(0.75rem, 3vw, 1.75rem) clamp(0.4rem, 2vw, 1.25rem);
-    color: var(--text);
-    box-shadow: var(--shadow);
-    transition: transform 0.18s ease, border-color 0.18s ease;
+    padding: 1rem 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
   }
 
-  :global(.home-card:hover) {
-    transform: translateY(-4px);
+  :global(.widget-nav) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.85rem;
+  }
+
+  :global(.widget-nav-btn) {
+    appearance: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s ease;
+  }
+
+  :global(.widget-nav-btn:hover) {
     border-color: var(--accent-dim);
   }
 
-  :global(.home-card:active) {
-    transform: scale(0.97);
+  :global(.widget-counter) {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    min-width: 3rem;
+    text-align: center;
   }
 
-  :global(.home-card-icon) {
-    font-size: clamp(1.3rem, 4.5vw, 2rem);
+  :global(.result-mini) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
   }
 
-  :global(.home-card-title) {
+  :global(.result-mini-cat) {
+    color: var(--gold);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  :global(.result-mini-title) {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.8rem, 2.6vw, 1.05rem);
+    font-size: 0.98rem;
   }
 
-  :global(.home-card-desc) {
+  :global(.result-mini-leader) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+  }
+
+  :global(.result-mini-leader-label) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  :global(.result-mini-leader-label.is-empty) {
     color: var(--text-dim);
-    font-size: clamp(0.68rem, 2vw, 0.85rem);
-    line-height: 1.35;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-style: italic;
   }
 
-  @media (max-width: 420px) {
-    :global(.home-card-desc) {
-      display: none;
-    }
+  :global(.result-mini-leader-pct) {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.palmares-mini) {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.5rem;
+  }
+
+  :global(.palmares-mini-item) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-align: center;
+  }
+
+  :global(.palmares-mini-avatar) {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    overflow: hidden;
+  }
+
+  :global(.palmares-mini-avatar img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  :global(.palmares-mini-medal) {
+    font-size: 0.85rem;
+  }
+
+  :global(.palmares-mini-name) {
+    font-size: 0.72rem;
+    font-weight: 600;
+    max-width: 5.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .float-shapes {
@@ -154,13 +517,13 @@ const sections = [
   .shape {
     position: absolute;
     font-size: 2.5rem;
-    opacity: 0.25;
+    opacity: 0.2;
     animation: float 5s ease-in-out infinite;
   }
 
-  .shape-1 { top: 8%; left: 8%; animation-delay: 0s; }
-  .shape-2 { top: 12%; right: 10%; animation-delay: 1.2s; }
-  .shape-3 { bottom: 6%; left: 18%; animation-delay: 2.1s; }
+  .shape-1 { top: 6%; left: 6%; animation-delay: 0s; }
+  .shape-2 { top: 8%; right: 8%; animation-delay: 1.2s; }
+  .shape-3 { bottom: 4%; left: 12%; animation-delay: 2.1s; }
 
   @media (max-width: 480px) {
     .shape { font-size: 1.8rem; }

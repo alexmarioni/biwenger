@@ -278,6 +278,7 @@ import Base from '../layouts/Base.astro';
   import { supabase } from '../lib/supabase';
   import { getStoredPlayer, clearStoredPlayer } from '../lib/identity';
   import { redirectIfMaintenance } from '../lib/maintenance';
+  import { computePollLeader } from '../lib/pollSummary';
 
   const base = import.meta.env.BASE_URL;
 
@@ -423,47 +424,7 @@ import Base from '../layouts/Base.astro';
     rows.innerHTML = '';
 
     for (const poll of polls) {
-      const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
-      const isText = poll.poll_type === 'text';
-
-      let counts: { label: string; count: number }[];
-      if (isText) {
-        const map = new Map<string, number>();
-        for (const v of pollVotes) {
-          const key = (v.text_value ?? '').trim();
-          map.set(key, (map.get(key) ?? 0) + 1);
-        }
-        counts = [...map.entries()].map(([value, count]) => ({
-          label: value === '' ? poll.empty_label ?? 'Sin especificar' : value,
-          count,
-        }));
-      } else {
-        const options = poll.poll_options ?? [];
-        counts = options.map((opt: any) => ({
-          label: opt.label,
-          count: pollVotes.filter((v: any) => v.option_id === opt.id).length,
-        }));
-      }
-
-      const max = Math.max(0, ...counts.map((c) => c.count));
-      const leaders = counts.filter((c) => c.count === max && max > 0);
-
-      let leaderLabel: string;
-      let leaderClass = '';
-      let pctText = '';
-
-      if (max === 0) {
-        leaderLabel = 'Sin respuestas aún';
-        leaderClass = 'is-empty';
-      } else if (leaders.length > 1) {
-        const shown = leaders.slice(0, 3).map((l) => l.label);
-        const extra = leaders.length > 3 ? ` +${leaders.length - 3} más` : '';
-        leaderLabel = isText ? `Varias respuestas (${shown.join(' / ')}${extra})` : `Empate (${shown.join(' / ')}${extra})`;
-      } else {
-        leaderLabel = leaders[0].label;
-        const pct = Math.round((max / pollVotes.length) * 100);
-        pctText = `${pct}%`;
-      }
+      const leader = computePollLeader(poll, allVotes);
 
       const row = document.createElement('div');
       row.className = 'summary-row';
@@ -473,8 +434,8 @@ import Base from '../layouts/Base.astro';
           <span class="summary-title">${poll.title}</span>
         </div>
         <div class="summary-leader">
-          <span class="summary-leader-label ${leaderClass}">${leaderLabel}</span>
-          <span class="summary-leader-pct">${pctText}</span>
+          <span class="summary-leader-label ${leader.className}">${leader.label}</span>
+          <span class="summary-leader-pct">${leader.pctText}</span>
         </div>
       `;
       rows.appendChild(row);

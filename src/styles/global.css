@@ -178,3 +178,164 @@ a {
   background: rgba(159, 176, 170, 0.12);
   color: var(--text-dim);
 }
+
+/* ---------- poll card (shared by votaciones + home widget) ---------- */
+
+.poll-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.poll-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.poll-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+.poll-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.poll-desc {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 1rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.option-btn {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.18s ease, transform 0.12s ease;
+}
+
+.option-btn:hover {
+  border-color: var(--accent-dim);
+}
+
+.option-btn:active {
+  transform: scale(0.985);
+}
+
+.option-btn.selected {
+  border-color: var(--accent);
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  gap: 0.75rem;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.option-hint {
+  display: block;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  margin-top: 0.3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.option-pct {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.option-bar {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: var(--accent-soft);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.option-btn.selected .option-bar {
+  background: rgba(53, 214, 143, 0.22);
+}
+
+.check {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.text-answer-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.text-answer-input {
+  flex: 1;
+  min-width: 10rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.text-answer-input:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+.text-answer-note {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  margin: 0.6rem 0 0;
+}
+
+.text-answer-error {
+  color: var(--danger);
+  font-size: 0.82rem;
+  margin: 0.5rem 0 0;
+}
