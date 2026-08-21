@@ -456,6 +456,13 @@ function renderAutocomplete(
   });
 
   input.addEventListener('focus', () => {
+    // Clicking into a field that already has a saved answer used to just
+    // place the cursor, so typing appended to the old value instead of
+    // replacing it — the resulting garbled query never matched anything,
+    // making the dropdown look broken. Selecting the text on focus makes
+    // the first keystroke naturally replace it, like editing any other
+    // pre-filled field.
+    input.select();
     if (input.value.trim()) input.dispatchEvent(new Event('input'));
   });
 
@@ -627,6 +634,13 @@ function renderPlayerAutocomplete(
   });
 
   input.addEventListener('focus', () => {
+    // Clicking into a field that already has a saved answer used to just
+    // place the cursor, so typing appended to the old value instead of
+    // replacing it — the resulting garbled query never matched anything,
+    // making the dropdown look broken. Selecting the text on focus makes
+    // the first keystroke naturally replace it, like editing any other
+    // pre-filled field.
+    input.select();
     if (input.value.trim()) input.dispatchEvent(new Event('input'));
   });
 
