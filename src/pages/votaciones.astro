@@ -20,6 +20,8 @@ import Base from '../layouts/Base.astro';
       Todavía no hay encuestas cargadas. ¡Pronto va a haber algo para votar!
     </div>
 
+    <section id="polls-list" class="polls-list" hidden></section>
+
     <section id="summary-panel" class="summary-panel animate-in" hidden>
       <div class="summary-head">
         <div>
@@ -30,8 +32,6 @@ import Base from '../layouts/Base.astro';
       </div>
       <div id="summary-rows" class="summary-rows"></div>
     </section>
-
-    <section id="polls-list" class="polls-list" hidden></section>
   </main>
 </Base>
 
