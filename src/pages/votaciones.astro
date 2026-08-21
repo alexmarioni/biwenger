@@ -9,7 +9,10 @@ import Base from '../layouts/Base.astro';
         <p class="hello" id="hello-msg">Hola 👋</p>
         <h1>Encuestas de la liga</h1>
       </div>
-      <button id="change-player" class="btn btn-ghost" type="button">Cambiar de jugador</button>
+      <div class="top-actions">
+        <a class="btn btn-ghost" href={`${import.meta.env.BASE_URL}resultados`}>Ver resultados</a>
+        <button id="change-player" class="btn btn-ghost" type="button">Cambiar de jugador</button>
+      </div>
     </header>
 
     <div id="state-loading" class="state-msg">Cargando encuestas…</div>
@@ -19,19 +22,19 @@ import Base from '../layouts/Base.astro';
     <div id="state-empty" class="state-msg" hidden>
       Todavía no hay encuestas cargadas. ¡Pronto va a haber algo para votar!
     </div>
+    <div id="state-all-done" class="state-msg all-done" hidden>
+      🎉 ¡Votaste todo lo que está abierto! Mirá cómo va quedando la liga en <a href={`${import.meta.env.BASE_URL}resultados`}>resultados</a>.
+    </div>
 
-    <section id="polls-list" class="polls-list" hidden></section>
+    <section id="pending-list" class="polls-list" hidden></section>
 
-    <section id="summary-panel" class="summary-panel animate-in" hidden>
-      <div class="summary-head">
-        <div>
-          <h2>Cómo va quedando la liga</h2>
-          <p class="summary-sub">La opción que va ganando en cada encuesta, de un vistazo.</p>
-        </div>
-        <button id="summary-toggle" class="btn btn-ghost btn-small" type="button">Ocultar</button>
-      </div>
-      <div id="summary-rows" class="summary-rows"></div>
-    </section>
+    <details id="done-section" class="done-section" hidden>
+      <summary class="done-summary">
+        <span class="done-summary-title">Ya votaste / cerradas</span>
+        <span class="category-count" id="done-count"></span>
+      </summary>
+      <div id="done-list" class="polls-list done-list"></div>
+    </details>
   </main>
 </Base>
 
@@ -68,114 +71,69 @@ import Base from '../layouts/Base.astro';
     color: var(--danger);
   }
 
+  .state-msg.all-done {
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .state-msg.all-done a {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
   .polls-list {
     display: flex;
     flex-direction: column;
     gap: 2.25rem;
   }
 
-  .summary-panel {
-    background: linear-gradient(160deg, var(--bg-card), var(--bg-elevated));
+  .top-actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .done-section {
+    background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
+    padding: 0.25rem 1.25rem;
   }
 
-  .summary-head {
+  .done-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1rem 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .summary-head h2 {
-    font-size: 1.15rem;
-  }
-
-  .summary-sub {
+    gap: 0.75rem;
     color: var(--text-dim);
-    font-size: 0.85rem;
-    margin: 0.2rem 0 0;
-  }
-
-  .btn-small {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-  }
-
-  .summary-rows {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1.1rem;
-  }
-
-  :global(.summary-row) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.65rem 0;
-    border-top: 1px solid var(--border);
-  }
-
-  :global(.summary-row:first-child) {
-    border-top: none;
-  }
-
-  :global(.summary-row-main) {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    min-width: 0;
-  }
-
-  :global(.summary-cat) {
-    color: var(--gold);
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-  }
-
-  :global(.summary-title) {
-    font-size: 0.92rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  :global(.summary-leader) {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
-    text-align: right;
-  }
-
-  :global(.summary-leader-label) {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.9rem;
-    max-width: 12rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
-  :global(.summary-leader-label.is-empty) {
-    color: var(--text-dim);
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-style: italic;
+  .done-summary::-webkit-details-marker {
+    display: none;
   }
 
-  :global(.summary-leader-pct) {
-    color: var(--accent);
-    font-size: 0.8rem;
-    font-variant-numeric: tabular-nums;
-    min-width: 2.5rem;
+  .done-summary::before {
+    content: '▸';
+    margin-right: 0.5rem;
+    transition: transform 0.15s ease;
+    display: inline-block;
+  }
+
+  .done-section[open] .done-summary::before {
+    transform: rotate(90deg);
+  }
+
+  .done-list {
+    padding: 0.5rem 0 1.25rem;
   }
 
   :global(.category-section) {
@@ -343,11 +301,15 @@ import Base from '../layouts/Base.astro';
     init(player);
   }
 
+  const CATEGORY_ORDER = ['Liga', 'Participantes', 'Alineaciones', 'Mercado', 'Primas', 'Premium'];
+
+  let allPolls: any[] = [];
+  let allVotesState: any[] = [];
+
   async function init(player: { id: string; name: string; emoji: string }) {
     const loading = document.getElementById('state-loading')!;
     const errorMsg = document.getElementById('state-error')!;
     const empty = document.getElementById('state-empty')!;
-    const list = document.getElementById('polls-list')!;
 
     const { data: polls, error: pollsError } = await supabase
       .from('polls')
@@ -378,10 +340,54 @@ import Base from '../layouts/Base.astro';
       return;
     }
 
-    list.hidden = false;
-    renderSummary(polls, votes ?? []);
+    allPolls = polls;
+    allVotesState = votes ?? [];
 
-    const CATEGORY_ORDER = ['Liga', 'Participantes', 'Alineaciones', 'Mercado', 'Primas', 'Premium'];
+    renderAll(player);
+  }
+
+  function renderAll(player: { id: string; name: string; emoji: string }) {
+    const pendingList = document.getElementById('pending-list')!;
+    const doneSection = document.getElementById('done-section')! as HTMLDetailsElement;
+    const doneList = document.getElementById('done-list')!;
+    const doneCount = document.getElementById('done-count')!;
+    const allDoneMsg = document.getElementById('state-all-done')!;
+
+    pendingList.innerHTML = '';
+    doneList.innerHTML = '';
+
+    const pending: any[] = [];
+    const done: any[] = [];
+
+    for (const poll of allPolls) {
+      const isOpen = poll.status === 'open';
+      const myVote = allVotesState.find((v) => v.poll_id === poll.id && v.player_id === player.id);
+      if (isOpen && !myVote) {
+        pending.push(poll);
+      } else {
+        done.push(poll);
+      }
+    }
+
+    if (pending.length > 0) {
+      pendingList.hidden = false;
+      allDoneMsg.hidden = true;
+      renderCategoryGroups(pendingList, pending, player);
+    } else {
+      pendingList.hidden = true;
+      allDoneMsg.hidden = false;
+    }
+
+    if (done.length > 0) {
+      doneSection.hidden = false;
+      doneCount.textContent = `${done.length}`;
+      renderCategoryGroups(doneList, done, player);
+    } else {
+      doneSection.hidden = true;
+    }
+  }
+
+  function renderCategoryGroups(container: HTMLElement, polls: any[], player: { id: string; name: string; emoji: string }) {
     const categories = new Map<string, any[]>();
     for (const poll of polls) {
       const key = poll.category ?? 'Otras';
@@ -415,11 +421,11 @@ import Base from '../layouts/Base.astro';
       const pollsWrap = document.createElement('div');
       pollsWrap.className = 'category-polls';
       for (const poll of pollsInCategory) {
-        pollsWrap.appendChild(renderPoll(poll, votes ?? [], player));
+        pollsWrap.appendChild(renderPoll(poll, allVotesState, player));
       }
       section.appendChild(pollsWrap);
 
-      list.appendChild(section);
+      container.appendChild(section);
     });
   }
 
@@ -480,14 +486,11 @@ import Base from '../layouts/Base.astro';
               { onConflict: 'poll_id,player_id' }
             );
           if (!error) {
-            const updatedVotes = pollVotes.filter((v) => v.player_id !== player.id);
-            updatedVotes.push({ poll_id: poll.id, option_id: option.id, player_id: player.id });
-            const newCard = renderPoll(
-              { ...poll },
-              [...allVotes.filter((v) => v.poll_id !== poll.id), ...updatedVotes],
-              player
-            );
-            card.replaceWith(newCard);
+            allVotesState = [
+              ...allVotesState.filter((v) => !(v.poll_id === poll.id && v.player_id === player.id)),
+              { poll_id: poll.id, option_id: option.id, player_id: player.id },
+            ];
+            renderAll(player);
           } else {
             btn.disabled = false;
           }
@@ -504,65 +507,5 @@ import Base from '../layouts/Base.astro';
 
     card.appendChild(options);
     return card;
-  }
-
-  function renderSummary(polls: any[], allVotes: any[]) {
-    const panel = document.getElementById('summary-panel')!;
-    const rows = document.getElementById('summary-rows')!;
-    const toggle = document.getElementById('summary-toggle')!;
-
-    rows.innerHTML = '';
-
-    const sortedPolls = [...polls].sort((a, b) => a.created_at.localeCompare(b.created_at));
-
-    for (const poll of sortedPolls) {
-      const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
-      const options = poll.poll_options ?? [];
-
-      const counts = options.map((opt: any) => ({
-        label: opt.label,
-        count: pollVotes.filter((v) => v.option_id === opt.id).length,
-      }));
-
-      const max = Math.max(0, ...counts.map((c: any) => c.count));
-      const leaders = counts.filter((c: any) => c.count === max && max > 0);
-
-      let leaderLabel: string;
-      let leaderClass = '';
-      let pctText = '';
-
-      if (max === 0) {
-        leaderLabel = 'Sin votos aún';
-        leaderClass = 'is-empty';
-      } else if (leaders.length > 1) {
-        leaderLabel = `Empate (${leaders.map((l: any) => l.label).join(' / ')})`;
-      } else {
-        leaderLabel = leaders[0].label;
-        const pct = Math.round((max / pollVotes.length) * 100);
-        pctText = `${pct}%`;
-      }
-
-      const row = document.createElement('div');
-      row.className = 'summary-row';
-      row.innerHTML = `
-        <div class="summary-row-main">
-          <span class="summary-cat">${poll.category ?? 'Otras'}</span>
-          <span class="summary-title">${poll.title}</span>
-        </div>
-        <div class="summary-leader">
-          <span class="summary-leader-label ${leaderClass}">${leaderLabel}</span>
-          <span class="summary-leader-pct">${pctText}</span>
-        </div>
-      `;
-      rows.appendChild(row);
-    }
-
-    panel.hidden = false;
-
-    toggle.addEventListener('click', () => {
-      const isHidden = rows.hidden;
-      rows.hidden = !isHidden;
-      toggle.textContent = isHidden ? 'Ocultar' : 'Mostrar';
-    });
   }
 </script>
