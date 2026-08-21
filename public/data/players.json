@@ -1,0 +1,2968 @@
+{
+  "generated_at": "2026-08-21T06:42:46.874Z",
+  "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
+  "count": 592,
+  "failed_clubs": 0,
+  "players": [
+    {
+      "name": "Ben White",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Bruno Guimarães",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Bukayo Saka",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Christos Tzolis",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Cristhian Mosquera",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "David Raya",
+      "team": "Arsenal",
+      "position": "G"
+    },
+    {
+      "name": "Declan Rice",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Eberechi Eze",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Ethan Nwaneri",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Fabio Vieira",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Gabriel Jesus",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Gabriel Magalhães",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Gabriel Martinelli",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Illan Meslier",
+      "team": "Arsenal",
+      "position": "G"
+    },
+    {
+      "name": "Jurriën Timber",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Kai Havertz",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Kepa Arrizabalaga",
+      "team": "Arsenal",
+      "position": "G"
+    },
+    {
+      "name": "Martin Ødegaard",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Martín Zubimendi",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Max Dowman",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Mikel Merino",
+      "team": "Arsenal",
+      "position": "M"
+    },
+    {
+      "name": "Myles Lewis-Skelly",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Noni Madueke",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Piero Hincapié",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Reiss Nelson",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Riccardo Calafiori",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Tommy Setford",
+      "team": "Arsenal",
+      "position": "G"
+    },
+    {
+      "name": "Viktor Gyökeres",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "William Saliba",
+      "team": "Arsenal",
+      "position": "D"
+    },
+    {
+      "name": "Alejandro Garnacho",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Alysson",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Amadou Onana",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Boubacar Kamara",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Bradley Burrowes",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Brian Madjo",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Emiliano Buendía",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Emiliano Martínez",
+      "team": "Aston Villa",
+      "position": "G"
+    },
+    {
+      "name": "Ezri Konsa",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "George Hemmings",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Ian Maatsen",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "James Wright",
+      "team": "Aston Villa",
+      "position": "G"
+    },
+    {
+      "name": "João Gomes",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Johan Manzambi",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "John McGinn",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Lamare Bogarde",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Leon Bailey",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Luka Lynch",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Marco Bizot",
+      "team": "Aston Villa",
+      "position": "G"
+    },
+    {
+      "name": "Matteo Ruggeri",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Matty Cash",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Modou Cissé",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Ollie Watkins",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Owen Asemota",
+      "team": "Aston Villa",
+      "position": "G"
+    },
+    {
+      "name": "Pau Torres",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Ross Barkley",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
+      "name": "Tammy Abraham",
+      "team": "Aston Villa",
+      "position": "F"
+    },
+    {
+      "name": "Triston Rowe",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Tyrone Mings",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Victor Lindelöf",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
+      "name": "Zion Suzuki",
+      "team": "Aston Villa",
+      "position": "G"
+    },
+    {
+      "name": "Adam Smith",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Adrien Truffert",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Alex Scott",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Alex Tóth",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Álvaro Rodríguez",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Amine Adli",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "António Silva",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Bafodé Diakité",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Ben Gannon-Doak",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Daniel Jebbison",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "David Brooks",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Djordje Petrovic",
+      "team": "Bournemouth",
+      "position": "G"
+    },
+    {
+      "name": "Evanilson",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Fraser Forster",
+      "team": "Bournemouth",
+      "position": "G"
+    },
+    {
+      "name": "James Hill",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Juanlu Sanchez",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Julián Araujo",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Julio Soler",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Junior Kroupi",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Justin Kluivert",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Lewis Cook",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Marcus Tavernier",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Matai Akinmboni",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Max Aarons",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "Rayan",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Remy Rees-Dottin",
+      "team": "Bournemouth",
+      "position": "F"
+    },
+    {
+      "name": "Ryan Christie",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Tyler Adams",
+      "team": "Bournemouth",
+      "position": "M"
+    },
+    {
+      "name": "Veljko Milosavljevic",
+      "team": "Bournemouth",
+      "position": "D"
+    },
+    {
+      "name": "William Dennis",
+      "team": "Bournemouth",
+      "position": "G"
+    },
+    {
+      "name": "Aaron Hickey",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Antoni Milambo",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Benjamin Fredrick",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Callum Wilson",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Caoimhín Kelleher",
+      "team": "Brentford",
+      "position": "G"
+    },
+    {
+      "name": "Dango Ouattara",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Ellery Balcombe",
+      "team": "Brentford",
+      "position": "G"
+    },
+    {
+      "name": "Ethan Pinnock",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Fábio Carvalho",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Gustavo Nunes",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Hákon Valdimarsson",
+      "team": "Brentford",
+      "position": "G"
+    },
+    {
+      "name": "Igor Thiago",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Jaidon Anthony",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Jannik Schuster",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Jayden Meghoma",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Josh Dasilva",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Kaye Furo",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Keane Lewis-Potter",
+      "team": "Brentford",
+      "position": "F"
+    },
+    {
+      "name": "Kevin Schade",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Kim Ji-Soo",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Kristoffer Ajer",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Mamadou Sangare",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Mathias Jensen",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Michael Kayode",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Mikkel Damsgaard",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Nathan Collins",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Rico Henry",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Sepp van den Berg",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
+      "name": "Vitaly Janelt",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Yehor Yarmoliuk",
+      "team": "Brentford",
+      "position": "M"
+    },
+    {
+      "name": "Amario Cozier-Duberry",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Bart Verbruggen",
+      "team": "Brighton",
+      "position": "G"
+    },
+    {
+      "name": "Carlos Baleba",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Charalambos Kostoulas",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Charlie Tasker",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Costinha",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Diego Gómez",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Eiran Cashin",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Evan Ferguson",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Ferdi Kadioglu",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Georginio Rutter",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Ibrahim Osman",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Igor Julio",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Jack Hinshelwood",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Jason Steele",
+      "team": "Brighton",
+      "position": "G"
+    },
+    {
+      "name": "Kaoru Mitoma",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Lewis Dunk",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Luka Vuskovic",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Malick Yalcouyé",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Mats Wieffer",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Matt O'Riley",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Maxim De Cuyper",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Michael Svoboda",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Nehemiah Oriola",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Olivier Boscagli",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Pascal Gross",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Pascal Struijk",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
+      "name": "Promise David",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Stefanos Tzimas",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Tom McGill",
+      "team": "Brighton",
+      "position": "G"
+    },
+    {
+      "name": "Yankuba Minteh",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Yasin Ayari",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Zadok Yohanna",
+      "team": "Brighton",
+      "position": "F"
+    },
+    {
+      "name": "Aaron Anselmino",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Axel Disasi",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Benoît Badiashile",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Calvin Diakite",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Cole Palmer",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Danny Welbeck",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Dário Essugo",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "David Datro Fofana",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Emmanuel Emegha",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Enzo Fernández",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Estêvão",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Gaga Slonina",
+      "team": "Chelsea",
+      "position": "G"
+    },
+    {
+      "name": "Geovany Quenda",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Jamie Gittens",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "João Pedro",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Jordan Henderson",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Jorrel Hato",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Josh Acheampong",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Landon Emenalo",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Levi Colwill",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Liam Delap",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Mahdi Nicoll-Jazuli",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Malo Gusto",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Mamadou Sarr",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Marc Guiu",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Marco Palestra",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Maxence Lacroix",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Mike Penders",
+      "team": "Chelsea",
+      "position": "G"
+    },
+    {
+      "name": "Moisés Caicedo",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Morgan Rogers",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Mykhailo Mudryk",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Nicolas Jackson",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Olutayo Subuloye",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Omari Kellyman",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Pedro Neto",
+      "team": "Chelsea",
+      "position": "F"
+    },
+    {
+      "name": "Pep Chavarría",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Reece James",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Reggie Watson",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Robert Sánchez",
+      "team": "Chelsea",
+      "position": "G"
+    },
+    {
+      "name": "Romeo Lavia",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Ted Curd",
+      "team": "Chelsea",
+      "position": "G"
+    },
+    {
+      "name": "Teddy Sharman-Lowe",
+      "team": "Chelsea",
+      "position": "G"
+    },
+    {
+      "name": "Tosin Adarabioyo",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Valentín Barco",
+      "team": "Chelsea",
+      "position": "M"
+    },
+    {
+      "name": "Wesley Fofana",
+      "team": "Chelsea",
+      "position": "D"
+    },
+    {
+      "name": "Aurèle Amenda",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Ben Wilson",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Bobby Thomas",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Brandon Thomas-Asante",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Caleb Yirenkyi",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Carl Rushworth",
+      "team": "Coventry City",
+      "position": "G"
+    },
+    {
+      "name": "Ellis Simms",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Ephron Mason-Clark",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Frank Onyeka",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Gustavo Hamer",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Haji Wright",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Jack Rudoni",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Jake Bidwell",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Jay Da Silva",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Joel Latibeaudiere",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Josh Eccles",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Kai Andrews",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Kaine Kesler Hayden",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Liam Kitching",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Loum Tchaouna",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Luke Woolfenden",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Matt Grimes",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Miguel Ángel Brau",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Milan van Ewijk",
+      "team": "Coventry City",
+      "position": "D"
+    },
+    {
+      "name": "Oliver Dovin",
+      "team": "Coventry City",
+      "position": "G"
+    },
+    {
+      "name": "Raphael Borges Rodrigues",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Sidiki Cherif",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Taiwo Awoniyi",
+      "team": "Coventry City",
+      "position": "F"
+    },
+    {
+      "name": "Tatsuhiro Sakamoto",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Victor Torp",
+      "team": "Coventry City",
+      "position": "M"
+    },
+    {
+      "name": "Adam Wharton",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Anan Khalaili",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Borna Sosa",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Chadi Riad",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Cheick Doucouré",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Chris Richards",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Daichi Kamada",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Daniel Muñoz",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "David Ozoh",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Dean Henderson",
+      "team": "Crystal Palace",
+      "position": "G"
+    },
+    {
+      "name": "Dwight McNeil",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Eddie Nketiah",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Evann Guessand",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Ismaïla Sarr",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Jaydee Canvot",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Jean-Philippe Mateta",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Jefferson Lerma",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Jesurun Rak-Sakyi",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Jørgen Strand Larsen",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Joseph Whitworth",
+      "team": "Crystal Palace",
+      "position": "G"
+    },
+    {
+      "name": "Justin Devenny",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Matheus França",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Óscar Mingueza",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Remi Matthews",
+      "team": "Crystal Palace",
+      "position": "G"
+    },
+    {
+      "name": "Romain Esse",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Takehiro Tomiyasu",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Tyrick Mitchell",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Walter Benítez",
+      "team": "Crystal Palace",
+      "position": "G"
+    },
+    {
+      "name": "Will Hughes",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Yéremy Pino",
+      "team": "Crystal Palace",
+      "position": "M"
+    },
+    {
+      "name": "Zavier Gozo",
+      "team": "Crystal Palace",
+      "position": "F"
+    },
+    {
+      "name": "Adam Aznou",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "Beto",
+      "team": "Everton",
+      "position": "F"
+    },
+    {
+      "name": "Brennan Johnson",
+      "team": "Everton",
+      "position": "F"
+    },
+    {
+      "name": "Charly Alcaraz",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Christian Nørgaard",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Harrison Armstrong",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Hayden Hackney",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Iliman Ndiaye",
+      "team": "Everton",
+      "position": "F"
+    },
+    {
+      "name": "Jake O'Brien",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "James Garner",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "James Tarkowski",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "Jarrad Branthwaite",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "Jordan Pickford",
+      "team": "Everton",
+      "position": "G"
+    },
+    {
+      "name": "Kiernan Dewsbury-Hall",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Mark Travers",
+      "team": "Everton",
+      "position": "G"
+    },
+    {
+      "name": "Merlin Röhl",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Michael Keane",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "Nathan Patterson",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "Thierno Barry",
+      "team": "Everton",
+      "position": "F"
+    },
+    {
+      "name": "Tim Iroegbunam",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Tom King",
+      "team": "Everton",
+      "position": "G"
+    },
+    {
+      "name": "Tyler Dibling",
+      "team": "Everton",
+      "position": "F"
+    },
+    {
+      "name": "Tyrique George",
+      "team": "Everton",
+      "position": "F"
+    },
+    {
+      "name": "Vitaliy Mykolenko",
+      "team": "Everton",
+      "position": "D"
+    },
+    {
+      "name": "Alex Borto",
+      "team": "Fulham",
+      "position": "G"
+    },
+    {
+      "name": "Alex Iwobi",
+      "team": "Fulham",
+      "position": "F"
+    },
+    {
+      "name": "Antonee Robinson",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "Benjamin Lecomte",
+      "team": "Fulham",
+      "position": "G"
+    },
+    {
+      "name": "Bernd Leno",
+      "team": "Fulham",
+      "position": "G"
+    },
+    {
+      "name": "Calvin Bassey",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "César Palacios",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Emile Smith Rowe",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Gonzalo García",
+      "team": "Fulham",
+      "position": "F"
+    },
+    {
+      "name": "Harrison Reed",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Joachim Andersen",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "Jonah Kusi-Asare",
+      "team": "Fulham",
+      "position": "F"
+    },
+    {
+      "name": "Jorge Cuenca",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "Josh King",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Kenny Tete",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "Kevin",
+      "team": "Fulham",
+      "position": "F"
+    },
+    {
+      "name": "Luc de Fougerolles",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "Macauley Zepa",
+      "team": "Fulham",
+      "position": "F"
+    },
+    {
+      "name": "Oscar Bobb",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Rodrigo Muniz",
+      "team": "Fulham",
+      "position": "F"
+    },
+    {
+      "name": "Ryan Sessegnon",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Sander Berge",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Shea Charles",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Timothy Castagne",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
+      "name": "Tom Cairney",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Abdülkadir Ömür",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Babajide David",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
+      "name": "Charlie Hughes",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Cody Drameh",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Darko Gyabi",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Dillon Phillips",
+      "team": "Hull City",
+      "position": "G"
+    },
+    {
+      "name": "Eliot Matazo",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Elliot Stroud",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Hidemasa Morita",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Jack Butland",
+      "team": "Hull City",
+      "position": "G"
+    },
+    {
+      "name": "Jens Hjerto Dahl",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Joe Gelhardt",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
+      "name": "John Egan",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Kieran Dowell",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Konstantinos Tzolakis",
+      "team": "Hull City",
+      "position": "G"
+    },
+    {
+      "name": "Lewie Coyle",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Liam Millar",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
+      "name": "Lucas Gourna-Douath",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Lucas Herrington",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Matt Crooks",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Matt Targett",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Matty Jacob",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Mohamed Belloumi",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
+      "name": "Nobel Mendy",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Oliver McBurnie",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
+      "name": "Óscar Zambrano",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Paddy McNair",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Regan Slater",
+      "team": "Hull City",
+      "position": "M"
+    },
+    {
+      "name": "Ryan Giles",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Semi Ajayi",
+      "team": "Hull City",
+      "position": "D"
+    },
+    {
+      "name": "Abdoul Ouattara",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Alex Palmer",
+      "team": "Ipswich Town",
+      "position": "G"
+    },
+    {
+      "name": "Anis Mehmeti",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Azor Matusiwa",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Ben Johnson",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Cameron Humphreys",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Cedric Kipre",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Chiedozie Ogbene",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Christian Walton",
+      "team": "Ipswich Town",
+      "position": "G"
+    },
+    {
+      "name": "Chuba Akpom",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Daizen Maeda",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Dara O'Shea",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Darnell Furlong",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "David Button",
+      "team": "Ipswich Town",
+      "position": "G"
+    },
+    {
+      "name": "Emersonn",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Fatawu Issahaku",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Florentino",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Issa Diop",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Jack Clarke",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Jack Taylor",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Jacob Greaves",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Jaden Philogene",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Julio Enciso",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Kasey McAteer",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Kayne Van Oevelen",
+      "team": "Ipswich Town",
+      "position": "G"
+    },
+    {
+      "name": "Kjell Scherpen",
+      "team": "Ipswich Town",
+      "position": "G"
+    },
+    {
+      "name": "Leif Davis",
+      "team": "Ipswich Town",
+      "position": "D"
+    },
+    {
+      "name": "Marcelino Núñez",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Sasa Lukic",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
+      "name": "Sindre Walle Egeli",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Alex Cairns",
+      "team": "Leeds United",
+      "position": "G"
+    },
+    {
+      "name": "Anton Stach",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
+      "name": "Ao Tanaka",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
+      "name": "Brenden Aaronson",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
+      "name": "Daniel James",
+      "team": "Leeds United",
+      "position": "F"
+    },
+    {
+      "name": "Dominic Calvert-Lewin",
+      "team": "Leeds United",
+      "position": "F"
+    },
+    {
+      "name": "Ethan Ampadu",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
+      "name": "Gabriel Gudmundsson",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "Harry Wilson",
+      "team": "Leeds United",
+      "position": "F"
+    },
+    {
+      "name": "Ilia Gruev",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
+      "name": "Jaka Bijol",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "James Justin",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "James Trafford",
+      "team": "Leeds United",
+      "position": "G"
+    },
+    {
+      "name": "Jayden Bogle",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "Joe Rodon",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "Lucas Perri",
+      "team": "Leeds United",
+      "position": "G"
+    },
+    {
+      "name": "Lukas Nmecha",
+      "team": "Leeds United",
+      "position": "F"
+    },
+    {
+      "name": "Nico Elvedi",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "Noah Okafor",
+      "team": "Leeds United",
+      "position": "F"
+    },
+    {
+      "name": "Sam Byram",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "Sean Longstaff",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
+      "name": "Tarik Muharemovic",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
+      "name": "Wilfried Gnonto",
+      "team": "Leeds United",
+      "position": "F"
+    },
+    {
+      "name": "Alexander Isak",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
+      "name": "Alexis Mac Allister",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Alisson Becker",
+      "team": "Liverpool",
+      "position": "G"
+    },
+    {
+      "name": "Calvin Ramsay",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Cody Gakpo",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
+      "name": "Conor Bradley",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Curtis Jones",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Dominik Szoboszlai",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Federico Chiesa",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
+      "name": "Florian Wirtz",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Freddie Woodman",
+      "team": "Liverpool",
+      "position": "G"
+    },
+    {
+      "name": "Giorgi Mamardashvili",
+      "team": "Liverpool",
+      "position": "G"
+    },
+    {
+      "name": "Giovanni Leoni",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Harvey Davies",
+      "team": "Liverpool",
+      "position": "G"
+    },
+    {
+      "name": "Harvey Elliott",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Hugo Ekitike",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
+      "name": "James McConnell",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Jeremie Frimpong",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Jérémy Jacquet",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Joe Gomez",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Kostas Tsimikas",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Lucas Pitt",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Milos Kerkez",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Rio Ngumoha",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
+      "name": "Ronald Araújo",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Ryan Gravenberch",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Stefan Bajcetic",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Trey Nyoni",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Víctor Muñoz",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
+      "name": "Virgil van Dijk",
+      "team": "Liverpool",
+      "position": "D"
+    },
+    {
+      "name": "Vitezslav Jaros",
+      "team": "Liverpool",
+      "position": "G"
+    },
+    {
+      "name": "Wataru Endo",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
+      "name": "Abdukodir Khusanov",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Antoine Semenyo",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
+      "name": "Claudio Echeverri",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Elliot Anderson",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Erling Haaland",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
+      "name": "Gerónimo Rulli",
+      "team": "Manchester City",
+      "position": "G"
+    },
+    {
+      "name": "Gianluigi Donnarumma",
+      "team": "Manchester City",
+      "position": "G"
+    },
+    {
+      "name": "Jack Grealish",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Jérémy Doku",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
+      "name": "Jeremy Monga",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
+      "name": "Josh Wilson-Esbrand",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Josko Gvardiol",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Marc Guéhi",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Marcus Bettinelli",
+      "team": "Manchester City",
+      "position": "G"
+    },
+    {
+      "name": "Mateo Kovacic",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Matheus Nunes",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Nico González",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Nico O'Reilly",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Omar Marmoush",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
+      "name": "Phil Foden",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Rayan Aït-Nouri",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Rayan Cherki",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Rico Lewis",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Rúben Dias",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Savinho",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
+      "name": "Vitor Reis",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
+      "name": "Amad Diallo",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Andrey Santos",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Ayden Heaven",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Benjamin Sesko",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Bruno Fernandes",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Bryan Mbeumo",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Dermot Mee",
+      "team": "Manchester United",
+      "position": "G"
+    },
+    {
+      "name": "Diogo Dalot",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Harry Amass",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Harry Maguire",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Jack Fletcher",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Joshua Zirkzee",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Karl Darlow",
+      "team": "Manchester United",
+      "position": "G"
+    },
+    {
+      "name": "Kobbie Mainoo",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Leny Yoro",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Lisandro Martínez",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Luke Shaw",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Manuel Ugarte",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Marcus Rashford",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Mason Mount",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Matheus Cunha",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Matthijs de Ligt",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Noussair Mazraoui",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Patrick Dorgu",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
+      "name": "Senne Lammens",
+      "team": "Manchester United",
+      "position": "G"
+    },
+    {
+      "name": "Shea Lacey",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
+      "name": "Toby Collyer",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Tom Heaton",
+      "team": "Manchester United",
+      "position": "G"
+    },
+    {
+      "name": "Tyler Fletcher",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Youri Tielemans",
+      "team": "Manchester United",
+      "position": "M"
+    },
+    {
+      "name": "Aidan Harris",
+      "team": "Newcastle United",
+      "position": "G"
+    },
+    {
+      "name": "Aladji Bamba",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Amar Dedic",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Anthony Elanga",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Bazoumana Touré",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Dan Burn",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Ewen Jaouen",
+      "team": "Newcastle United",
+      "position": "G"
+    },
+    {
+      "name": "Fabian Schär",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Harvey Barnes",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Henry Johnson",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Jacob Murphy",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Jacob Ramsey",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Joe Willock",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Joelinton",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Leo Shahar",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Lewis Hall",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Lewis Miley",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Lukás Hornícek",
+      "team": "Newcastle United",
+      "position": "G"
+    },
+    {
+      "name": "Malick Thiaw",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Mark Gillespie",
+      "team": "Newcastle United",
+      "position": "G"
+    },
+    {
+      "name": "Nick Pope",
+      "team": "Newcastle United",
+      "position": "G"
+    },
+    {
+      "name": "Nick Woltemade",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Sean Neave",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Sean Steur",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
+      "name": "Sven Botman",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "Tino Livramento",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
+      "name": "William Osula",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Yoane Wissa",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Arnaud Kalimuendo",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Callum Hudson-Odoi",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Chris Wood",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Dan Ndoye",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Dilane Bakwa",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Eric Da Silva Moreira",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Ibrahim Sangaré",
+      "team": "Nottingham Forest",
+      "position": "M"
+    },
+    {
+      "name": "Igor Jesus",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Jair Paula",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "James McAtee",
+      "team": "Nottingham Forest",
+      "position": "M"
+    },
+    {
+      "name": "John Victor",
+      "team": "Nottingham Forest",
+      "position": "G"
+    },
+    {
+      "name": "Luca Netz",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Matz Sels",
+      "team": "Nottingham Forest",
+      "position": "G"
+    },
+    {
+      "name": "Morato",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Morgan Gibbs-White",
+      "team": "Nottingham Forest",
+      "position": "M"
+    },
+    {
+      "name": "Murillo",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Neco Williams",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Nicolás Domínguez",
+      "team": "Nottingham Forest",
+      "position": "M"
+    },
+    {
+      "name": "Nicolò Savona",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Nikola Milenkovic",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Ola Aina",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Omar Richards",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Omari Hutchinson",
+      "team": "Nottingham Forest",
+      "position": "F"
+    },
+    {
+      "name": "Ousmane Diomande",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Ryan Yates",
+      "team": "Nottingham Forest",
+      "position": "M"
+    },
+    {
+      "name": "Steven Benda",
+      "team": "Nottingham Forest",
+      "position": "G"
+    },
+    {
+      "name": "Tyler Bindon",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Xaver Schlager",
+      "team": "Nottingham Forest",
+      "position": "M"
+    },
+    {
+      "name": "Zach Abbott",
+      "team": "Nottingham Forest",
+      "position": "D"
+    },
+    {
+      "name": "Abdoullah Ba",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Ajibola Alese",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Alan Browne",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Brian Brobbey",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Chemsdine Talbi",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Chris Rigg",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Danny Ballard",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Enzo Le Fée",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Granit Xhaka",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Habib Diarra",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Jenson Seelt",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Jocelin Ta Bi",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Luís Semedo",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Luke O'Nien",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Melker Ellborg",
+      "team": "Sunderland",
+      "position": "G"
+    },
+    {
+      "name": "Nilson Angulo",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Noah Sadiki",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Nordi Mukiele",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Omar Alderete",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Reinildo Mandava",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Robin Roefs",
+      "team": "Sunderland",
+      "position": "G"
+    },
+    {
+      "name": "Romaine Mundle",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Simon Adingra",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Simon Moore",
+      "team": "Sunderland",
+      "position": "G"
+    },
+    {
+      "name": "Thomas Meunier",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Trai Hume",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Wilson Isidor",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
+      "name": "Andy Robertson",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Antonín Kinsky",
+      "team": "Tottenham Hotspur",
+      "position": "G"
+    },
+    {
+      "name": "Archie Gray",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Ben Davies",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Brandon Austin",
+      "team": "Tottenham Hotspur",
+      "position": "G"
+    },
+    {
+      "name": "Conor Gallagher",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Dane Scarlett",
+      "team": "Tottenham Hotspur",
+      "position": "F"
+    },
+    {
+      "name": "Dejan Kulusevski",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Destiny Udogie",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Dominic Solanke",
+      "team": "Tottenham Hotspur",
+      "position": "F"
+    },
+    {
+      "name": "James Maddison",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Jan Paul van Hecke",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Kevin Danso",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Kota Takai",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Lucas Bergvall",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Marcos Senesi",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Martin Dúbravka",
+      "team": "Tottenham Hotspur",
+      "position": "G"
+    },
+    {
+      "name": "Mateus Fernandes",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Mathys Tel",
+      "team": "Tottenham Hotspur",
+      "position": "F"
+    },
+    {
+      "name": "Micky van de Ven",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Mohammed Kudus",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Pape Matar Sarr",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Pedro Porro",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Richarlison",
+      "team": "Tottenham Hotspur",
+      "position": "F"
+    },
+    {
+      "name": "Rodrigo Bentancur",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Sandro Tonali",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
+      "name": "Souza",
+      "team": "Tottenham Hotspur",
+      "position": "D"
+    },
+    {
+      "name": "Wilson Odobert",
+      "team": "Tottenham Hotspur",
+      "position": "F"
+    },
+    {
+      "name": "Xavi Simons",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    }
+  ]
+}

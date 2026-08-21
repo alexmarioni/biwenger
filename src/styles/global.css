@@ -438,6 +438,11 @@ a {
   flex-shrink: 0;
 }
 
+.autocomplete-item-hint {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
 .autocomplete-empty {
   padding: 0.6rem 0.7rem;
   color: var(--text-dim);

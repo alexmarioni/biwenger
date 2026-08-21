@@ -16,6 +16,32 @@ function resolveTeamName(label: string): string | null {
   return null;
 }
 
+type PlayerListEntry = { name: string; team: string; position?: string | null };
+
+let playersListCache: PlayerListEntry[] | null = null;
+let playersListPromise: Promise<PlayerListEntry[]> | null = null;
+
+/** Lazily fetches and caches public/data/players.json (real squads, kept
+ * fresh weekly by .github/workflows/update-squads.yml) — the suggestion
+ * source for 'player_autocomplete' polls, so voters pick from real players
+ * instead of a hand-curated shortlist that inevitably goes stale. */
+function loadPlayersList(): Promise<PlayerListEntry[]> {
+  if (playersListCache) return Promise.resolve(playersListCache);
+  if (!playersListPromise) {
+    playersListPromise = fetch(`${base}data/players.json`)
+      .then((r) => (r.ok ? r.json() : { players: [] }))
+      .then((d) => {
+        playersListCache = d.players ?? [];
+        return playersListCache!;
+      })
+      .catch(() => {
+        playersListCache = [];
+        return playersListCache!;
+      });
+  }
+  return playersListPromise;
+}
+
 export interface PollCardOptions {
   /** When true (default) the card swaps itself in place after a vote. Set
    * false to let the caller fully control what happens post-vote (e.g. a
@@ -76,6 +102,11 @@ export function renderPollCard(
 
   if (poll.poll_type === 'autocomplete') {
     renderAutocomplete(card, poll, allVotes, canVote, player, onVote, options);
+    return card;
+  }
+
+  if (poll.poll_type === 'player_autocomplete') {
+    renderPlayerAutocomplete(card, poll, allVotes, canVote, player, onVote, options);
     return card;
   }
 
@@ -418,6 +449,177 @@ function renderAutocomplete(
       item.addEventListener('mousedown', (e) => {
         e.preventDefault();
         selectOption(option);
+      });
+      list.appendChild(item);
+    }
+    openList();
+  });
+
+  input.addEventListener('focus', () => {
+    if (input.value.trim()) input.dispatchEvent(new Event('input'));
+  });
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!list.hidden) closeList();
+    },
+    { capture: true, passive: true }
+  );
+
+  input.addEventListener('blur', () => {
+    setTimeout(closeList, 150);
+  });
+}
+
+/** Same UX as renderAutocomplete (type-ahead, crest badge, viewport-portaled
+ * dropdown) but the suggestion source is public/data/players.json (real
+ * squads) instead of poll.poll_options, and the vote is stored as free text
+ * (text_value = "Player Name (Team)") like a 'text' poll — no DB-seeded
+ * options needed, so the pool of names never goes stale or misses a
+ * transfer. */
+function renderPlayerAutocomplete(
+  card: HTMLElement,
+  poll: any,
+  allVotes: any[],
+  canVote: boolean,
+  player: PollCardPlayer,
+  onVote: (updatedVotes: any[]) => void,
+  options: PollCardOptions
+) {
+  const selfUpdate = options.selfUpdate ?? true;
+  const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
+  const myVote = player ? pollVotes.find((v) => v.player_id === player.id) : undefined;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'autocomplete-wrap';
+
+  const crestBadge = document.createElement('span');
+  crestBadge.className = 'autocomplete-crest-badge';
+
+  function updateCrestBadge(team: string | null) {
+    const path = team ? crestPath(team) : null;
+    crestBadge.innerHTML = path
+      ? `<img src="${base}${path}" alt="${team}" />`
+      : `<span class="autocomplete-crest-fallback">⚽</span>`;
+  }
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'autocomplete-input text-answer-input has-crest';
+  input.placeholder = poll.placeholder ?? 'Escribí un jugador…';
+  input.autocomplete = 'off';
+  input.value = myVote?.text_value ?? '';
+  input.disabled = !canVote;
+
+  const list = document.createElement('div');
+  list.className = 'autocomplete-list';
+  list.hidden = true;
+
+  updateCrestBadge(myVote?.text_value ? resolveTeamName(myVote.text_value) : null);
+  wrap.appendChild(crestBadge);
+  wrap.appendChild(input);
+  wrap.appendChild(list);
+  card.appendChild(wrap);
+
+  function positionList() {
+    const rect = input.getBoundingClientRect();
+    list.style.position = 'fixed';
+    list.style.left = `${rect.left}px`;
+    list.style.top = `${rect.bottom + 6}px`;
+    list.style.width = `${rect.width}px`;
+    list.style.right = 'auto';
+  }
+
+  function openList() {
+    document.body.appendChild(list);
+    positionList();
+    list.hidden = false;
+  }
+
+  function closeList() {
+    list.hidden = true;
+    list.innerHTML = '';
+    if (list.parentElement === document.body) wrap.appendChild(list);
+  }
+
+  const note = document.createElement('p');
+  note.className = 'text-answer-note';
+  note.textContent = `${pollVotes.length} ${pollVotes.length === 1 ? 'persona respondió' : 'personas respondieron'} hasta ahora.`;
+  card.appendChild(note);
+
+  if (!canVote) return;
+
+  let playersList: PlayerListEntry[] = [];
+  let ready = false;
+  loadPlayersList().then((list) => {
+    playersList = list;
+    ready = true;
+  });
+
+  async function selectPlayer(p: PlayerListEntry) {
+    const label = `${p.name} (${p.team})`;
+    input.value = label;
+    updateCrestBadge(p.team);
+    closeList();
+    input.disabled = true;
+
+    await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player!.id);
+    const { error } = await supabase
+      .from('votes')
+      .insert({ poll_id: poll.id, player_id: player!.id, text_value: label });
+
+    if (!error) {
+      const updated = [
+        ...allVotes.filter((v) => !(v.poll_id === poll.id && v.player_id === player!.id)),
+        { poll_id: poll.id, option_id: null, text_value: label, player_id: player!.id },
+      ];
+      onVote(updated);
+      if (selfUpdate) card.replaceWith(renderPollCard(poll, updated, player, onVote, options));
+    } else {
+      input.disabled = false;
+    }
+  }
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+    if (!query) {
+      closeList();
+      return;
+    }
+
+    if (!ready) {
+      list.innerHTML = `<div class="autocomplete-empty">Cargando jugadores…</div>`;
+      openList();
+      return;
+    }
+
+    const matches = playersList.filter((p) => p.name.toLowerCase().includes(query)).slice(0, 8);
+    if (matches.length === 0) {
+      list.innerHTML = `<div class="autocomplete-empty">Sin resultados</div>`;
+      openList();
+      return;
+    }
+
+    list.innerHTML = '';
+    for (const p of matches) {
+      const path = crestPath(p.team);
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'autocomplete-item';
+      item.innerHTML = `
+        <span class="autocomplete-item-row">
+          ${
+            path
+              ? `<img class="autocomplete-item-crest" src="${base}${path}" alt="${p.team}" />`
+              : '<span class="autocomplete-item-crest-fallback">⚽</span>'
+          }
+          <span>${p.name} <span class="autocomplete-item-hint">${p.team}</span></span>
+        </span>
+      `;
+      item.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        selectPlayer(p);
       });
       list.appendChild(item);
     }
