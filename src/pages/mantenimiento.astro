@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Mantenimiento">
+  <main class="wrap maintenance">
+    <div class="content animate-in">
+      <span class="wrench">🛠️</span>
+      <h1>Estamos ajustando las encuestas</h1>
+      <p id="message" class="lead">
+        Volvé en un ratito para no perderte nada ni perder tu voto.
+      </p>
+      <button id="refresh" class="btn btn-primary" type="button">Refrescar</button>
+      <p id="still-msg" class="still" hidden>Todavía estamos con esto, probá de nuevo en un rato 🙏</p>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .maintenance {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100dvh;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    max-width: 26rem;
+  }
+
+  .wrench {
+    font-size: 3rem;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+  }
+
+  .lead {
+    color: var(--text-dim);
+    font-size: 1rem;
+  }
+
+  .still {
+    color: var(--gold);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+</style>
+
+<script>
+  import { supabase } from '../lib/supabase';
+
+  const base = import.meta.env.BASE_URL;
+  const button = document.getElementById('refresh') as HTMLButtonElement;
+  const stillMsg = document.getElementById('still-msg')!;
+  const messageEl = document.getElementById('message')!;
+
+  async function loadMessage() {
+    const { data } = await supabase
+      .from('site_settings')
+      .select('maintenance, message')
+      .eq('id', 1)
+      .maybeSingle();
+
+    if (data?.message) {
+      messageEl.textContent = data.message;
+    }
+
+    return data?.maintenance ?? true;
+  }
+
+  loadMessage();
+
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    stillMsg.hidden = true;
+
+    const stillOn = await loadMessage();
+
+    if (!stillOn) {
+      window.location.href = base;
+    } else {
+      stillMsg.hidden = false;
+      button.disabled = false;
+    }
+  });
+</script>

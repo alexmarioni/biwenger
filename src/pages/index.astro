@@ -27,6 +27,12 @@ const base = import.meta.env.BASE_URL;
   </main>
 </Base>
 
+<script>
+  import { redirectIfMaintenance } from '../lib/maintenance';
+
+  redirectIfMaintenance(import.meta.env.BASE_URL);
+</script>
+
 <style>
   .hero {
     justify-content: center;
