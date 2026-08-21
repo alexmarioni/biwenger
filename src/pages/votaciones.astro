@@ -287,6 +287,41 @@ import Base from '../layouts/Base.astro';
     color: var(--accent);
     font-weight: 700;
   }
+
+  :global(.btn-small) {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  :global(.text-answer-form) {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  :global(.text-answer-input) {
+    flex: 1;
+    min-width: 10rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+  }
+
+  :global(.text-answer-input:focus) {
+    outline: none;
+    border-color: var(--accent-dim);
+  }
+
+  :global(.text-answer-note) {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin: 0.6rem 0 0;
+  }
 </style>
 
 <script>
@@ -337,7 +372,7 @@ import Base from '../layouts/Base.astro';
 
     const { data: votes, error: votesError } = await supabase
       .from('votes')
-      .select('id, poll_id, option_id, player_id');
+      .select('id, poll_id, option_id, text_value, player_id');
 
     loading.hidden = true;
 
@@ -465,6 +500,11 @@ import Base from '../layouts/Base.astro';
       card.appendChild(desc);
     }
 
+    if (poll.poll_type === 'text') {
+      renderTextAnswer(card, poll, pollVotes, isOpen, player);
+      return card;
+    }
+
     const options = document.createElement('div');
     options.className = 'options';
 
@@ -504,7 +544,7 @@ import Base from '../layouts/Base.astro';
                 allVotesState = allVotesState.filter(
                   (v) => !(v.poll_id === poll.id && v.option_id === option.id && v.player_id === player.id)
                 );
-                renderAll(player);
+                card.replaceWith(renderPoll(poll, allVotesState, player));
                 return;
               }
             } else {
@@ -516,7 +556,7 @@ import Base from '../layouts/Base.astro';
                   ...allVotesState,
                   { poll_id: poll.id, option_id: option.id, player_id: player.id },
                 ];
-                renderAll(player);
+                card.replaceWith(renderPoll(poll, allVotesState, player));
                 return;
               }
             }
@@ -530,7 +570,7 @@ import Base from '../layouts/Base.astro';
                 ...allVotesState.filter((v) => !(v.poll_id === poll.id && v.player_id === player.id)),
                 { poll_id: poll.id, option_id: option.id, player_id: player.id },
               ];
-              renderAll(player);
+              card.replaceWith(renderPoll(poll, allVotesState, player));
               return;
             }
           }
@@ -549,5 +589,68 @@ import Base from '../layouts/Base.astro';
 
     card.appendChild(options);
     return card;
+  }
+
+  function renderTextAnswer(
+    card: HTMLElement,
+    poll: any,
+    pollVotes: any[],
+    isOpen: boolean,
+    player: { id: string; name: string; emoji: string }
+  ) {
+    const myVote = pollVotes.find((v) => v.player_id === player.id);
+    const answeredCount = pollVotes.length;
+
+    const form = document.createElement('form');
+    form.className = 'text-answer-form';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'text-answer-input';
+    input.placeholder = 'Ej: 25.000€';
+    input.value = myVote?.text_value ?? '';
+    input.disabled = !isOpen;
+
+    const submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.className = 'btn btn-primary btn-small';
+    submit.textContent = myVote ? 'Actualizar' : 'Guardar';
+    submit.disabled = !isOpen;
+
+    form.appendChild(input);
+    form.appendChild(submit);
+    card.appendChild(form);
+
+    const note = document.createElement('p');
+    note.className = 'text-answer-note';
+    note.textContent = `${answeredCount} ${answeredCount === 1 ? 'persona respondió' : 'personas respondieron'} hasta ahora.`;
+    card.appendChild(note);
+
+    if (isOpen) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const value = input.value.trim();
+        if (!value) return;
+
+        input.disabled = true;
+        submit.disabled = true;
+
+        await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player.id);
+        const { error } = await supabase
+          .from('votes')
+          .insert({ poll_id: poll.id, player_id: player.id, text_value: value });
+
+        if (!error) {
+          allVotesState = [
+            ...allVotesState.filter((v) => !(v.poll_id === poll.id && v.player_id === player.id)),
+            { poll_id: poll.id, option_id: null, text_value: value, player_id: player.id },
+          ];
+          card.replaceWith(renderPoll(poll, allVotesState, player));
+        } else {
+          input.disabled = false;
+          submit.disabled = false;
+        }
+      });
+    }
   }
 </script>

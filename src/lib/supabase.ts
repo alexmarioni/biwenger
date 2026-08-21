@@ -6,7 +6,7 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export type PollStatus = 'draft' | 'open' | 'closed';
-export type PollType = 'single' | 'multi';
+export type PollType = 'single' | 'multi' | 'text';
 
 export interface Player {
   id: string;
@@ -36,6 +36,7 @@ export interface Poll {
 export interface Vote {
   id: string;
   poll_id: string;
-  option_id: string;
+  option_id: string | null;
+  text_value: string | null;
   player_id: string;
 }

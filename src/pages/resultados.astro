@@ -314,9 +314,9 @@ import Base from '../layouts/Base.astro';
       supabase.from('players').select('id, name, emoji').order('name', { ascending: true }),
       supabase
         .from('polls')
-        .select('id, title, status, category, created_at, poll_options(id, label, sort_order)')
+        .select('id, title, status, poll_type, category, created_at, poll_options(id, label, sort_order)')
         .order('sort_order', { foreignTable: 'poll_options', ascending: true }),
-      supabase.from('votes').select('id, poll_id, option_id, player_id'),
+      supabase.from('votes').select('id, poll_id, option_id, text_value, player_id'),
     ]);
 
     if (playersRes.error || pollsRes.error || votesRes.error) {
@@ -374,18 +374,26 @@ import Base from '../layouts/Base.astro';
         }
 
         const myPollVotes = myVotes.filter((v) => v.poll_id === poll.id);
-        const chosenOptions = myPollVotes
-          .map((v) => (poll.poll_options ?? []).find((o: any) => o.id === v.option_id))
-          .filter(Boolean);
-        const answerText = chosenOptions.length > 0
-          ? chosenOptions.map((o: any) => o.label).join(', ')
-          : 'Sin votar';
+        let answerText: string;
+        let hasAnswer: boolean;
+
+        if (poll.poll_type === 'text') {
+          const textVote = myPollVotes[0];
+          hasAnswer = !!textVote?.text_value;
+          answerText = hasAnswer ? textVote.text_value : 'Sin votar';
+        } else {
+          const chosenOptions = myPollVotes
+            .map((v) => (poll.poll_options ?? []).find((o: any) => o.id === v.option_id))
+            .filter(Boolean);
+          hasAnswer = chosenOptions.length > 0;
+          answerText = hasAnswer ? chosenOptions.map((o: any) => o.label).join(', ') : 'Sin votar';
+        }
 
         const row = document.createElement('div');
         row.className = 'player-vote-row';
         row.innerHTML = `
           <span class="player-vote-poll">${poll.title}</span>
-          <span class="player-vote-answer${chosenOptions.length > 0 ? '' : ' is-empty'}">${answerText}</span>
+          <span class="player-vote-answer${hasAnswer ? '' : ' is-empty'}">${answerText}</span>
         `;
         catGroup!.appendChild(row);
       }
@@ -406,25 +414,39 @@ import Base from '../layouts/Base.astro';
 
     for (const poll of polls) {
       const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
-      const options = poll.poll_options ?? [];
+      const isText = poll.poll_type === 'text';
 
-      const counts = options.map((opt: any) => ({
-        label: opt.label,
-        count: pollVotes.filter((v) => v.option_id === opt.id).length,
-      }));
+      let counts: { label: string; count: number }[];
+      if (isText) {
+        const map = new Map<string, number>();
+        for (const v of pollVotes) {
+          if (!v.text_value) continue;
+          const key = v.text_value.trim();
+          map.set(key, (map.get(key) ?? 0) + 1);
+        }
+        counts = [...map.entries()].map(([label, count]) => ({ label, count }));
+      } else {
+        const options = poll.poll_options ?? [];
+        counts = options.map((opt: any) => ({
+          label: opt.label,
+          count: pollVotes.filter((v: any) => v.option_id === opt.id).length,
+        }));
+      }
 
-      const max = Math.max(0, ...counts.map((c: any) => c.count));
-      const leaders = counts.filter((c: any) => c.count === max && max > 0);
+      const max = Math.max(0, ...counts.map((c) => c.count));
+      const leaders = counts.filter((c) => c.count === max && max > 0);
 
       let leaderLabel: string;
       let leaderClass = '';
       let pctText = '';
 
       if (max === 0) {
-        leaderLabel = 'Sin votos aún';
+        leaderLabel = 'Sin respuestas aún';
         leaderClass = 'is-empty';
       } else if (leaders.length > 1) {
-        leaderLabel = `Empate (${leaders.map((l: any) => l.label).join(' / ')})`;
+        const shown = leaders.slice(0, 3).map((l) => l.label);
+        const extra = leaders.length > 3 ? ` +${leaders.length - 3} más` : '';
+        leaderLabel = isText ? `Varias respuestas (${shown.join(' / ')}${extra})` : `Empate (${shown.join(' / ')}${extra})`;
       } else {
         leaderLabel = leaders[0].label;
         const pct = Math.round((max / pollVotes.length) * 100);
