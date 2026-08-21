@@ -864,18 +864,27 @@ a {
 /* ---------- puntaje leaderboard ---------- */
 
 .score-row {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0.85rem 1.1rem;
 }
 
 .score-row.is-first {
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(242, 193, 78, 0.14);
+}
+
+.score-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1.1rem;
+}
+
+.score-summary::-webkit-details-marker {
+  display: none;
 }
 
 .score-rank {
@@ -920,6 +929,58 @@ a {
   font-size: 1.3rem;
   color: var(--accent);
   flex-shrink: 0;
+}
+
+.score-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0 1.1rem 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.1rem;
+  padding-top: 0.75rem;
+}
+
+.score-detail-empty {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.score-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.score-detail-row.is-positive {
+  color: var(--text);
+}
+
+.score-detail-label {
+  font-weight: 600;
+  flex-shrink: 0;
+  width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-detail-note {
+  flex: 1;
+  min-width: 0;
+}
+
+.score-detail-points {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.score-detail-row.is-positive .score-detail-points {
+  color: var(--accent);
 }
 
 /* ---------- responsive list grids (Jornada / Fichajes / Minijuegos) ----------

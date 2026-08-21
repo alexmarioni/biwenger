@@ -164,16 +164,35 @@ import Base from '../layouts/Base.astro';
         const categories = Object.entries(s.byCategory)
           .map(([cat, pts]) => `<span class="score-cat">${cat}: ${pts}</span>`)
           .join('');
+
+        const detailRows = [...s.details]
+          .sort((a, b) => b.points - a.points)
+          .map(
+            (d) => `
+              <div class="score-detail-row${d.points > 0 ? ' is-positive' : ''}">
+                <span class="score-detail-label">${d.label}</span>
+                <span class="score-detail-note">${d.note}</span>
+                <span class="score-detail-points">${d.points > 0 ? '+' : ''}${d.points}</span>
+              </div>
+            `
+          )
+          .join('');
+
         return `
-          <div class="score-row${i === 0 && s.total > 0 ? ' is-first' : ''}">
-            <span class="score-rank">${MEDALS[i] ?? i + 1}</span>
-            ${playerAvatarHtml(p, base, 'score-avatar')}
-            <div class="score-info">
-              <span class="score-name">${p.name}</span>
-              <span class="score-breakdown">${categories || 'Sin puntos todavía'}</span>
+          <details class="score-row${i === 0 && s.total > 0 ? ' is-first' : ''}">
+            <summary class="score-summary">
+              <span class="score-rank">${MEDALS[i] ?? i + 1}</span>
+              ${playerAvatarHtml(p, base, 'score-avatar')}
+              <div class="score-info">
+                <span class="score-name">${p.name}</span>
+                <span class="score-breakdown">${categories || 'Sin puntos todavía'}</span>
+              </div>
+              <span class="score-total">${s.total}</span>
+            </summary>
+            <div class="score-detail-list">
+              ${detailRows || '<p class="score-detail-empty">Todavía no hay nada resuelto para esta persona.</p>'}
             </div>
-            <span class="score-total">${s.total}</span>
-          </div>
+          </details>
         `;
       })
       .join('');

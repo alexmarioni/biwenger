@@ -1,7 +1,15 @@
+export interface ScoreDetail {
+  category: string;
+  label: string;
+  points: number;
+  note: string;
+}
+
 export interface PlayerScore {
   playerId: string;
   total: number;
   byCategory: Record<string, number>;
+  details: ScoreDetail[];
 }
 
 const MATCH_POINTS = 3;
@@ -17,6 +25,10 @@ function answerLabel(poll: any, vote: any): string | null {
   return null;
 }
 
+function ordinal(n: number): string {
+  return `${n}°`;
+}
+
 /**
  * Computes each player's points from poll_results (the real/current
  * answer, written by scripts/fetch-results.mjs) compared against their
@@ -27,15 +39,20 @@ function answerLabel(poll: any, vote: any): string | null {
  *    |predicted position - actual position|), summed across all 20 —
  *    rewards close guesses, not just exact ones.
  * Polls with no poll_results row yet (nothing resolved) contribute 0.
+ * `details` carries one line per scoring event (per match, per poll, or —
+ * for the ranking poll — per team) so the UI can explain exactly where
+ * every point came from instead of just a category total.
  */
 export function computeScores(polls: any[], results: any[], votes: any[], players: any[]): PlayerScore[] {
   const resultsByPoll = new Map(results.map((r) => [r.poll_id, r]));
   const scores = new Map<string, PlayerScore>();
-  for (const p of players) scores.set(p.id, { playerId: p.id, total: 0, byCategory: {} });
+  for (const p of players) scores.set(p.id, { playerId: p.id, total: 0, byCategory: {}, details: [] });
 
-  function addPoints(playerId: string, category: string, points: number) {
+  function addPoints(playerId: string, category: string, points: number, label: string, note: string) {
     const s = scores.get(playerId);
-    if (!s || points <= 0) return;
+    if (!s) return;
+    s.details.push({ category, label, points, note });
+    if (points <= 0) return;
     s.total += points;
     s.byCategory[category] = (s.byCategory[category] ?? 0) + points;
   }
@@ -49,6 +66,8 @@ export function computeScores(polls: any[], results: any[], votes: any[], player
 
     if (poll.poll_type === 'ranking' && result.correct_order) {
       const correctOrder: string[] = result.correct_order;
+      const optionsById = new Map((poll.poll_options ?? []).map((o: any) => [o.id, o]));
+
       for (const vote of pollVotes) {
         if (!vote.text_value) continue;
         let order: string[];
@@ -57,13 +76,18 @@ export function computeScores(polls: any[], results: any[], votes: any[], player
         } catch {
           continue;
         }
-        let points = 0;
         correctOrder.forEach((optionId, actualIdx) => {
           const predictedIdx = order.indexOf(optionId);
           if (predictedIdx === -1) return;
-          points += Math.max(0, RANKING_MAX_PER_TEAM - Math.abs(actualIdx - predictedIdx));
+          const diff = Math.abs(actualIdx - predictedIdx);
+          const points = Math.max(0, RANKING_MAX_PER_TEAM - diff);
+          const teamLabel = (optionsById.get(optionId) as any)?.label ?? '?';
+          const note =
+            diff === 0
+              ? `predijiste ${ordinal(predictedIdx + 1)}, justo ahí`
+              : `predijiste ${ordinal(predictedIdx + 1)}, está ${ordinal(actualIdx + 1)} (${diff} de diferencia)`;
+          addPoints(vote.player_id, category, points, teamLabel, note);
         });
-        addPoints(vote.player_id, category, points);
       }
       continue;
     }
@@ -79,9 +103,16 @@ export function computeScores(polls: any[], results: any[], votes: any[], player
 
     const points = category === 'Jornada' ? MATCH_POINTS : EXACT_ANSWER_POINTS;
     for (const vote of pollVotes) {
-      if (answerLabel(poll, vote) === correctLabel) {
-        addPoints(vote.player_id, category, points);
-      }
+      const mine = answerLabel(poll, vote);
+      if (mine == null) continue;
+      const hit = mine === correctLabel;
+      addPoints(
+        vote.player_id,
+        category,
+        hit ? points : 0,
+        poll.title,
+        hit ? `acertaste (${correctLabel})` : `votaste "${mine}", era "${correctLabel}"`
+      );
     }
   }
 
