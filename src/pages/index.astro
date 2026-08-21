@@ -269,19 +269,23 @@ const base = import.meta.env.BASE_URL;
 
     widget.hidden = false;
     const MEDALS: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
-    mini.innerHTML = entries
-      .map(
-        (e) => `
-        <div class="palmares-mini-item">
-          <div class="palmares-mini-avatar">
-            ${e.image_url ? `<img src="${base}${e.image_url}" alt="${e.name}" />` : MEDALS[e.position] ?? '⚽'}
-          </div>
-          <span class="palmares-mini-medal">${MEDALS[e.position] ?? ''}</span>
-          <span class="palmares-mini-name">${e.name}</span>
+    const itemHtml = (e: any) => `
+      <div class="palmares-mini-item${e.position === 1 ? ' is-first' : ''}">
+        <div class="palmares-mini-avatar">
+          ${e.image_url ? `<img src="${base}${e.image_url}" alt="${e.name}" />` : MEDALS[e.position] ?? '⚽'}
         </div>
-      `
-      )
-      .join('');
+        <span class="palmares-mini-medal">${MEDALS[e.position] ?? ''}</span>
+        <span class="palmares-mini-name">${e.name}</span>
+      </div>
+    `;
+
+    const first = entries.find((e) => e.position === 1);
+    const rest = entries.filter((e) => e.position !== 1);
+
+    mini.innerHTML = `
+      ${first ? `<div class="palmares-podium-top">${itemHtml(first)}</div>` : ''}
+      <div class="palmares-podium-bottom">${rest.map(itemHtml).join('')}</div>
+    `;
   }
 
   function renderParticipants(players: any[]) {
@@ -502,8 +506,15 @@ const base = import.meta.env.BASE_URL;
 
   :global(.palmares-mini) {
     display: flex;
-    justify-content: space-around;
-    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  :global(.palmares-podium-bottom) {
+    display: flex;
+    justify-content: center;
+    gap: 1.75rem;
   }
 
   :global(.palmares-mini-item) {
@@ -527,6 +538,13 @@ const base = import.meta.env.BASE_URL;
     overflow: hidden;
   }
 
+  :global(.palmares-mini-item.is-first .palmares-mini-avatar) {
+    width: 6rem;
+    height: 6rem;
+    font-size: 2.2rem;
+    border-color: var(--gold);
+  }
+
   :global(.palmares-mini-avatar img) {
     width: 100%;
     height: 100%;
@@ -537,6 +555,10 @@ const base = import.meta.env.BASE_URL;
     font-size: 0.85rem;
   }
 
+  :global(.palmares-mini-item.is-first .palmares-mini-medal) {
+    font-size: 1.3rem;
+  }
+
   :global(.palmares-mini-name) {
     font-size: 0.72rem;
     font-weight: 600;
@@ -544,6 +566,11 @@ const base = import.meta.env.BASE_URL;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  :global(.palmares-mini-item.is-first .palmares-mini-name) {
+    font-size: 0.85rem;
+    max-width: 8rem;
   }
 
   :global(.participants-list) {
@@ -565,14 +592,14 @@ const base = import.meta.env.BASE_URL;
   }
 
   :global(.participant-avatar.player-avatar-img) {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 3.5rem;
+    height: 3.5rem;
     flex-shrink: 0;
   }
 
   :global(.participant-avatar.player-avatar-emoji) {
-    font-size: 1.5rem;
-    width: 2.2rem;
+    font-size: 2.2rem;
+    width: 3.5rem;
     text-align: center;
     flex-shrink: 0;
   }
@@ -645,6 +672,7 @@ const base = import.meta.env.BASE_URL;
     .widgets {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      align-items: start;
       gap: 1.75rem;
       max-width: 100%;
     }
@@ -720,13 +748,28 @@ const base = import.meta.env.BASE_URL;
       font-size: 1.5rem;
     }
 
+    :global(.palmares-mini-item.is-first .palmares-mini-avatar) {
+      width: 9rem;
+      height: 9rem;
+      font-size: 3rem;
+    }
+
     :global(.palmares-mini-medal) {
       font-size: 1.15rem;
+    }
+
+    :global(.palmares-mini-item.is-first .palmares-mini-medal) {
+      font-size: 1.6rem;
     }
 
     :global(.palmares-mini-name) {
       font-size: 0.9rem;
       max-width: 7.5rem;
+    }
+
+    :global(.palmares-mini-item.is-first .palmares-mini-name) {
+      font-size: 1.05rem;
+      max-width: 10rem;
     }
 
     :global(.participant-row) {
@@ -735,13 +778,13 @@ const base = import.meta.env.BASE_URL;
     }
 
     :global(.participant-avatar.player-avatar-img) {
-      width: 2.8rem;
-      height: 2.8rem;
+      width: 4.5rem;
+      height: 4.5rem;
     }
 
     :global(.participant-avatar.player-avatar-emoji) {
-      width: 2.8rem;
-      font-size: 1.9rem;
+      width: 4.5rem;
+      font-size: 2.8rem;
     }
 
     :global(.participant-nick) {
