@@ -16,6 +16,8 @@ const base = import.meta.env.BASE_URL;
       No se pudo conectar con la base. Revisá tu conexión o probá de nuevo en un rato.
     </div>
 
+    <section id="pinned-widget" class="pinned-widget" hidden></section>
+
     <div id="widgets" class="widgets stagger" hidden>
       <section id="poll-widget" class="widget" hidden>
         <div class="widget-head">
@@ -123,15 +125,19 @@ const base = import.meta.env.BASE_URL;
     allVotesState = votesRes.data ?? [];
     allPollsForResults = pollsRes.data ?? [];
     pendingPolls = player
-      ? allPollsForResults
-          .filter((poll) => poll.status === 'open' && !allVotesState.some((v) => v.poll_id === poll.id && v.player_id === player.id))
-          .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+      ? allPollsForResults.filter(
+          (poll) =>
+            !poll.featured &&
+            poll.status === 'open' &&
+            !allVotesState.some((v) => v.poll_id === poll.id && v.player_id === player.id)
+        )
       : [];
 
     setupPollWidget(player);
     setupResultsWidget();
     renderPalmaresMini(palmaresRes.data ?? []);
     renderParticipants(playersRes.data ?? []);
+    renderPinned(allPollsForResults.filter((poll) => poll.featured), player);
   }
 
   function setupPollWidget(player: PollCardPlayer) {
@@ -186,26 +192,18 @@ const base = import.meta.env.BASE_URL;
     const poll = pendingPolls[pollWidgetIdx];
 
     body.innerHTML = '';
-
-    if (poll.featured) {
-      const badge = document.createElement('div');
-      badge.className = 'featured-badge';
-      badge.textContent = '🆕 Novedad';
-      body.appendChild(badge);
-    }
-
-    const card = renderPollCard(
-      poll,
-      allVotesState,
-      player,
-      (updated) => {
-        allVotesState = updated;
-        advanceAfterVote(poll, player);
-      },
-      { selfUpdate: false }
+    body.appendChild(
+      renderPollCard(
+        poll,
+        allVotesState,
+        player,
+        (updated) => {
+          allVotesState = updated;
+          advanceAfterVote(poll, player);
+        },
+        { selfUpdate: false }
+      )
     );
-    if (poll.featured) card.classList.add('featured-card');
-    body.appendChild(card);
 
     counter.textContent = `${pollWidgetIdx + 1} / ${pendingPolls.length}`;
   }
@@ -323,6 +321,36 @@ const base = import.meta.env.BASE_URL;
       )
       .join('');
   }
+
+  function renderPinned(polls: any[], player: PollCardPlayer) {
+    const section = document.getElementById('pinned-widget')!;
+
+    if (polls.length === 0) {
+      section.hidden = true;
+      return;
+    }
+
+    section.hidden = false;
+    section.innerHTML = '';
+
+    for (const poll of polls) {
+      const wrap = document.createElement('div');
+      wrap.className = 'featured-wrap';
+
+      const badge = document.createElement('div');
+      badge.className = 'featured-badge';
+      badge.textContent = '🆕 Novedad';
+      wrap.appendChild(badge);
+
+      const card = renderPollCard(poll, allVotesState, player, (updated) => {
+        allVotesState = updated;
+      });
+      card.classList.add('featured-card');
+      wrap.appendChild(card);
+
+      section.appendChild(wrap);
+    }
+  }
 </script>
 
 <style>
@@ -407,37 +435,13 @@ const base = import.meta.env.BASE_URL;
     padding: 1.1rem;
   }
 
-  :global(.featured-badge) {
-    display: inline-flex;
+  .pinned-widget {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.35rem;
-    background: linear-gradient(135deg, var(--gold), #d9a62e);
-    color: #241a04;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
-    border-radius: 999px;
-    margin-bottom: 0.6rem;
-    animation: pulse-badge 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-badge {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-
-  :global(.widget .featured-card) {
-    border: 2px solid var(--gold);
-    box-shadow: 0 0 0 4px rgba(242, 193, 78, 0.14);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :global(.featured-badge) {
-      animation: none;
-    }
+    gap: 0.85rem;
+    z-index: 1;
   }
 
   :global(.slide-out) {

@@ -25,8 +25,6 @@ import Base from '../layouts/Base.astro';
       🎉 ¡Votaste todo lo que está abierto! Mirá cómo va quedando la liga en <a href={`${import.meta.env.BASE_URL}resultados`}>resultados</a>.
     </div>
 
-    <section id="featured-section" class="featured-section" hidden></section>
-
     <section id="pending-list" class="polls-list" hidden></section>
 
     <details id="done-section" class="done-section" hidden>
@@ -89,60 +87,6 @@ import Base from '../layouts/Base.astro';
     display: flex;
     flex-direction: column;
     gap: 2.25rem;
-  }
-
-  .featured-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.85rem;
-  }
-
-  :global(.featured-badge) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: linear-gradient(135deg, var(--gold), #d9a62e);
-    color: #241a04;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.45rem 1.1rem;
-    border-radius: 999px;
-    animation: pulse-badge 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-badge {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-
-  :global(.featured-wrap) {
-    width: 100%;
-    max-width: 34rem;
-    margin: 0 auto;
-  }
-
-  :global(.featured-card) {
-    border: 2px solid var(--gold);
-    box-shadow: 0 0 0 5px rgba(242, 193, 78, 0.14), var(--shadow);
-    padding: 2rem;
-  }
-
-  :global(.featured-card .poll-title) {
-    font-size: 1.4rem;
-  }
-
-  :global(.featured-card .poll-desc) {
-    font-size: 0.98rem;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :global(.featured-badge) {
-      animation: none;
-    }
   }
 
   .top-actions {
@@ -292,21 +236,21 @@ import Base from '../layouts/Base.astro';
       return;
     }
 
-    allPolls = polls;
+    // Las encuestas "featured" tienen su propio widget fijo aparte (home) y
+    // no se mezclan acá.
+    allPolls = polls.filter((p) => !p.featured);
     allVotesState = votes ?? [];
 
     renderAll(player);
   }
 
   function renderAll(player: { id: string; name: string; emoji: string }) {
-    const featuredSection = document.getElementById('featured-section')!;
     const pendingList = document.getElementById('pending-list')!;
     const doneSection = document.getElementById('done-section')! as HTMLDetailsElement;
     const doneList = document.getElementById('done-list')!;
     const doneCount = document.getElementById('done-count')!;
     const allDoneMsg = document.getElementById('state-all-done')!;
 
-    featuredSection.innerHTML = '';
     pendingList.innerHTML = '';
     doneList.innerHTML = '';
 
@@ -323,39 +267,13 @@ import Base from '../layouts/Base.astro';
       }
     }
 
-    const featuredPending = pending.filter((p) => p.featured);
-    const regularPending = pending.filter((p) => !p.featured);
-
-    if (featuredPending.length > 0) {
-      featuredSection.hidden = false;
-      for (const poll of featuredPending) {
-        const wrap = document.createElement('div');
-        wrap.className = 'featured-wrap';
-
-        const badge = document.createElement('div');
-        badge.className = 'featured-badge';
-        badge.textContent = '🆕 Novedad';
-        wrap.appendChild(badge);
-
-        const card = renderPollCard(poll, allVotesState, player, (updated) => {
-          allVotesState = updated;
-        });
-        card.classList.add('featured-card');
-        wrap.appendChild(card);
-
-        featuredSection.appendChild(wrap);
-      }
-    } else {
-      featuredSection.hidden = true;
-    }
-
-    if (regularPending.length > 0) {
+    if (pending.length > 0) {
       pendingList.hidden = false;
       allDoneMsg.hidden = true;
-      renderCategoryGroups(pendingList, regularPending, player);
+      renderCategoryGroups(pendingList, pending, player);
     } else {
       pendingList.hidden = true;
-      allDoneMsg.hidden = featuredPending.length > 0;
+      allDoneMsg.hidden = false;
     }
 
     if (done.length > 0) {
