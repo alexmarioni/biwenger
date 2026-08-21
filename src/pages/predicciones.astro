@@ -50,6 +50,12 @@ import Base from '../layouts/Base.astro';
     gap: 1.75rem;
   }
 
+  @media (min-width: 860px) {
+    .predicciones {
+      max-width: 76rem;
+    }
+  }
+
   .top-bar {
     display: flex;
     align-items: flex-start;
@@ -100,79 +106,10 @@ import Base from '../layouts/Base.astro';
     margin: 0 0 1rem;
   }
 
-  .jornada-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-    gap: 1.1rem;
-  }
-
-  .pred-poll-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-  }
-
   .fichajes-updated {
     color: var(--text-dim);
     font-size: 0.78rem;
     margin: -0.4rem 0 1rem;
-  }
-
-  .fichajes-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .fichaje-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.85rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.65rem 0.9rem;
-    font-size: 0.85rem;
-  }
-
-  .fichaje-date {
-    color: var(--text-dim);
-    font-size: 0.75rem;
-    flex-shrink: 0;
-    width: 6rem;
-  }
-
-  .fichaje-player {
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-
-  .fichaje-move {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--text-dim);
-    flex-wrap: wrap;
-  }
-
-  .fichaje-club {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .fichaje-crest {
-    width: 1.2em;
-    height: 1.2em;
-    object-fit: contain;
-  }
-
-  .fichaje-fee {
-    margin-left: auto;
-    color: var(--gold);
-    font-weight: 600;
-    flex-shrink: 0;
   }
 </style>
 
@@ -183,6 +120,7 @@ import Base from '../layouts/Base.astro';
   import { renderMatchCard } from '../lib/matchCard';
   import { renderPollCard } from '../lib/pollCard';
   import { renderRankingCard } from '../lib/rankingCard';
+  import { renderRankingComparison } from '../lib/rankingComparison';
   import { playerAvatarHtml } from '../lib/playerAvatar';
   import { crestPath } from '../lib/crests';
 
@@ -321,6 +259,8 @@ import Base from '../layouts/Base.astro';
     if (clasificacion) {
       document.getElementById('clasificacion')!.hidden = false;
       const body = document.getElementById('clasificacion-body')!;
+      let comparisonEl = renderRankingComparison(clasificacion, allVotesState, players, base);
+
       body.appendChild(
         renderRankingCard(
           clasificacion,
@@ -329,10 +269,14 @@ import Base from '../layouts/Base.astro';
           players,
           (updated) => {
             allVotesState = updated;
+            const fresh = renderRankingComparison(clasificacion, allVotesState, players, base);
+            comparisonEl.replaceWith(fresh);
+            comparisonEl = fresh;
           },
           base
         )
       );
+      body.appendChild(comparisonEl);
     }
   }
 </script>

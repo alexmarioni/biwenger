@@ -334,6 +334,18 @@ function renderAutocomplete(
     list.style.right = 'auto';
   }
 
+  // Home widgets animate in via a CSS transform (.stagger keyframes), and
+  // any ancestor with a transform becomes the containing block for
+  // position:fixed descendants — that silently breaks the dropdown there
+  // even though it works fine on pages without that animation. Moving the
+  // list to be a direct child of <body> while open sidesteps this
+  // regardless of which ancestor (if any) has a transform.
+  function openList() {
+    document.body.appendChild(list);
+    positionList();
+    list.hidden = false;
+  }
+
   const note = document.createElement('p');
   note.className = 'text-answer-note';
   note.textContent = `${pollVotes.length} ${pollVotes.length === 1 ? 'persona respondió' : 'personas respondieron'} hasta ahora.`;
@@ -344,6 +356,7 @@ function renderAutocomplete(
   function closeList() {
     list.hidden = true;
     list.innerHTML = '';
+    if (list.parentElement === document.body) wrap.appendChild(list);
   }
 
   async function selectOption(option: any) {
@@ -377,10 +390,9 @@ function renderAutocomplete(
     }
 
     const matches = allOptions.filter((o) => o.label.toLowerCase().includes(query)).slice(0, 8);
-    positionList();
     if (matches.length === 0) {
       list.innerHTML = `<div class="autocomplete-empty">Sin resultados</div>`;
-      list.hidden = false;
+      openList();
       return;
     }
 
@@ -409,7 +421,7 @@ function renderAutocomplete(
       });
       list.appendChild(item);
     }
-    list.hidden = false;
+    openList();
   });
 
   input.addEventListener('focus', () => {

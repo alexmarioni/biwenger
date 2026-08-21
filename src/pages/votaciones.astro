@@ -42,6 +42,12 @@ import Base from '../layouts/Base.astro';
     gap: 1.75rem;
   }
 
+  @media (min-width: 860px) {
+    .votaciones {
+      max-width: 76rem;
+    }
+  }
+
   .top-bar {
     display: flex;
     align-items: flex-start;
@@ -161,12 +167,6 @@ import Base from '../layouts/Base.astro';
   :global(.category-count) {
     color: var(--text-dim);
     font-size: 0.8rem;
-  }
-
-  :global(.category-polls) {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
   }
 </style>
 

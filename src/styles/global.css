@@ -294,6 +294,17 @@ a {
   background: rgba(53, 214, 143, 0.22);
 }
 
+/* Visual feedback the instant you click/submit, before the network
+   round-trip resolves — every vote path already sets disabled=true
+   synchronously before its awaits, so this alone covers all of them. */
+.option-btn:disabled,
+.autocomplete-input:disabled,
+.text-answer-input:disabled,
+.btn:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
 .check {
   color: var(--accent);
   font-weight: 700;
@@ -746,4 +757,148 @@ a {
 .rank-save-status {
   color: var(--text-dim);
   font-size: 0.85rem;
+}
+
+.rank-compare {
+  margin-top: 1.25rem;
+}
+
+.rank-compare-toggle {
+  width: 100%;
+}
+
+.rank-compare-body {
+  margin-top: 1rem;
+}
+
+.rank-compare-scroll {
+  overflow-x: auto;
+}
+
+.rank-compare-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.82rem;
+}
+
+.rank-compare-table th,
+.rank-compare-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.rank-compare-team-head {
+  text-align: left !important;
+}
+
+.rank-compare-team {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.rank-compare-crest {
+  width: 1.3em;
+  height: 1.3em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.rank-compare-avatar {
+  width: 1.6em;
+  height: 1.6em;
+}
+
+/* ---------- responsive list grids (Jornada / Fichajes / Minijuegos) ----------
+   Shared across pages so every list of cards behaves the same way instead
+   of each page hand-rolling its own breakpoint. Mobile: one full-width
+   card per row for readability. Desktop: a real multi-column grid so a
+   wide screen doesn't waste space on a single stretched-out card. */
+
+.jornada-list,
+.fichajes-list,
+.pred-poll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 860px) {
+  .jornada-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+
+  .fichajes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .pred-poll-list,
+  .category-polls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+    gap: 1.1rem;
+    align-items: start;
+  }
+}
+
+/* ---------- fichaje row (Fichajes recientes, /predicciones) ---------- */
+
+.fichaje-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.fichaje-date {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  width: 6rem;
+}
+
+.fichaje-player {
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.fichaje-move {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+
+.fichaje-club {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.fichaje-crest {
+  width: 1.2em;
+  height: 1.2em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.fichaje-fee {
+  margin-left: auto;
+  color: var(--gold);
+  font-weight: 600;
+  flex-shrink: 0;
 }

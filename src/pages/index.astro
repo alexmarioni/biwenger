@@ -586,12 +586,6 @@ const base = import.meta.env.BASE_URL;
     padding: 1.1rem;
   }
 
-  :global(.jornada-list) {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-  }
-
   .pinned-widget {
     width: 100%;
     display: flex;
@@ -877,12 +871,6 @@ const base = import.meta.env.BASE_URL;
 
     :global(.jornada-widget) {
       grid-column: 1 / -1;
-    }
-
-    :global(.jornada-list) {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-      gap: 1rem;
     }
 
     :global(.widget) {
