@@ -7,7 +7,11 @@ export interface PollLeader {
 /** Computes the currently-leading answer for a poll, text or option-based alike. */
 export function computePollLeader(poll: any, allVotes: any[]): PollLeader {
   const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
-  const isText = poll.poll_type === 'text';
+  // 'text' and 'player_autocomplete' both store the answer as free text
+  // (text_value); everything else (single/multi/autocomplete) is option_id
+  // based. 'ranking' also uses text_value but as a JSON array, not a
+  // human-readable answer, so callers should skip it before reaching here.
+  const isText = poll.poll_type === 'text' || poll.poll_type === 'player_autocomplete';
 
   let counts: { label: string; count: number }[];
   if (isText) {

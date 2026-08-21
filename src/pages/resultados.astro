@@ -334,7 +334,10 @@ import Base from '../layouts/Base.astro';
     }
 
     const players = playersRes.data ?? [];
-    const polls = sortByCategory(pollsRes.data ?? []);
+    // 'ranking' (Clasificación) stores a JSON array, not a human-readable
+    // answer — it has its own dedicated comparison view on /predicciones,
+    // so it's excluded here rather than showing raw JSON.
+    const polls = sortByCategory((pollsRes.data ?? []).filter((p) => p.poll_type !== 'ranking'));
     const votes = votesRes.data ?? [];
 
     loading.hidden = true;
@@ -385,7 +388,7 @@ import Base from '../layouts/Base.astro';
         let answerText: string;
         let hasAnswer: boolean;
 
-        if (poll.poll_type === 'text') {
+        if (poll.poll_type === 'text' || poll.poll_type === 'player_autocomplete') {
           const textVote = myPollVotes[0];
           hasAnswer = !!textVote;
           answerText = hasAnswer

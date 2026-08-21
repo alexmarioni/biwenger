@@ -122,6 +122,7 @@ const base = import.meta.env.BASE_URL;
 
   let allVotesState: any[] = [];
   let allPollsForResults: any[] = [];
+  let resultsPolls: any[] = [];
   let resultsIdx = 0;
 
   async function init(player: PollCardPlayer) {
@@ -382,7 +383,11 @@ const base = import.meta.env.BASE_URL;
 
   function setupResultsWidget() {
     const widget = document.getElementById('results-widget')!;
-    if (allPollsForResults.length === 0) {
+    // 'ranking' (Clasificación) stores a JSON array, not a single
+    // human-readable leader — it has its own comparison view on
+    // /predicciones, so skip it here.
+    resultsPolls = allPollsForResults.filter((poll) => poll.poll_type !== 'ranking');
+    if (resultsPolls.length === 0) {
       widget.hidden = true;
       return;
     }
@@ -390,11 +395,11 @@ const base = import.meta.env.BASE_URL;
     renderCurrentResult();
 
     document.getElementById('results-prev')!.addEventListener('click', () => {
-      resultsIdx = (resultsIdx - 1 + allPollsForResults.length) % allPollsForResults.length;
+      resultsIdx = (resultsIdx - 1 + resultsPolls.length) % resultsPolls.length;
       renderCurrentResult();
     });
     document.getElementById('results-next')!.addEventListener('click', () => {
-      resultsIdx = (resultsIdx + 1) % allPollsForResults.length;
+      resultsIdx = (resultsIdx + 1) % resultsPolls.length;
       renderCurrentResult();
     });
   }
@@ -402,7 +407,7 @@ const base = import.meta.env.BASE_URL;
   function renderCurrentResult() {
     const body = document.getElementById('results-widget-body')!;
     const counter = document.getElementById('results-counter')!;
-    const poll = allPollsForResults[resultsIdx];
+    const poll = resultsPolls[resultsIdx];
     const leader = computePollLeader(poll, allVotesState);
 
     body.innerHTML = `
@@ -413,7 +418,7 @@ const base = import.meta.env.BASE_URL;
         <span class="result-mini-leader-pct">${leader.pctText}</span>
       </div>
     `;
-    counter.textContent = `${resultsIdx + 1} / ${allPollsForResults.length}`;
+    counter.textContent = `${resultsIdx + 1} / ${resultsPolls.length}`;
   }
 
   function renderPalmaresMini(entries: any[]) {
