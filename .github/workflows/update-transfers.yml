@@ -1,0 +1,37 @@
+name: Update transfers data
+
+on:
+  schedule:
+    # Mondays 09:00 UTC (~06:00 Argentina).
+    - cron: '0 9 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch transfers from Wikipedia
+        run: node scripts/fetch-transfers.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- public/data/transfers.json; then
+            echo "No changes, skipping commit."
+          else
+            git add public/data/transfers.json
+            git commit -m "Update transfers data from Wikipedia"
+            git push
+          fi

@@ -35,6 +35,12 @@ import Base from '../layouts/Base.astro';
         <h2 class="pred-heading">🏆 Clasificación</h2>
         <div id="clasificacion-body"></div>
       </section>
+
+      <section id="fichajes-section" class="pred-section" hidden>
+        <h2 class="pred-heading">📰 Fichajes recientes</h2>
+        <p class="fichajes-updated" id="fichajes-updated"></p>
+        <div id="fichajes-list" class="fichajes-list"></div>
+      </section>
     </div>
   </main>
 </Base>
@@ -105,6 +111,69 @@ import Base from '../layouts/Base.astro';
     flex-direction: column;
     gap: 1.1rem;
   }
+
+  .fichajes-updated {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin: -0.4rem 0 1rem;
+  }
+
+  .fichajes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fichaje-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.85rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .fichaje-date {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    width: 6rem;
+  }
+
+  .fichaje-player {
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .fichaje-move {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+  }
+
+  .fichaje-club {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .fichaje-crest {
+    width: 1.2em;
+    height: 1.2em;
+    object-fit: contain;
+  }
+
+  .fichaje-fee {
+    margin-left: auto;
+    color: var(--gold);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
 </style>
 
 <script>
@@ -115,6 +184,7 @@ import Base from '../layouts/Base.astro';
   import { renderPollCard } from '../lib/pollCard';
   import { renderRankingCard } from '../lib/rankingCard';
   import { playerAvatarHtml } from '../lib/playerAvatar';
+  import { crestPath } from '../lib/crests';
 
   const base = import.meta.env.BASE_URL;
 
@@ -133,6 +203,44 @@ import Base from '../layouts/Base.astro';
         window.location.href = `${base}identidad`;
       });
       init(player);
+      loadFichajes();
+    }
+  }
+
+  function clubHtml(name: string): string {
+    const path = crestPath(name);
+    return path
+      ? `<span class="fichaje-club"><img class="fichaje-crest" src="${base}${path}" alt="${name}" />${name}</span>`
+      : `<span class="fichaje-club">${name}</span>`;
+  }
+
+  async function loadFichajes() {
+    try {
+      const res = await fetch(`${base}data/transfers.json`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const transfers: any[] = data.transfers ?? [];
+      if (transfers.length === 0) return;
+
+      document.getElementById('fichajes-section')!.hidden = false;
+      const updated = data.generated_at ? new Date(data.generated_at).toLocaleDateString('es-AR') : '';
+      document.getElementById('fichajes-updated')!.textContent = `Actualizado ${updated} · fuente: Wikipedia`;
+
+      document.getElementById('fichajes-list')!.innerHTML = transfers
+        .slice(0, 15)
+        .map(
+          (t) => `
+        <div class="fichaje-row">
+          <span class="fichaje-date">${t.date ?? ''}</span>
+          <span class="fichaje-player">${t.player}</span>
+          <span class="fichaje-move">${clubHtml(t.from)} → ${clubHtml(t.to)}</span>
+          <span class="fichaje-fee">${t.fee ?? ''}</span>
+        </div>
+      `
+        )
+        .join('');
+    } catch {
+      /* informational widget only — fail silently */
     }
   }
 
