@@ -351,8 +351,13 @@ import Base from '../layouts/Base.astro';
     const list = document.getElementById('players-list')!;
     list.innerHTML = '';
 
+    // `polls` already excludes 'ranking' (Clasificación) — votes on it
+    // must be excluded here too, or the numerator counts one more poll
+    // than the denominator for anyone who's sent in a table prediction.
+    const validPollIds = new Set(polls.map((p) => p.id));
+
     for (const p of players) {
-      const myVotes = votes.filter((v) => v.player_id === p.id);
+      const myVotes = votes.filter((v) => v.player_id === p.id && validPollIds.has(v.poll_id));
       const pollsAnswered = new Set(myVotes.map((v) => v.poll_id)).size;
 
       const details = document.createElement('details');

@@ -986,8 +986,12 @@ a {
 /* ---------- responsive list grids (Jornada / Fichajes / Minijuegos) ----------
    Shared across pages so every list of cards behaves the same way instead
    of each page hand-rolling its own breakpoint. Mobile: one full-width
-   card per row for readability. Desktop: a real multi-column grid so a
-   wide screen doesn't waste space on a single stretched-out card. */
+   card per row for readability. Desktop: CSS multi-column instead of
+   Grid — Grid sizes every row to its tallest cell, so an odd card count
+   (e.g. 3 poll cards: 2 in row 1, 1 alone in row 2) leaves a big dead gap
+   next to the leftover one. column-width packs cards masonry-style: each
+   takes only its own height and the next one flows in immediately,
+   still auto-sizing the column count to whatever fits the screen. */
 
 .jornada-list,
 .fichajes-list,
@@ -999,23 +1003,35 @@ a {
 
 @media (min-width: 860px) {
   .jornada-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem;
+    column-width: 16rem;
+    column-gap: 1rem;
   }
 
   .fichajes-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-    gap: 0.75rem;
+    column-width: 22rem;
+    column-gap: 0.75rem;
   }
 
   .pred-poll-list,
   .category-polls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
-    gap: 1.1rem;
-    align-items: start;
+    column-width: 26rem;
+    column-gap: 1.1rem;
+  }
+
+  .jornada-list > .match-card {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  .fichajes-list > .fichaje-row {
+    break-inside: avoid;
+    margin-bottom: 0.75rem;
+  }
+
+  .pred-poll-list > .poll-card,
+  .category-polls > .poll-card {
+    break-inside: avoid;
+    margin-bottom: 1.1rem;
   }
 }
 
