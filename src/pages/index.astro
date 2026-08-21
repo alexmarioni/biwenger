@@ -2,24 +2,48 @@
 import Base from '../layouts/Base.astro';
 
 const base = import.meta.env.BASE_URL;
+
+const sections = [
+  {
+    href: `${base}identidad`,
+    icon: '🗳️',
+    title: 'Votar',
+    desc: 'Elegí tu nombre y metele tu voto a las encuestas pendientes.',
+  },
+  {
+    href: `${base}resultados`,
+    icon: '📊',
+    title: 'Resultados',
+    desc: 'Quién votó qué, y cómo va quedando la configuración de la liga.',
+  },
+  {
+    href: `${base}palmares`,
+    icon: '🏆',
+    title: 'Palmarés',
+    desc: 'El podio de la temporada pasada.',
+  },
+];
 ---
 
 <Base title="Bienvenida">
-  <main class="wrap hero">
+  <main class="wrap home">
     <div class="hero-content animate-in">
       <span class="badge">⚽ Liga Biwenger</span>
       <h1>Decidamos entre todos<br />cómo se juega esta liga.</h1>
       <p class="lead">
         Balance inicial, modo de juego, reglas especiales... en vez de discutirlo
-        en el grupo, lo votamos acá. Elegí quién sos y metele tu voto.
+        en el grupo, lo votamos acá.
       </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href={`${base}identidad`} data-astro-prefetch>
-          Entrar a votar
-          <span aria-hidden="true">→</span>
+    </div>
+
+    <div class="cards-grid stagger">
+      {sections.map((s) => (
+        <a class="home-card" href={s.href} data-astro-prefetch>
+          <span class="home-card-icon">{s.icon}</span>
+          <span class="home-card-title">{s.title}</span>
+          <span class="home-card-desc">{s.desc}</span>
         </a>
-        <a class="btn btn-ghost" href={`${base}palmares`}>🏆 Palmarés</a>
-      </div>
+      ))}
     </div>
 
     <div class="float-shapes" aria-hidden="true">
@@ -37,37 +61,80 @@ const base = import.meta.env.BASE_URL;
 </script>
 
 <style>
-  .hero {
+  .home {
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
     overflow: hidden;
+    gap: 2.5rem;
   }
 
   .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1.1rem;
     max-width: 30rem;
     z-index: 1;
   }
 
   h1 {
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-size: clamp(1.6rem, 5vw, 2.3rem);
   }
 
   .lead {
     color: var(--text-dim);
+    font-size: 1.02rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 40rem;
+    z-index: 1;
+  }
+
+  :global(.home-card) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.25rem;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: transform 0.18s ease, border-color 0.18s ease;
+  }
+
+  :global(.home-card:hover) {
+    transform: translateY(-4px);
+    border-color: var(--accent-dim);
+  }
+
+  :global(.home-card:active) {
+    transform: scale(0.97);
+  }
+
+  :global(.home-card-icon) {
+    font-size: 2rem;
+  }
+
+  :global(.home-card-title) {
+    font-family: var(--font-display);
+    font-weight: 600;
     font-size: 1.05rem;
   }
 
-  .hero-actions {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  :global(.home-card-desc) {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.4;
   }
 
   .float-shapes {
@@ -79,13 +146,13 @@ const base = import.meta.env.BASE_URL;
   .shape {
     position: absolute;
     font-size: 2.5rem;
-    opacity: 0.35;
+    opacity: 0.25;
     animation: float 5s ease-in-out infinite;
   }
 
-  .shape-1 { top: 12%; left: 8%; animation-delay: 0s; }
-  .shape-2 { top: 65%; right: 10%; animation-delay: 1.2s; }
-  .shape-3 { bottom: 8%; left: 18%; animation-delay: 2.1s; }
+  .shape-1 { top: 8%; left: 8%; animation-delay: 0s; }
+  .shape-2 { top: 12%; right: 10%; animation-delay: 1.2s; }
+  .shape-3 { bottom: 6%; left: 18%; animation-delay: 2.1s; }
 
   @media (max-width: 480px) {
     .shape { font-size: 1.8rem; }
