@@ -527,6 +527,11 @@ a {
   margin: 0.75rem 0 1.1rem;
 }
 
+.match-locked {
+  color: var(--danger);
+  font-weight: 600;
+}
+
 /* ---------- featured/pinned poll (e.g. tournament vote) ---------- */
 
 .featured-wrap {
@@ -816,6 +821,44 @@ a {
 .rank-compare-avatar {
   width: 1.6em;
   height: 1.6em;
+}
+
+.poll-compare {
+  margin-top: 1.5rem;
+}
+
+.poll-compare-toggle {
+  width: 100%;
+}
+
+.poll-compare-body {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.poll-compare-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+}
+
+.poll-compare-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin: 0 0 0.75rem;
+}
+
+.poll-compare-label {
+  width: 9rem;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ---------- responsive list grids (Jornada / Fichajes / Minijuegos) ----------

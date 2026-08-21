@@ -22,6 +22,11 @@ function parseOrder(textValue: string | null | undefined, options: any[]): any[]
  * option_id in the chosen order. Clicking the 📊 button on a row expands an
  * inline panel showing the position distribution + who (by avatar) picked
  * that team for each position, computed from every player's stored order.
+ *
+ * `lockAt` (ISO timestamp, typically the first Jornada kickoff) closes
+ * editing once matches start — but only for players who already had a
+ * prediction in. Anyone who never submitted can still send their first one
+ * late; they just can't touch it again after that.
  */
 export function renderRankingCard(
   poll: any,
@@ -29,13 +34,16 @@ export function renderRankingCard(
   player: PollCardPlayer,
   players: any[],
   onVote: (updatedVotes: any[]) => void,
-  base: string
+  base: string,
+  lockAt: string | null = null
 ): HTMLElement {
   const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
   const myVote = player ? pollVotes.find((v) => v.player_id === player.id) : undefined;
   const baseOptions = [...(poll.poll_options ?? [])].sort((a, b) => a.sort_order - b.sort_order);
   const isOpen = poll.status === 'open';
-  const canVote = !!player && isOpen;
+  const pastLock = !!lockAt && Date.now() >= new Date(lockAt).getTime();
+  const lockedOut = pastLock && !!myVote;
+  const canVote = !!player && isOpen && !lockedOut;
 
   const card = document.createElement('article');
   card.className = 'poll-card ranking-card';
@@ -69,9 +77,16 @@ export function renderRankingCard(
 
   const hint = document.createElement('p');
   hint.className = 'text-answer-note ranking-hint';
-  hint.textContent = canVote
-    ? 'Arrastrá con el ⠿ (o usá las flechas) para ordenar del 1° al 20°. Tocá 📊 en un equipo para ver cómo lo votaron tus compañeros.'
-    : `${pollVotes.length} ${pollVotes.length === 1 ? 'pronóstico cargado' : 'pronósticos cargados'}. La encuesta está cerrada.`;
+  if (!isOpen) {
+    hint.textContent = `${pollVotes.length} ${pollVotes.length === 1 ? 'pronóstico cargado' : 'pronósticos cargados'}. La encuesta está cerrada.`;
+  } else if (lockedOut) {
+    hint.textContent = 'Ya arrancó la fecha — tu pronóstico quedó cerrado y no se puede editar más.';
+  } else if (pastLock) {
+    hint.textContent = 'Ya arrancó la fecha, pero todavía no habías enviado un pronóstico: podés mandar este primero y último.';
+  } else {
+    hint.textContent =
+      'Arrastrá con el ⠿ (o usá las flechas) para ordenar del 1° al 20°. Tocá 📊 en un equipo para ver cómo lo votaron tus compañeros.';
+  }
   card.appendChild(hint);
 
   const list = document.createElement('ol');
@@ -266,19 +281,35 @@ export function renderRankingCard(
         .from('votes')
         .insert({ poll_id: poll.id, player_id: player!.id, text_value: textValue });
 
-      saveBtn.disabled = false;
       if (!error) {
         const updated = [
           ...allVotes.filter((v) => !(v.poll_id === poll.id && v.player_id === player!.id)),
           { poll_id: poll.id, option_id: null, text_value: textValue, player_id: player!.id },
         ];
         onVote(updated);
-        saveBtn.textContent = 'Actualizar pronóstico';
         status.textContent = '✓ Guardado';
         setTimeout(() => {
           status.textContent = '';
         }, 2500);
+
+        // A late first submission (pastLock was true when this render
+        // happened, meaning myVote didn't exist yet) locks immediately —
+        // no second chance to keep tweaking after the deadline.
+        if (pastLock) {
+          saveBtn.disabled = true;
+          saveBtn.textContent = '🔒 Cerrado';
+          hint.textContent = 'Ya arrancó la fecha — tu pronóstico quedó cerrado y no se puede editar más.';
+          list.querySelectorAll<HTMLElement>('.rank-up-btn, .rank-down-btn, .rank-handle').forEach((el) => {
+            (el as HTMLButtonElement).disabled = true;
+            el.style.pointerEvents = 'none';
+            el.style.opacity = '0.4';
+          });
+        } else {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Actualizar pronóstico';
+        }
       } else {
+        saveBtn.disabled = false;
         status.textContent = 'Error al guardar, probá de nuevo.';
       }
     });

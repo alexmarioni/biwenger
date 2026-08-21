@@ -121,6 +121,7 @@ import Base from '../layouts/Base.astro';
   import { renderPollCard } from '../lib/pollCard';
   import { renderRankingCard } from '../lib/rankingCard';
   import { renderRankingComparison } from '../lib/rankingComparison';
+  import { renderPollGroupComparison } from '../lib/pollComparison';
   import { playerAvatarHtml } from '../lib/playerAvatar';
   import { crestPath } from '../lib/crests';
 
@@ -254,11 +255,19 @@ import Base from '../layouts/Base.astro';
           })
         );
       }
+      document.getElementById('minijuegos-section')!.appendChild(
+        renderPollGroupComparison(minijuegos, allVotesState, players, base, {
+          title: 'Comparar respuestas de todos',
+        })
+      );
     }
 
     if (clasificacion) {
       document.getElementById('clasificacion')!.hidden = false;
       const body = document.getElementById('clasificacion-body')!;
+      // Predictions lock at the first Jornada kickoff — once matches start,
+      // nobody should still be able to tweak their table pronóstico.
+      const lockAt = jornada[0]?.kickoff_at ?? null;
       let comparisonEl = renderRankingComparison(clasificacion, allVotesState, players, base);
 
       body.appendChild(
@@ -273,7 +282,8 @@ import Base from '../layouts/Base.astro';
             comparisonEl.replaceWith(fresh);
             comparisonEl = fresh;
           },
-          base
+          base,
+          lockAt
         )
       );
       body.appendChild(comparisonEl);

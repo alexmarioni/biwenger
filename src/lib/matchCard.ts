@@ -12,6 +12,11 @@ export function renderMatchCard(
   base: string
 ): HTMLElement {
   const [home, away] = poll.title.split(' vs ');
+  // Voting closes the instant kickoff hits — status stays 'open' in the DB
+  // (nobody flips it match by match), so this is purely a client-side
+  // clock check each render.
+  const kickoffPassed = !!poll.kickoff_at && new Date(poll.kickoff_at).getTime() <= Date.now();
+  const effectivePoll = kickoffPassed && poll.status === 'open' ? { ...poll, status: 'closed' } : poll;
 
   const card = document.createElement('article');
   card.className = 'match-card';
@@ -37,6 +42,7 @@ export function renderMatchCard(
     meta.innerHTML = `
       ${poll.venue ? `<span class="match-venue">🏟️ ${poll.venue}</span>` : ''}
       ${poll.kickoff_at ? `<span class="match-time">🕒 ${formatArgentinaTime(poll.kickoff_at)}</span>` : ''}
+      ${kickoffPassed ? `<span class="match-locked">🔒 Ya empezó</span>` : ''}
     `;
     card.appendChild(meta);
   }
@@ -45,7 +51,7 @@ export function renderMatchCard(
   // would target the inner (discarded) card, not this one — we replace
   // the whole match-card ourselves instead.
   const inner = renderPollCard(
-    poll,
+    effectivePoll,
     allVotes,
     player,
     (updated) => {
