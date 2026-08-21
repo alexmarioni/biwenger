@@ -20,6 +20,17 @@ import Base from '../layouts/Base.astro';
       Todavía no hay encuestas cargadas. ¡Pronto va a haber algo para votar!
     </div>
 
+    <section id="summary-panel" class="summary-panel animate-in" hidden>
+      <div class="summary-head">
+        <div>
+          <h2>Cómo va quedando la liga</h2>
+          <p class="summary-sub">La opción que va ganando en cada encuesta, de un vistazo.</p>
+        </div>
+        <button id="summary-toggle" class="btn btn-ghost btn-small" type="button">Ocultar</button>
+      </div>
+      <div id="summary-rows" class="summary-rows"></div>
+    </section>
+
     <section id="polls-list" class="polls-list" hidden></section>
   </main>
 </Base>
@@ -61,6 +72,110 @@ import Base from '../layouts/Base.astro';
     display: flex;
     flex-direction: column;
     gap: 2.25rem;
+  }
+
+  .summary-panel {
+    background: linear-gradient(160deg, var(--bg-card), var(--bg-elevated));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .summary-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .summary-head h2 {
+    font-size: 1.15rem;
+  }
+
+  .summary-sub {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin: 0.2rem 0 0;
+  }
+
+  .btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .summary-rows {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.1rem;
+  }
+
+  :global(.summary-row) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  :global(.summary-row:first-child) {
+    border-top: none;
+  }
+
+  :global(.summary-row-main) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  :global(.summary-cat) {
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  :global(.summary-title) {
+    font-size: 0.92rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.summary-leader) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  :global(.summary-leader-label) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.summary-leader-label.is-empty) {
+    color: var(--text-dim);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  :global(.summary-leader-pct) {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    min-width: 2.5rem;
   }
 
   :global(.category-section) {
@@ -175,6 +290,16 @@ import Base from '../layouts/Base.astro';
     gap: 0.5rem;
   }
 
+  :global(.option-hint) {
+    display: block;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    margin-top: 0.3rem;
+    position: relative;
+    z-index: 1;
+  }
+
   :global(.option-pct) {
     color: var(--text-dim);
     font-size: 0.85rem;
@@ -226,7 +351,7 @@ import Base from '../layouts/Base.astro';
 
     const { data: polls, error: pollsError } = await supabase
       .from('polls')
-      .select('id, title, description, status, category, created_at, poll_options(id, label, sort_order)')
+      .select('id, title, description, status, category, created_at, poll_options(id, label, hint, sort_order)')
       .order('created_at', { ascending: true })
       .order('sort_order', { foreignTable: 'poll_options', ascending: true });
 
@@ -254,6 +379,7 @@ import Base from '../layouts/Base.astro';
     }
 
     list.hidden = false;
+    renderSummary(polls, votes ?? []);
 
     const CATEGORY_ORDER = ['Liga', 'Participantes', 'Alineaciones', 'Mercado', 'Primas', 'Premium'];
     const categories = new Map<string, any[]>();
@@ -341,6 +467,7 @@ import Base from '../layouts/Base.astro';
           <span class="option-label">${isMine ? '<span class="check">✓</span>' : ''}${option.label}</span>
           <span class="option-pct">${pct}% · ${count}</span>
         </span>
+        ${option.hint ? `<span class="option-hint">${option.hint}</span>` : ''}
       `;
 
       if (isOpen) {
@@ -377,5 +504,65 @@ import Base from '../layouts/Base.astro';
 
     card.appendChild(options);
     return card;
+  }
+
+  function renderSummary(polls: any[], allVotes: any[]) {
+    const panel = document.getElementById('summary-panel')!;
+    const rows = document.getElementById('summary-rows')!;
+    const toggle = document.getElementById('summary-toggle')!;
+
+    rows.innerHTML = '';
+
+    const sortedPolls = [...polls].sort((a, b) => a.created_at.localeCompare(b.created_at));
+
+    for (const poll of sortedPolls) {
+      const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
+      const options = poll.poll_options ?? [];
+
+      const counts = options.map((opt: any) => ({
+        label: opt.label,
+        count: pollVotes.filter((v) => v.option_id === opt.id).length,
+      }));
+
+      const max = Math.max(0, ...counts.map((c: any) => c.count));
+      const leaders = counts.filter((c: any) => c.count === max && max > 0);
+
+      let leaderLabel: string;
+      let leaderClass = '';
+      let pctText = '';
+
+      if (max === 0) {
+        leaderLabel = 'Sin votos aún';
+        leaderClass = 'is-empty';
+      } else if (leaders.length > 1) {
+        leaderLabel = `Empate (${leaders.map((l: any) => l.label).join(' / ')})`;
+      } else {
+        leaderLabel = leaders[0].label;
+        const pct = Math.round((max / pollVotes.length) * 100);
+        pctText = `${pct}%`;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'summary-row';
+      row.innerHTML = `
+        <div class="summary-row-main">
+          <span class="summary-cat">${poll.category ?? 'Otras'}</span>
+          <span class="summary-title">${poll.title}</span>
+        </div>
+        <div class="summary-leader">
+          <span class="summary-leader-label ${leaderClass}">${leaderLabel}</span>
+          <span class="summary-leader-pct">${pctText}</span>
+        </div>
+      `;
+      rows.appendChild(row);
+    }
+
+    panel.hidden = false;
+
+    toggle.addEventListener('click', () => {
+      const isHidden = rows.hidden;
+      rows.hidden = !isHidden;
+      toggle.textContent = isHidden ? 'Ocultar' : 'Mostrar';
+    });
   }
 </script>

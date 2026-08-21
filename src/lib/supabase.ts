@@ -17,6 +17,7 @@ export interface PollOption {
   id: string;
   poll_id: string;
   label: string;
+  hint: string | null;
   sort_order: number;
 }
 
