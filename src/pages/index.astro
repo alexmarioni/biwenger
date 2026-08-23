@@ -52,14 +52,7 @@ const base = import.meta.env.BASE_URL;
           <span class="widget-title">🎮 Minijuegos</span>
           <a class="widget-link" href={`${base}predicciones`}>Ver todas →</a>
         </div>
-        <div class="poll-widget-viewport">
-          <div id="minijuegos-widget-body"></div>
-        </div>
-        <div class="widget-nav">
-          <button id="minijuegos-prev" class="widget-nav-btn" type="button" aria-label="Anterior">‹</button>
-          <span id="minijuegos-counter" class="widget-counter"></span>
-          <button id="minijuegos-next" class="widget-nav-btn" type="button" aria-label="Siguiente">›</button>
-        </div>
+        <div id="minijuegos-widget-body"></div>
       </section>
 
       <section id="jornada-widget" class="widget jornada-widget" hidden>
@@ -154,7 +147,7 @@ const base = import.meta.env.BASE_URL;
     );
 
     encuestasCarousel.setup(player);
-    minijuegosCarousel.setup(player);
+    setupMinijuegosWidget(player);
     setupJornadaWidget(player);
     setupResultsWidget();
     renderPalmaresMini(palmaresRes.data ?? []);
@@ -294,20 +287,42 @@ const base = import.meta.env.BASE_URL;
       !poll.featured && poll.category !== 'Minijuegos' && poll.category !== 'Jornada' && poll.poll_type !== 'ranking',
   });
 
-  const minijuegosCarousel = createPendingCarousel({
-    widgetId: 'minijuegos-widget',
-    bodyId: 'minijuegos-widget-body',
-    counterId: 'minijuegos-counter',
-    prevId: 'minijuegos-prev',
-    nextId: 'minijuegos-next',
-    loginPrompt: 'Elegí tu nombre para participar de los minijuegos.',
-    doneHtml: `
-      <div class="widget-empty">
-        <p>🎉 ¡Ya predijiste todo lo que hay!</p>
-      </div>
-    `,
-    filterFn: (poll) => poll.category === 'Minijuegos',
-  });
+  // Unified with the Jornada widget below: list every Minijuegos poll (not
+  // just the still-open ones), so once they're all closed the widget shows
+  // everyone's answers instead of collapsing to a generic "done" message
+  // with no results in sight.
+  function setupMinijuegosWidget(player: PollCardPlayer) {
+    const widget = document.getElementById('minijuegos-widget')!;
+    const body = document.getElementById('minijuegos-widget-body')!;
+    const polls = allPollsForResults.filter((poll) => poll.category === 'Minijuegos');
+
+    if (polls.length === 0) {
+      widget.hidden = true;
+      return;
+    }
+
+    widget.hidden = false;
+
+    if (!player) {
+      body.innerHTML = `
+        <div class="widget-empty">
+          <p>Elegí tu nombre para participar de los minijuegos.</p>
+          <a class="btn btn-primary btn-small" href="${base}identidad">Entrar</a>
+        </div>
+      `;
+      return;
+    }
+
+    body.innerHTML = '';
+    body.className = 'jornada-list';
+    for (const poll of polls) {
+      body.appendChild(
+        renderPollCard(poll, allVotesState, player, (updated) => {
+          allVotesState = updated;
+        })
+      );
+    }
+  }
 
   function setupJornadaWidget(player: PollCardPlayer) {
     const widget = document.getElementById('jornada-widget')!;
