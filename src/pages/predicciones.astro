@@ -117,7 +117,7 @@ import Base from '../layouts/Base.astro';
   import { supabase } from '../lib/supabase';
   import { getStoredPlayer, clearStoredPlayer } from '../lib/identity';
   import { redirectIfMaintenance } from '../lib/maintenance';
-  import { renderMatchCard } from '../lib/matchCard';
+  import { renderMatchCard, isMatchFinished } from '../lib/matchCard';
   import { renderPollCard } from '../lib/pollCard';
   import { renderRankingCard } from '../lib/rankingCard';
   import { renderRankingComparison } from '../lib/rankingComparison';
@@ -190,7 +190,7 @@ import Base from '../layouts/Base.astro';
     const errorMsg = document.getElementById('state-error')!;
     const empty = document.getElementById('state-empty')!;
 
-    const [pollsRes, votesRes, playersRes] = await Promise.all([
+    const [pollsRes, votesRes, playersRes, resultsRes] = await Promise.all([
       supabase
         .from('polls')
         .select(
@@ -201,6 +201,7 @@ import Base from '../layouts/Base.astro';
         .order('sort_order', { foreignTable: 'poll_options', ascending: true }),
       supabase.from('votes').select('id, poll_id, option_id, text_value, player_id'),
       supabase.from('players').select('id, name, emoji, avatar_url'),
+      supabase.from('poll_results').select('poll_id, home_score, away_score'),
     ]);
 
     loading.hidden = true;
@@ -213,6 +214,7 @@ import Base from '../layouts/Base.astro';
     const polls = pollsRes.data ?? [];
     allVotesState = votesRes.data ?? [];
     const players = playersRes.data ?? [];
+    const resultsByPoll = new Map((resultsRes.data ?? []).map((r) => [r.poll_id, r]));
 
     if (polls.length === 0) {
       empty.hidden = false;
@@ -221,9 +223,16 @@ import Base from '../layouts/Base.astro';
 
     document.getElementById('sections')!.hidden = false;
 
+    // Not-yet-played matches first (so there's always something votable at
+    // the top instead of scrolling past every finished/collapsed one),
+    // chronological within each group.
     const jornada = polls
       .filter((p) => p.category === 'Jornada')
-      .sort((a, b) => (a.kickoff_at ?? '').localeCompare(b.kickoff_at ?? ''));
+      .sort((a, b) => {
+        const finishedDiff = Number(isMatchFinished(a)) - Number(isMatchFinished(b));
+        if (finishedDiff !== 0) return finishedDiff;
+        return (a.kickoff_at ?? '').localeCompare(b.kickoff_at ?? '');
+      });
     const minijuegos = polls.filter((p) => p.category === 'Minijuegos');
     const clasificacion = polls.find((p) => p.category === 'Clasificación');
 
@@ -231,6 +240,8 @@ import Base from '../layouts/Base.astro';
       document.getElementById('jornada-section')!.hidden = false;
       const list = document.getElementById('jornada-list')!;
       for (const poll of jornada) {
+        const r = resultsByPoll.get(poll.id);
+        const result = r ? { homeScore: r.home_score, awayScore: r.away_score } : null;
         list.appendChild(
           renderMatchCard(
             poll,
@@ -239,7 +250,8 @@ import Base from '../layouts/Base.astro';
             (updated) => {
               allVotesState = updated;
             },
-            base
+            base,
+            result
           )
         );
       }

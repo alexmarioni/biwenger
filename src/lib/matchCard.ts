@@ -1,15 +1,28 @@
 import { renderPollCard, isPollExpired, collapseClosedCard, type PollCardPlayer } from './pollCard';
 import { crestImgHtml } from './crests';
 
+export type MatchResult = { homeScore: number | null; awayScore: number | null } | null;
+
+/** Whether a Jornada match is done accepting votes — same rule renderMatchCard
+ * uses internally, exported so pages can sort not-yet-played matches first
+ * without duplicating the kickoff/expiry check. */
+export function isMatchFinished(poll: any): boolean {
+  const kickoffPassed = !!poll.kickoff_at && new Date(poll.kickoff_at).getTime() <= Date.now();
+  return kickoffPassed || isPollExpired(poll);
+}
+
 /** Renders a Jornada poll (title "Home vs Away") as a rich match card:
  * crests, home/away, venue, kickoff time in Argentina time, then reuses
- * renderPollCard's option buttons/voting logic underneath. */
+ * renderPollCard's option buttons/voting logic underneath. `result` (from
+ * poll_results.home_score/away_score) shows the real scoreline instead of
+ * "VS" once the match has been resolved by hand. */
 export function renderMatchCard(
   poll: any,
   allVotes: any[],
   player: PollCardPlayer,
   onVote: (updatedVotes: any[]) => void,
-  base: string
+  base: string,
+  result: MatchResult = null
 ): HTMLElement {
   const [home, away] = poll.title.split(' vs ');
   // Voting closes the instant kickoff hits — status stays 'open' in the DB
@@ -18,6 +31,7 @@ export function renderMatchCard(
   const kickoffPassed = !!poll.kickoff_at && new Date(poll.kickoff_at).getTime() <= Date.now();
   const effectivePoll =
     (kickoffPassed || isPollExpired(poll)) && poll.status === 'open' ? { ...poll, status: 'closed' } : poll;
+  const hasScore = !!result && result.homeScore != null && result.awayScore != null;
 
   const card = document.createElement('article');
   card.className = 'match-card';
@@ -33,7 +47,11 @@ export function renderMatchCard(
       ${crestImgHtml(home, base)}
       <span class="match-team-name">${home}</span>
     </div>
-    <span class="match-vs">VS</span>
+    ${
+      hasScore
+        ? `<span class="match-score">${result!.homeScore} - ${result!.awayScore}</span>`
+        : '<span class="match-vs">VS</span>'
+    }
     <div class="match-team">
       ${crestImgHtml(away, base)}
       <span class="match-team-name">${away}</span>
@@ -47,7 +65,7 @@ export function renderMatchCard(
     meta.innerHTML = `
       ${poll.venue ? `<span class="match-venue">🏟️ ${poll.venue}</span>` : ''}
       ${poll.kickoff_at ? `<span class="match-time">🕒 ${formatArgentinaTime(poll.kickoff_at)}</span>` : ''}
-      ${kickoffPassed ? `<span class="match-locked">🔒 Ya empezó</span>` : ''}
+      ${kickoffPassed ? `<span class="match-locked">🔒 Finalizado</span>` : ''}
     `;
     head.appendChild(meta);
   }
@@ -61,7 +79,7 @@ export function renderMatchCard(
     player,
     (updated) => {
       onVote(updated);
-      card.replaceWith(renderMatchCard(poll, updated, player, onVote, base));
+      card.replaceWith(renderMatchCard(poll, updated, player, onVote, base, result));
     },
     { selfUpdate: false }
   );

@@ -621,6 +621,19 @@ a {
   flex-shrink: 0;
 }
 
+.match-score {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.match-card.poll-card-closed .match-score {
+  font-size: 0.95rem;
+}
+
 .match-meta {
   display: flex;
   justify-content: center;
