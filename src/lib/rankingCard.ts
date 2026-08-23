@@ -1,7 +1,7 @@
 import { supabase } from './supabase';
 import { crestPath } from './crests';
 import { playerAvatarHtml } from './playerAvatar';
-import type { PollCardPlayer } from './pollCard';
+import { isPollEffectivelyOpen, type PollCardPlayer } from './pollCard';
 
 function parseOrder(textValue: string | null | undefined, options: any[]): any[] {
   if (!textValue) return options;
@@ -40,7 +40,7 @@ export function renderRankingCard(
   const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
   const myVote = player ? pollVotes.find((v) => v.player_id === player.id) : undefined;
   const baseOptions = [...(poll.poll_options ?? [])].sort((a, b) => a.sort_order - b.sort_order);
-  const isOpen = poll.status === 'open';
+  const isOpen = isPollEffectivelyOpen(poll);
   const pastLock = !!lockAt && Date.now() >= new Date(lockAt).getTime();
   const lockedOut = pastLock && !!myVote;
   const canVote = !!player && isOpen && !lockedOut;
@@ -274,6 +274,7 @@ export function renderRankingCard(
 
     saveBtn.addEventListener('click', async () => {
       saveBtn.disabled = true;
+      saveBtn.classList.add('pending');
       status.textContent = 'Guardando…';
       const ids = [...list.children].map((row) => (row as HTMLElement).dataset.optionId);
       const textValue = JSON.stringify(ids);
@@ -297,6 +298,7 @@ export function renderRankingCard(
         // A late first submission (pastLock was true when this render
         // happened, meaning myVote didn't exist yet) locks immediately —
         // no second chance to keep tweaking after the deadline.
+        saveBtn.classList.remove('pending');
         if (pastLock) {
           saveBtn.disabled = true;
           saveBtn.textContent = '🔒 Cerrado';
@@ -312,6 +314,7 @@ export function renderRankingCard(
         }
       } else {
         saveBtn.disabled = false;
+        saveBtn.classList.remove('pending');
         status.textContent = 'Error al guardar, probá de nuevo.';
       }
     });

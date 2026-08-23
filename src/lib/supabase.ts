@@ -39,6 +39,7 @@ export interface Poll {
   allow_empty: boolean;
   empty_label: string | null;
   featured: boolean;
+  closes_at: string | null;
 }
 
 export interface Vote {

@@ -174,7 +174,7 @@ import Base from '../layouts/Base.astro';
   import { supabase } from '../lib/supabase';
   import { getStoredPlayer, clearStoredPlayer } from '../lib/identity';
   import { redirectIfMaintenance } from '../lib/maintenance';
-  import { renderPollCard } from '../lib/pollCard';
+  import { renderPollCard, isPollEffectivelyOpen } from '../lib/pollCard';
   import { playerAvatarHtml } from '../lib/playerAvatar';
 
   const base = import.meta.env.BASE_URL;
@@ -209,7 +209,7 @@ import Base from '../layouts/Base.astro';
 
     const { data: polls, error: pollsError } = await supabase
       .from('polls')
-      .select('id, title, description, status, poll_type, category, created_at, featured, placeholder, min_value, max_value, allow_empty, empty_label, poll_options(id, label, hint, sort_order)')
+      .select('id, title, description, status, poll_type, category, created_at, featured, placeholder, min_value, max_value, allow_empty, empty_label, closes_at, poll_options(id, label, hint, sort_order)')
       .order('created_at', { ascending: true })
       .order('sort_order', { foreignTable: 'poll_options', ascending: true });
 
@@ -264,7 +264,7 @@ import Base from '../layouts/Base.astro';
     const done: any[] = [];
 
     for (const poll of allPolls) {
-      const isOpen = poll.status === 'open';
+      const isOpen = isPollEffectivelyOpen(poll);
       const myVote = allVotesState.find((v) => v.poll_id === poll.id && v.player_id === player.id);
       if (isOpen && !myVote) {
         pending.push(poll);

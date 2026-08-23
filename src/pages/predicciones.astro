@@ -194,7 +194,7 @@ import Base from '../layouts/Base.astro';
       supabase
         .from('polls')
         .select(
-          'id, title, description, status, poll_type, category, created_at, venue, kickoff_at, poll_options(id, label, hint, sort_order)'
+          'id, title, description, status, poll_type, category, created_at, closes_at, venue, kickoff_at, poll_options(id, label, hint, sort_order)'
         )
         .in('category', ['Jornada', 'Minijuegos', 'Clasificación'])
         .order('created_at', { ascending: true })

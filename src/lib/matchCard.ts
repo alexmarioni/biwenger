@@ -1,4 +1,4 @@
-import { renderPollCard, type PollCardPlayer } from './pollCard';
+import { renderPollCard, isPollExpired, collapseClosedCard, type PollCardPlayer } from './pollCard';
 import { crestImgHtml } from './crests';
 
 /** Renders a Jornada poll (title "Home vs Away") as a rich match card:
@@ -16,10 +16,15 @@ export function renderMatchCard(
   // (nobody flips it match by match), so this is purely a client-side
   // clock check each render.
   const kickoffPassed = !!poll.kickoff_at && new Date(poll.kickoff_at).getTime() <= Date.now();
-  const effectivePoll = kickoffPassed && poll.status === 'open' ? { ...poll, status: 'closed' } : poll;
+  const effectivePoll =
+    (kickoffPassed || isPollExpired(poll)) && poll.status === 'open' ? { ...poll, status: 'closed' } : poll;
 
   const card = document.createElement('article');
   card.className = 'match-card';
+
+  const head = document.createElement('div');
+  head.className = 'match-head';
+  card.appendChild(head);
 
   const teams = document.createElement('div');
   teams.className = 'match-teams';
@@ -34,7 +39,7 @@ export function renderMatchCard(
       <span class="match-team-name">${away}</span>
     </div>
   `;
-  card.appendChild(teams);
+  head.appendChild(teams);
 
   if (poll.venue || poll.kickoff_at) {
     const meta = document.createElement('div');
@@ -44,7 +49,7 @@ export function renderMatchCard(
       ${poll.kickoff_at ? `<span class="match-time">🕒 ${formatArgentinaTime(poll.kickoff_at)}</span>` : ''}
       ${kickoffPassed ? `<span class="match-locked">🔒 Ya empezó</span>` : ''}
     `;
-    card.appendChild(meta);
+    head.appendChild(meta);
   }
 
   // selfUpdate:false because renderPollCard's own in-place replaceWith
@@ -63,7 +68,7 @@ export function renderMatchCard(
   const options = inner.querySelector('.options');
   if (options) card.appendChild(options);
 
-  return card;
+  return collapseClosedCard(card, effectivePoll.status === 'open', '.match-head');
 }
 
 function formatArgentinaTime(iso: string): string {

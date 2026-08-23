@@ -5,6 +5,58 @@ export type PollCardPlayer = { id: string; name: string; emoji: string } | null;
 
 const base = import.meta.env.BASE_URL;
 
+/** `poll.closes_at` (nullable) is an optional voting deadline set by hand
+ * in SQL — null means the poll stays open indefinitely. Purely a
+ * client-side clock check, same pattern as matchCard's kickoff cutoff:
+ * nobody flips `status` to 'closed' in the DB when a deadline passes. */
+export function isPollExpired(poll: any): boolean {
+  return !!poll.closes_at && new Date(poll.closes_at).getTime() <= Date.now();
+}
+
+export function isPollEffectivelyOpen(poll: any): boolean {
+  return poll.status === 'open' && !isPollExpired(poll);
+}
+
+/** Closed polls used to render at full size, identical to open ones apart
+ * from a small badge — with several stacked on a page they were impossible
+ * to tell apart and wasted a lot of space. When `isOpen` is false, this
+ * pulls the already-appended `headSelector` node (title+badges, or a
+ * match's crests+teams) out of `card` and into a `<summary>`, then reuses
+ * `card` itself — minus that head — as the collapsible body. Open cards
+ * are returned untouched, so nothing changes for the interactive path
+ * (self-updating `card.replaceWith(...)` calls elsewhere keep referencing
+ * the same live element either way). */
+export function collapseClosedCard(card: HTMLElement, isOpen: boolean, headSelector: string): HTMLElement {
+  if (isOpen) return card;
+
+  const head = card.querySelector(`:scope > ${headSelector}`);
+  const details = document.createElement('details');
+  details.className = `${card.className} poll-card-closed`;
+
+  const summary = document.createElement('summary');
+  summary.className = 'poll-summary';
+  if (head) summary.appendChild(head);
+  details.appendChild(summary);
+
+  card.className = 'poll-body';
+  details.appendChild(card);
+
+  return details;
+}
+
+/** Short Spanish "closes in..." label for the deadline badge. Only shown
+ * while the poll is still open and has a closes_at set. */
+function formatClosesIn(closesAt: string): string {
+  const diffMs = new Date(closesAt).getTime() - Date.now();
+  if (diffMs <= 0) return 'Cierra ya';
+  const diffMin = Math.round(diffMs / 60000);
+  if (diffMin < 60) return `Cierra en ${diffMin} min`;
+  const diffHours = Math.round(diffMin / 60);
+  if (diffHours < 24) return `Cierra en ${diffHours} h`;
+  const diffDays = Math.round(diffHours / 24);
+  return `Cierra en ${diffDays} ${diffDays === 1 ? 'día' : 'días'}`;
+}
+
 /** Team-related autocomplete options are either a bare team name ("Arsenal")
  * or end with "(Team Name)" (e.g. a coach's option "Mikel Arteta (Arsenal)").
  * Returns the resolvable crest team name, or null if this option isn't
@@ -68,8 +120,8 @@ export function renderPollCard(
   const pollVotes = allVotes.filter((v) => v.poll_id === poll.id);
   const totalVotes = pollVotes.length;
   const isMulti = poll.poll_type === 'multi';
-  const canVote = !!player && poll.status === 'open';
-  const isOpen = poll.status === 'open';
+  const isOpen = isPollEffectivelyOpen(poll);
+  const canVote = !!player && isOpen;
   const myOptionIds = new Set(
     player ? pollVotes.filter((v) => v.player_id === player.id).map((v) => v.option_id) : []
   );
@@ -83,7 +135,8 @@ export function renderPollCard(
     <span class="poll-title">${poll.title}</span>
     <span class="poll-badges">
       ${isMulti ? '<span class="badge">Elegí varias</span>' : ''}
-      <span class="badge ${isOpen ? '' : 'badge-closed'}">${isOpen ? 'Abierta' : 'Cerrada'}</span>
+      ${isOpen && poll.closes_at ? `<span class="badge badge-deadline">${formatClosesIn(poll.closes_at)}</span>` : ''}
+      <span class="badge ${isOpen ? '' : 'badge-closed'}">${isOpen ? 'Abierta' : `Cerrada · ${totalVotes} ${totalVotes === 1 ? 'voto' : 'votos'}`}</span>
     </span>
   `;
   card.appendChild(head);
@@ -97,17 +150,17 @@ export function renderPollCard(
 
   if (poll.poll_type === 'text') {
     renderTextAnswer(card, poll, allVotes, canVote, player, onVote, options);
-    return card;
+    return collapseClosedCard(card, isOpen, '.poll-head');
   }
 
   if (poll.poll_type === 'autocomplete') {
     renderAutocomplete(card, poll, allVotes, canVote, player, onVote, options);
-    return card;
+    return collapseClosedCard(card, isOpen, '.poll-head');
   }
 
   if (poll.poll_type === 'player_autocomplete') {
     renderPlayerAutocomplete(card, poll, allVotes, canVote, player, onVote, options);
-    return card;
+    return collapseClosedCard(card, isOpen, '.poll-head');
   }
 
   const optionsEl = document.createElement('div');
@@ -136,6 +189,7 @@ export function renderPollCard(
     if (canVote && player) {
       btn.addEventListener('click', async () => {
         btn.disabled = true;
+        btn.classList.add('pending');
 
         if (isMulti) {
           if (isMine) {
@@ -181,6 +235,7 @@ export function renderPollCard(
         }
 
         btn.disabled = false;
+        btn.classList.remove('pending');
       });
     }
 
@@ -193,7 +248,7 @@ export function renderPollCard(
   }
 
   card.appendChild(optionsEl);
-  return card;
+  return collapseClosedCard(card, isOpen, '.poll-head');
 }
 
 function renderTextAnswer(
@@ -286,6 +341,8 @@ function renderTextAnswer(
 
       input.disabled = true;
       submit.disabled = true;
+      input.classList.add('pending');
+      submit.classList.add('pending');
 
       await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player.id);
       const { error } = await supabase.from('votes').insert({ poll_id: poll.id, player_id: player.id, text_value: value });
@@ -300,6 +357,8 @@ function renderTextAnswer(
       } else {
         input.disabled = false;
         submit.disabled = false;
+        input.classList.remove('pending');
+        submit.classList.remove('pending');
       }
     });
   }
@@ -395,6 +454,7 @@ function renderAutocomplete(
     updateCrestBadge(option.label);
     closeList();
     input.disabled = true;
+    input.classList.add('pending');
 
     await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player!.id);
     const { error } = await supabase
@@ -410,6 +470,7 @@ function renderAutocomplete(
       if (selfUpdate) card.replaceWith(renderPollCard(poll, updated, player, onVote, options));
     } else {
       input.disabled = false;
+      input.classList.remove('pending');
     }
   }
 
@@ -570,6 +631,7 @@ function renderPlayerAutocomplete(
     updateCrestBadge(p.team);
     closeList();
     input.disabled = true;
+    input.classList.add('pending');
 
     await supabase.from('votes').delete().eq('poll_id', poll.id).eq('player_id', player!.id);
     const { error } = await supabase
@@ -585,6 +647,7 @@ function renderPlayerAutocomplete(
       if (selfUpdate) card.replaceWith(renderPollCard(poll, updated, player, onVote, options));
     } else {
       input.disabled = false;
+      input.classList.remove('pending');
     }
   }
 
