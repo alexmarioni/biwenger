@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-08-21T06:16:13.935Z",
+  "generated_at": "2026-08-24T09:51:25.034Z",
   "source": "https://en.wikipedia.org/wiki/List_of_English_football_transfers_summer_2026",
-  "count": 186,
+  "count": 189,
   "transfers": [
+    {
+      "date": "21 August 2026",
+      "player": "Ezri Konsa",
+      "from": "Aston Villa",
+      "to": "Arsenal",
+      "fee": "£51m"
+    },
+    {
+      "date": "21 August 2026",
+      "player": "Curtis Jones",
+      "from": "Liverpool",
+      "to": "Inter Milan",
+      "fee": "£30m"
+    },
+    {
+      "date": "21 August 2026",
+      "player": "Dan Bentley",
+      "from": "Wolverhampton Wanderers",
+      "to": "Coventry City",
+      "fee": "Undisclosed"
+    },
     {
       "date": "20 August 2026",
       "player": "George Hirst",
@@ -401,27 +422,6 @@
       "from": "Brighton & Hove Albion",
       "to": "Coventry City",
       "fee": "£22m"
-    },
-    {
-      "date": "4 August 2026",
-      "player": "Florentino Luís",
-      "from": "Burnley",
-      "to": "Ipswich Town",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "4 August 2026",
-      "player": "Ahmed Abdullahi",
-      "from": "Sunderland",
-      "to": "Eyüpspor",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "3 August 2026",
-      "player": "César Palacios",
-      "from": "Real Madrid",
-      "to": "Fulham",
-      "fee": "Undisclosed"
     }
   ]
 }
