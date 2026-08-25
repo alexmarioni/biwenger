@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-21T06:42:46.874Z",
+  "generated_at": "2026-08-25T09:37:25.734Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 592,
+  "count": 588,
   "failed_clubs": 0,
   "players": [
     {
@@ -48,6 +48,11 @@
       "name": "Ethan Nwaneri",
       "team": "Arsenal",
       "position": "M"
+    },
+    {
+      "name": "Ezri Konsa",
+      "team": "Arsenal",
+      "position": "D"
     },
     {
       "name": "Fabio Vieira",
@@ -150,6 +155,11 @@
       "position": "D"
     },
     {
+      "name": "Aaron Wan-Bissaka",
+      "team": "Aston Villa",
+      "position": "D"
+    },
+    {
       "name": "Alejandro Garnacho",
       "team": "Aston Villa",
       "position": "F"
@@ -188,11 +198,6 @@
       "name": "Emiliano Martínez",
       "team": "Aston Villa",
       "position": "G"
-    },
-    {
-      "name": "Ezri Konsa",
-      "team": "Aston Villa",
-      "position": "D"
     },
     {
       "name": "George Hemmings",
@@ -775,21 +780,6 @@
       "position": "D"
     },
     {
-      "name": "Axel Disasi",
-      "team": "Chelsea",
-      "position": "D"
-    },
-    {
-      "name": "Benoît Badiashile",
-      "team": "Chelsea",
-      "position": "D"
-    },
-    {
-      "name": "Calvin Diakite",
-      "team": "Chelsea",
-      "position": "D"
-    },
-    {
       "name": "Cole Palmer",
       "team": "Chelsea",
       "position": "M"
@@ -803,11 +793,6 @@
       "name": "Dário Essugo",
       "team": "Chelsea",
       "position": "M"
-    },
-    {
-      "name": "David Datro Fofana",
-      "team": "Chelsea",
-      "position": "F"
     },
     {
       "name": "Emmanuel Emegha",
@@ -856,11 +841,6 @@
     },
     {
       "name": "Josh Acheampong",
-      "team": "Chelsea",
-      "position": "D"
-    },
-    {
-      "name": "Landon Emenalo",
       "team": "Chelsea",
       "position": "D"
     },
@@ -935,11 +915,6 @@
       "position": "D"
     },
     {
-      "name": "Omari Kellyman",
-      "team": "Chelsea",
-      "position": "M"
-    },
-    {
       "name": "Pedro Neto",
       "team": "Chelsea",
       "position": "F"
@@ -970,11 +945,6 @@
       "position": "M"
     },
     {
-      "name": "Ted Curd",
-      "team": "Chelsea",
-      "position": "G"
-    },
-    {
       "name": "Teddy Sharman-Lowe",
       "team": "Chelsea",
       "position": "G"
@@ -1002,7 +972,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Bobby Thomas",
@@ -1021,6 +991,11 @@
     },
     {
       "name": "Carl Rushworth",
+      "team": "Coventry City",
+      "position": "G"
+    },
+    {
+      "name": "Daniel Bentley",
       "team": "Coventry City",
       "position": "G"
     },
@@ -1185,11 +1160,6 @@
       "position": "D"
     },
     {
-      "name": "David Ozoh",
-      "team": "Crystal Palace",
-      "position": "M"
-    },
-    {
       "name": "Dean Henderson",
       "team": "Crystal Palace",
       "position": "G"
@@ -1230,19 +1200,9 @@
       "position": "M"
     },
     {
-      "name": "Jesurun Rak-Sakyi",
-      "team": "Crystal Palace",
-      "position": "F"
-    },
-    {
       "name": "Jørgen Strand Larsen",
       "team": "Crystal Palace",
       "position": "F"
-    },
-    {
-      "name": "Joseph Whitworth",
-      "team": "Crystal Palace",
-      "position": "G"
     },
     {
       "name": "Justin Devenny",
@@ -1263,11 +1223,6 @@
       "name": "Remi Matthews",
       "team": "Crystal Palace",
       "position": "G"
-    },
-    {
-      "name": "Romain Esse",
-      "team": "Crystal Palace",
-      "position": "M"
     },
     {
       "name": "Takehiro Tomiyasu",
@@ -1505,11 +1460,6 @@
       "position": "D"
     },
     {
-      "name": "Macauley Zepa",
-      "team": "Fulham",
-      "position": "F"
-    },
-    {
       "name": "Oscar Bobb",
       "team": "Fulham",
       "position": "M"
@@ -1548,6 +1498,11 @@
       "name": "Abdülkadir Ömür",
       "team": "Hull City",
       "position": "M"
+    },
+    {
+      "name": "Archie Howard",
+      "team": "Hull City",
+      "position": "G"
     },
     {
       "name": "Babajide David",
@@ -1695,6 +1650,11 @@
       "position": "D"
     },
     {
+      "name": "Tyrell Sellars-Fleming",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
       "name": "Abdoul Ouattara",
       "team": "Ipswich Town",
       "position": "D"
@@ -1713,11 +1673,6 @@
       "name": "Azor Matusiwa",
       "team": "Ipswich Town",
       "position": "M"
-    },
-    {
-      "name": "Ben Johnson",
-      "team": "Ipswich Town",
-      "position": "D"
     },
     {
       "name": "Cameron Humphreys",
@@ -1815,11 +1770,6 @@
       "position": "M"
     },
     {
-      "name": "Kayne Van Oevelen",
-      "team": "Ipswich Town",
-      "position": "G"
-    },
-    {
       "name": "Kjell Scherpen",
       "team": "Ipswich Town",
       "position": "G"
@@ -1850,6 +1800,11 @@
       "position": "G"
     },
     {
+      "name": "Alfie Cresswell",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
       "name": "Anton Stach",
       "team": "Leeds United",
       "position": "M"
@@ -1865,9 +1820,19 @@
       "position": "M"
     },
     {
+      "name": "Callum Mills",
+      "team": "Leeds United",
+      "position": "M"
+    },
+    {
       "name": "Daniel James",
       "team": "Leeds United",
       "position": "F"
+    },
+    {
+      "name": "Darryl Ombang",
+      "team": "Leeds United",
+      "position": "G"
     },
     {
       "name": "Dominic Calvert-Lewin",
@@ -1915,6 +1880,11 @@
       "position": "D"
     },
     {
+      "name": "Jayden Lienou",
+      "team": "Leeds United",
+      "position": "D"
+    },
+    {
       "name": "Joe Rodon",
       "team": "Leeds United",
       "position": "D"
@@ -1940,9 +1910,19 @@
       "position": "F"
     },
     {
-      "name": "Sam Byram",
+      "name": "Rhys Chadwick",
       "team": "Leeds United",
-      "position": "D"
+      "position": "M"
+    },
+    {
+      "name": "Rory Mahady",
+      "team": "Leeds United",
+      "position": "G"
+    },
+    {
+      "name": "Sam Chambers",
+      "team": "Leeds United",
+      "position": "M"
     },
     {
       "name": "Sean Longstaff",
@@ -1988,11 +1968,6 @@
       "name": "Conor Bradley",
       "team": "Liverpool",
       "position": "D"
-    },
-    {
-      "name": "Curtis Jones",
-      "team": "Liverpool",
-      "position": "M"
     },
     {
       "name": "Dominik Szoboszlai",
@@ -2065,9 +2040,9 @@
       "position": "D"
     },
     {
-      "name": "Lucas Pitt",
+      "name": "Lewis Koumas",
       "team": "Liverpool",
-      "position": "D"
+      "position": "F"
     },
     {
       "name": "Milos Kerkez",
@@ -2445,11 +2420,6 @@
       "position": "M"
     },
     {
-      "name": "Henry Johnson",
-      "team": "Newcastle United",
-      "position": "D"
-    },
-    {
       "name": "Jacob Murphy",
       "team": "Newcastle United",
       "position": "M"
@@ -2645,11 +2615,6 @@
       "position": "D"
     },
     {
-      "name": "Omar Richards",
-      "team": "Nottingham Forest",
-      "position": "D"
-    },
-    {
       "name": "Omari Hutchinson",
       "team": "Nottingham Forest",
       "position": "F"
@@ -2716,6 +2681,11 @@
     },
     {
       "name": "Danny Ballard",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
+      "name": "Dayann Methalie",
       "team": "Sunderland",
       "position": "D"
     },
@@ -2890,6 +2860,11 @@
       "position": "D"
     },
     {
+      "name": "Luca Williams-Barnett",
+      "team": "Tottenham Hotspur",
+      "position": "M"
+    },
+    {
       "name": "Lucas Bergvall",
       "team": "Tottenham Hotspur",
       "position": "M"
@@ -2918,6 +2893,11 @@
       "name": "Micky van de Ven",
       "team": "Tottenham Hotspur",
       "position": "D"
+    },
+    {
+      "name": "Mikey Moore",
+      "team": "Tottenham Hotspur",
+      "position": "F"
     },
     {
       "name": "Mohammed Kudus",
