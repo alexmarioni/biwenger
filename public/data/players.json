@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-25T09:37:25.734Z",
+  "generated_at": "2026-09-01T13:59:55.030Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 588,
+  "count": 593,
   "failed_clubs": 0,
   "players": [
     {
@@ -53,11 +53,6 @@
       "name": "Ezri Konsa",
       "team": "Arsenal",
       "position": "D"
-    },
-    {
-      "name": "Fabio Vieira",
-      "team": "Arsenal",
-      "position": "M"
     },
     {
       "name": "Gabriel Jesus",
@@ -130,11 +125,6 @@
       "position": "D"
     },
     {
-      "name": "Reiss Nelson",
-      "team": "Arsenal",
-      "position": "F"
-    },
-    {
       "name": "Riccardo Calafiori",
       "team": "Arsenal",
       "position": "D"
@@ -195,11 +185,6 @@
       "position": "M"
     },
     {
-      "name": "Emiliano Martínez",
-      "team": "Aston Villa",
-      "position": "G"
-    },
-    {
       "name": "George Hemmings",
       "team": "Aston Villa",
       "position": "M"
@@ -208,6 +193,11 @@
       "name": "Ian Maatsen",
       "team": "Aston Villa",
       "position": "D"
+    },
+    {
+      "name": "Ibrahim Mbaye",
+      "team": "Aston Villa",
+      "position": "F"
     },
     {
       "name": "James Wright",
@@ -240,6 +230,11 @@
       "position": "F"
     },
     {
+      "name": "Leon Goretzka",
+      "team": "Aston Villa",
+      "position": "M"
+    },
+    {
       "name": "Luka Lynch",
       "team": "Aston Villa",
       "position": "F"
@@ -265,7 +260,7 @@
       "position": "D"
     },
     {
-      "name": "Ollie Watkins",
+      "name": "Nicolas Jackson",
       "team": "Aston Villa",
       "position": "F"
     },
@@ -288,6 +283,11 @@
       "name": "Tammy Abraham",
       "team": "Aston Villa",
       "position": "F"
+    },
+    {
+      "name": "Taylor Harwood-Bellis",
+      "team": "Aston Villa",
+      "position": "D"
     },
     {
       "name": "Triston Rowe",
@@ -420,14 +420,14 @@
       "position": "M"
     },
     {
-      "name": "Matai Akinmboni",
+      "name": "Max Aarons",
       "team": "Bournemouth",
       "position": "D"
     },
     {
-      "name": "Max Aarons",
+      "name": "Michele Di Gregorio",
       "team": "Bournemouth",
-      "position": "D"
+      "position": "G"
     },
     {
       "name": "Rayan",
@@ -453,11 +453,6 @@
       "name": "Veljko Milosavljevic",
       "team": "Bournemouth",
       "position": "D"
-    },
-    {
-      "name": "William Dennis",
-      "team": "Bournemouth",
-      "position": "G"
     },
     {
       "name": "Aaron Hickey",
@@ -490,14 +485,14 @@
       "position": "F"
     },
     {
+      "name": "El Hadji Malick Diouf",
+      "team": "Brentford",
+      "position": "D"
+    },
+    {
       "name": "Ellery Balcombe",
       "team": "Brentford",
       "position": "G"
-    },
-    {
-      "name": "Ethan Pinnock",
-      "team": "Brentford",
-      "position": "D"
     },
     {
       "name": "Fábio Carvalho",
@@ -620,11 +615,6 @@
       "position": "G"
     },
     {
-      "name": "Carlos Baleba",
-      "team": "Brighton",
-      "position": "M"
-    },
-    {
       "name": "Charalambos Kostoulas",
       "team": "Brighton",
       "position": "F"
@@ -660,6 +650,11 @@
       "position": "D"
     },
     {
+      "name": "Freddie Simmonds",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
       "name": "Georginio Rutter",
       "team": "Brighton",
       "position": "F"
@@ -680,9 +675,19 @@
       "position": "M"
     },
     {
+      "name": "Jaouen Hadjam",
+      "team": "Brighton",
+      "position": "D"
+    },
+    {
       "name": "Jason Steele",
       "team": "Brighton",
       "position": "G"
+    },
+    {
+      "name": "Josh Robertson",
+      "team": "Brighton",
+      "position": "M"
     },
     {
       "name": "Kaoru Mitoma",
@@ -701,6 +706,11 @@
     },
     {
       "name": "Malick Yalcouyé",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Matías Orozco",
       "team": "Brighton",
       "position": "M"
     },
@@ -750,6 +760,11 @@
       "position": "F"
     },
     {
+      "name": "Shane Nti",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
       "name": "Stefanos Tzimas",
       "team": "Brighton",
       "position": "F"
@@ -793,6 +808,11 @@
       "name": "Dário Essugo",
       "team": "Chelsea",
       "position": "M"
+    },
+    {
+      "name": "Emiliano Martínez",
+      "team": "Chelsea",
+      "position": "G"
     },
     {
       "name": "Emmanuel Emegha",
@@ -850,11 +870,6 @@
       "position": "D"
     },
     {
-      "name": "Liam Delap",
-      "team": "Chelsea",
-      "position": "F"
-    },
-    {
       "name": "Mahdi Nicoll-Jazuli",
       "team": "Chelsea",
       "position": "M"
@@ -863,16 +878,6 @@
       "name": "Malo Gusto",
       "team": "Chelsea",
       "position": "D"
-    },
-    {
-      "name": "Mamadou Sarr",
-      "team": "Chelsea",
-      "position": "D"
-    },
-    {
-      "name": "Marc Guiu",
-      "team": "Chelsea",
-      "position": "F"
     },
     {
       "name": "Marco Palestra",
@@ -903,11 +908,6 @@
       "name": "Mykhailo Mudryk",
       "team": "Chelsea",
       "position": "M"
-    },
-    {
-      "name": "Nicolas Jackson",
-      "team": "Chelsea",
-      "position": "F"
     },
     {
       "name": "Olutayo Subuloye",
@@ -972,7 +972,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Bobby Thomas",
@@ -1008,6 +1008,11 @@
       "name": "Ephron Mason-Clark",
       "team": "Coventry City",
       "position": "M"
+    },
+    {
+      "name": "Ethan Pinnock",
+      "team": "Coventry City",
+      "position": "D"
     },
     {
       "name": "Frank Onyeka",
@@ -1050,11 +1055,6 @@
       "position": "M"
     },
     {
-      "name": "Kai Andrews",
-      "team": "Coventry City",
-      "position": "M"
-    },
-    {
       "name": "Kaine Kesler Hayden",
       "team": "Coventry City",
       "position": "D"
@@ -1080,11 +1080,6 @@
       "position": "M"
     },
     {
-      "name": "Miguel Ángel Brau",
-      "team": "Coventry City",
-      "position": "D"
-    },
-    {
       "name": "Milan van Ewijk",
       "team": "Coventry City",
       "position": "D"
@@ -1103,6 +1098,11 @@
       "name": "Sidiki Cherif",
       "team": "Coventry City",
       "position": "F"
+    },
+    {
+      "name": "Stephen Mfuni",
+      "team": "Coventry City",
+      "position": "D"
     },
     {
       "name": "Taiwo Awoniyi",
@@ -1130,6 +1130,11 @@
       "position": "F"
     },
     {
+      "name": "Axel Disasi",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
       "name": "Borna Sosa",
       "team": "Crystal Palace",
       "position": "D"
@@ -1153,11 +1158,6 @@
       "name": "Daichi Kamada",
       "team": "Crystal Palace",
       "position": "M"
-    },
-    {
-      "name": "Daniel Muñoz",
-      "team": "Crystal Palace",
-      "position": "D"
     },
     {
       "name": "Dean Henderson",
@@ -1255,11 +1255,6 @@
       "position": "F"
     },
     {
-      "name": "Adam Aznou",
-      "team": "Everton",
-      "position": "D"
-    },
-    {
       "name": "Beto",
       "team": "Everton",
       "position": "F"
@@ -1281,6 +1276,11 @@
     },
     {
       "name": "Harrison Armstrong",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Harvey Foster",
       "team": "Everton",
       "position": "M"
     },
@@ -1400,12 +1400,22 @@
       "position": "G"
     },
     {
+      "name": "Bradley Slade",
+      "team": "Fulham",
+      "position": "D"
+    },
+    {
       "name": "Calvin Bassey",
       "team": "Fulham",
       "position": "D"
     },
     {
       "name": "César Palacios",
+      "team": "Fulham",
+      "position": "M"
+    },
+    {
+      "name": "Chibuzo Nwoko",
       "team": "Fulham",
       "position": "M"
     },
@@ -1458,6 +1468,11 @@
       "name": "Luc de Fougerolles",
       "team": "Fulham",
       "position": "D"
+    },
+    {
+      "name": "Macauley Zepa",
+      "team": "Fulham",
+      "position": "F"
     },
     {
       "name": "Oscar Bobb",
@@ -1545,6 +1560,11 @@
       "position": "M"
     },
     {
+      "name": "Ilyas Ansah",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
       "name": "Jack Butland",
       "team": "Hull City",
       "position": "G"
@@ -1611,6 +1631,11 @@
     },
     {
       "name": "Mohamed Belloumi",
+      "team": "Hull City",
+      "position": "F"
+    },
+    {
+      "name": "Mohamed-Ali Cho",
       "team": "Hull City",
       "position": "F"
     },
@@ -1725,6 +1750,11 @@
       "position": "F"
     },
     {
+      "name": "Exequiel Palacios",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
       "name": "Fatawu Issahaku",
       "team": "Ipswich Town",
       "position": "F"
@@ -1747,7 +1777,7 @@
     {
       "name": "Jack Taylor",
       "team": "Ipswich Town",
-      "position": "M"
+      "position": "D"
     },
     {
       "name": "Jacob Greaves",
@@ -1785,12 +1815,22 @@
       "position": "M"
     },
     {
+      "name": "Matthew Charles Compton",
+      "team": "Ipswich Town",
+      "position": "M"
+    },
+    {
       "name": "Sasa Lukic",
       "team": "Ipswich Town",
       "position": "M"
     },
     {
       "name": "Sindre Walle Egeli",
+      "team": "Ipswich Town",
+      "position": "F"
+    },
+    {
+      "name": "Tudor Mendel-Idowu",
       "team": "Ipswich Town",
       "position": "F"
     },
@@ -1890,14 +1930,14 @@
       "position": "D"
     },
     {
-      "name": "Lucas Perri",
-      "team": "Leeds United",
-      "position": "G"
-    },
-    {
       "name": "Lukas Nmecha",
       "team": "Leeds United",
       "position": "F"
+    },
+    {
+      "name": "Michael Zetterer",
+      "team": "Leeds United",
+      "position": "G"
     },
     {
       "name": "Nico Elvedi",
@@ -1955,9 +1995,9 @@
       "position": "G"
     },
     {
-      "name": "Calvin Ramsay",
+      "name": "Bradley Barcola",
       "team": "Liverpool",
-      "position": "D"
+      "position": "F"
     },
     {
       "name": "Cody Gakpo",
@@ -2065,11 +2105,6 @@
       "position": "M"
     },
     {
-      "name": "Stefan Bajcetic",
-      "team": "Liverpool",
-      "position": "M"
-    },
-    {
       "name": "Trey Nyoni",
       "team": "Liverpool",
       "position": "M"
@@ -2100,9 +2135,19 @@
       "position": "D"
     },
     {
+      "name": "Allan Elias",
+      "team": "Manchester City",
+      "position": "F"
+    },
+    {
       "name": "Antoine Semenyo",
       "team": "Manchester City",
       "position": "F"
+    },
+    {
+      "name": "Ayyoub Bouaddi",
+      "team": "Manchester City",
+      "position": "M"
     },
     {
       "name": "Claudio Echeverri",
@@ -2155,6 +2200,11 @@
       "position": "D"
     },
     {
+      "name": "Kaden Braithwaite",
+      "team": "Manchester City",
+      "position": "D"
+    },
+    {
       "name": "Marc Guéhi",
       "team": "Manchester City",
       "position": "D"
@@ -2175,19 +2225,9 @@
       "position": "M"
     },
     {
-      "name": "Nico González",
-      "team": "Manchester City",
-      "position": "M"
-    },
-    {
       "name": "Nico O'Reilly",
       "team": "Manchester City",
       "position": "D"
-    },
-    {
-      "name": "Omar Marmoush",
-      "team": "Manchester City",
-      "position": "F"
     },
     {
       "name": "Phil Foden",
@@ -2215,7 +2255,7 @@
       "position": "D"
     },
     {
-      "name": "Savinho",
+      "name": "Ryan McAidoo",
       "team": "Manchester City",
       "position": "F"
     },
@@ -2253,6 +2293,11 @@
       "name": "Bryan Mbeumo",
       "team": "Manchester United",
       "position": "F"
+    },
+    {
+      "name": "Carlos Baleba",
+      "team": "Manchester United",
+      "position": "M"
     },
     {
       "name": "Dermot Mee",
@@ -2355,11 +2400,6 @@
       "position": "F"
     },
     {
-      "name": "Toby Collyer",
-      "team": "Manchester United",
-      "position": "M"
-    },
-    {
       "name": "Tom Heaton",
       "team": "Manchester United",
       "position": "G"
@@ -2447,7 +2487,7 @@
     {
       "name": "Lewis Hall",
       "team": "Newcastle United",
-      "position": "D"
+      "position": "M"
     },
     {
       "name": "Lewis Miley",
@@ -2478,6 +2518,11 @@
       "name": "Nick Woltemade",
       "team": "Newcastle United",
       "position": "F"
+    },
+    {
+      "name": "Nico González",
+      "team": "Newcastle United",
+      "position": "M"
     },
     {
       "name": "Sean Neave",
@@ -2530,14 +2575,9 @@
       "position": "F"
     },
     {
-      "name": "Dilane Bakwa",
+      "name": "Daniel Muñoz",
       "team": "Nottingham Forest",
-      "position": "F"
-    },
-    {
-      "name": "Eric Da Silva Moreira",
-      "team": "Nottingham Forest",
-      "position": "F"
+      "position": "D"
     },
     {
       "name": "Ibrahim Sangaré",
@@ -2563,6 +2603,11 @@
       "name": "John Victor",
       "team": "Nottingham Forest",
       "position": "G"
+    },
+    {
+      "name": "Liam Delap",
+      "team": "Nottingham Forest",
+      "position": "F"
     },
     {
       "name": "Luca Netz",
@@ -2615,11 +2660,6 @@
       "position": "D"
     },
     {
-      "name": "Omari Hutchinson",
-      "team": "Nottingham Forest",
-      "position": "F"
-    },
-    {
       "name": "Ousmane Diomande",
       "team": "Nottingham Forest",
       "position": "D"
@@ -2633,11 +2673,6 @@
       "name": "Steven Benda",
       "team": "Nottingham Forest",
       "position": "G"
-    },
-    {
-      "name": "Tyler Bindon",
-      "team": "Nottingham Forest",
-      "position": "D"
     },
     {
       "name": "Xaver Schlager",
@@ -2705,19 +2740,14 @@
       "position": "M"
     },
     {
-      "name": "Jenson Seelt",
-      "team": "Sunderland",
-      "position": "D"
-    },
-    {
       "name": "Jocelin Ta Bi",
       "team": "Sunderland",
       "position": "F"
     },
     {
-      "name": "Luís Semedo",
+      "name": "Jules Ahoka",
       "team": "Sunderland",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Luke O'Nien",
@@ -2855,11 +2885,6 @@
       "position": "D"
     },
     {
-      "name": "Kota Takai",
-      "team": "Tottenham Hotspur",
-      "position": "D"
-    },
-    {
       "name": "Luca Williams-Barnett",
       "team": "Tottenham Hotspur",
       "position": "M"
@@ -2895,14 +2920,14 @@
       "position": "D"
     },
     {
-      "name": "Mikey Moore",
-      "team": "Tottenham Hotspur",
-      "position": "F"
-    },
-    {
       "name": "Mohammed Kudus",
       "team": "Tottenham Hotspur",
       "position": "M"
+    },
+    {
+      "name": "Omar Marmoush",
+      "team": "Tottenham Hotspur",
+      "position": "F"
     },
     {
       "name": "Pape Matar Sarr",
@@ -2930,9 +2955,9 @@
       "position": "M"
     },
     {
-      "name": "Souza",
+      "name": "Sávio",
       "team": "Tottenham Hotspur",
-      "position": "D"
+      "position": "F"
     },
     {
       "name": "Wilson Odobert",
