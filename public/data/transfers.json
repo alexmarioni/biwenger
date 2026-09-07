@@ -1,14 +1,238 @@
 {
-  "generated_at": "2026-08-31T16:52:12.597Z",
+  "generated_at": "2026-09-07T14:54:40.633Z",
   "source": "https://en.wikipedia.org/wiki/List_of_English_football_transfers_summer_2026",
-  "count": 211,
+  "count": 243,
   "transfers": [
     {
-      "date": "31 August 2026",
+      "date": "1 September 2026",
+      "player": "Joe Whitworth",
+      "from": "Crystal Palace",
+      "to": "Wigan Athletic",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Deivid Washington",
+      "from": "Chelsea",
+      "to": "Strasborug",
+      "fee": "£6.86m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Fábio Vieira",
+      "from": "Arsenal",
+      "to": "Hamburg",
+      "fee": "£8.6m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Quinten Timber",
+      "from": "Marseille",
+      "to": "Crystal Palace",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Sorba Thomas",
+      "from": "Leicester City",
+      "to": "Hull City",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Luís Semedo",
+      "from": "Sunderland",
+      "to": "Clermont Foot",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Nathan Patterson",
+      "from": "Everton",
+      "to": "Torino",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "David Ozoh",
+      "from": "Crystal Palace",
+      "to": "Derby County",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Brooke Norton-Cuffy",
+      "from": "Genoa",
+      "to": "Hull City",
+      "fee": "£12m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Iliman Ndiaye",
+      "from": "Everton",
+      "to": "Manchester City",
+      "fee": "£60m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Christos Mouzakitis",
+      "from": "Olympiacos",
+      "to": "Hull City",
+      "fee": "£13m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Ibrahim Mbaye",
+      "from": "Paris Saint-Germain",
+      "to": "Aston Villa",
+      "fee": "£47m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Ainsley Maitland-Niles",
+      "from": "Lyon",
+      "to": "Everton",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Gabriel Jesus",
+      "from": "Arsenal",
+      "to": "Barcelona",
+      "fee": "£8.6m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Tim Iroegbunam",
+      "from": "Everton",
+      "to": "Hull City",
+      "fee": "£13m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Taylor Harwood-Bellis",
+      "from": "Southampton",
+      "to": "Aston Villa",
+      "fee": "£25m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Marc Guiu",
+      "from": "Chelsea",
+      "to": "RB Leipzig",
+      "fee": "£14.6m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Malick Fofana",
+      "from": "Lyon",
+      "to": "Sunderland",
+      "fee": "£30m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Zian Flemming",
+      "from": "Burnley",
+      "to": "Ipswich Town",
+      "fee": "£20m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Matias Fernandez-Pardo",
+      "from": "Lille",
+      "to": "Newcastle United",
+      "fee": "£51.4m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Enzo Fernández",
+      "from": "Chelsea",
+      "to": "Manchester City",
+      "fee": "£125m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Cody Drameh",
+      "from": "Hull City",
+      "to": "Genoa",
+      "fee": "£3.4m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Ben Chilwell",
+      "from": "Strasbourg",
+      "to": "Crystal Palace",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Lucca Brughmans",
+      "from": "Genk",
+      "to": "Liverpool",
+      "fee": "£30m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Ilyas Ansah",
+      "from": "Union Berlin",
+      "to": "Hull City",
+      "fee": "£12.8m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Juan Riquelme Angulo",
+      "from": "Independiente del Valle",
+      "to": "Sunderland",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Manuel Ángel",
+      "from": "Real Madrid",
+      "to": "Fulham",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "David Affengruber",
+      "from": "Elche",
+      "to": "Fulham",
+      "fee": "Undisclosed"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Tosin Adarabioyo",
+      "from": "Chelsea",
+      "to": "Tottenham Hotspur",
+      "fee": "£10m"
+    },
+    {
+      "date": "30 August 2026",
+      "player": "Daniel Muñoz",
+      "from": "Crystal Palace",
+      "to": "Nottingham Forest",
+      "fee": "£22m"
+    },
+    {
+      "date": "30 August 2026",
       "player": "David Datro Fofana",
       "from": "Chelsea",
       "to": "Servette",
       "fee": "£2.5m"
+    },
+    {
+      "date": "30 August 2026",
+      "player": "Bradley Barcola",
+      "from": "Paris Saint-Germain",
+      "to": "Liverpool",
+      "fee": "£106m"
+    },
+    {
+      "date": "30 August 2026",
+      "player": "Stefan Bajcetic",
+      "from": "Liverpool",
+      "to": "Celta Vigo",
+      "fee": "Undisclosed"
     },
     {
       "date": "30 August 2026",
@@ -198,230 +422,6 @@
       "from": "Atlético Madrid",
       "to": "Aston Villa",
       "fee": "£17m"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Tijjani Reijnders",
-      "from": "Manchester City",
-      "to": "Al Qadsiah",
-      "fee": "£52m"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Alfie Osbourne",
-      "from": "Heart of Midlothian",
-      "to": "Chelsea",
-      "fee": "Free"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Nico Elvedi",
-      "from": "Borussia Mönchengladbach",
-      "to": "Leeds United",
-      "fee": "£8.5m"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Sidiki Cherif",
-      "from": "Fenerbahçe",
-      "to": "Coventry City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Harvey Araujo",
-      "from": "Fulham",
-      "to": "Burton Albion",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "18 August 2026",
-      "player": "Zavier Gozo",
-      "from": "Real Salt Lake",
-      "to": "Crystal Palace",
-      "fee": "£11.1m"
-    },
-    {
-      "date": "18 August 2026",
-      "player": "Ethan Ennis",
-      "from": "Manchester United",
-      "to": "Stockport County",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "18 August 2026",
-      "player": "Amar Dedić",
-      "from": "Benfica",
-      "to": "Newcastle United",
-      "fee": "£30m"
-    },
-    {
-      "date": "17 August 2026",
-      "player": "Abdoul Ouattara",
-      "from": "Strasbourg",
-      "to": "Ipswich Town",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "17 August 2026",
-      "player": "Julio Enciso",
-      "from": "Strasbourg",
-      "to": "Ipswich Town",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "17 August 2026",
-      "player": "Taiwo Awoniyi",
-      "from": "Nottingham Forest",
-      "to": "Coventry City",
-      "fee": "£9m"
-    },
-    {
-      "date": "15 August 2026",
-      "player": "Djed Spence",
-      "from": "Tottenham Hotspur",
-      "to": "Inter Milan",
-      "fee": "£25.6m"
-    },
-    {
-      "date": "15 August 2026",
-      "player": "Cristian Romero",
-      "from": "Tottenham Hotspur",
-      "to": "Atlético Madrid",
-      "fee": "£34.2m"
-    },
-    {
-      "date": "15 August 2026",
-      "player": "Ashley Phillips",
-      "from": "Tottenham Hotspur",
-      "to": "Middlesbrough",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "15 August 2026",
-      "player": "Anan Khalaili",
-      "from": "Union Saint-Gilloise",
-      "to": "Crystal Palace",
-      "fee": "£21m"
-    },
-    {
-      "date": "15 August 2026",
-      "player": "Lucas Gourna-Douath",
-      "from": "Red Bull Salzburg",
-      "to": "Hull City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "15 August 2026",
-      "player": "Joe Gelhardt",
-      "from": "Leeds United",
-      "to": "Hull City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "14 August 2026",
-      "player": "Dastan Satpayev",
-      "from": "FC Kairat",
-      "to": "Chelsea",
-      "fee": "£3.4m"
-    },
-    {
-      "date": "14 August 2026",
-      "player": "Enis Destan",
-      "from": "Hull City",
-      "to": "Konyaspor",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "14 August 2026",
-      "player": "Finley Burns",
-      "from": "Manchester City",
-      "to": "Wigan Athletic",
-      "fee": "Free"
-    },
-    {
-      "date": "13 August 2026",
-      "player": "Ethan Williams",
-      "from": "Manchester United",
-      "to": "Peterborough United",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "13 August 2026",
-      "player": "Enes Ünal",
-      "from": "Bournemouth",
-      "to": "Getafe",
-      "fee": "Free"
-    },
-    {
-      "date": "12 August 2026",
-      "player": "Gerónimo Rulli",
-      "from": "Marseille",
-      "to": "Manchester City",
-      "fee": "£1.7m"
-    },
-    {
-      "date": "12 August 2026",
-      "player": "Nobel Mendy",
-      "from": "Rayo Vallecano",
-      "to": "Hull City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "12 August 2026",
-      "player": "Lucas Herrington",
-      "from": "Colorado Rapids",
-      "to": "Hull City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "12 August 2026",
-      "player": "Dennis Cirkin",
-      "from": "Sunderland",
-      "to": "Queens Park Rangers",
-      "fee": "Free"
-    },
-    {
-      "date": "12 August 2026",
-      "player": "Pep Chavarría",
-      "from": "Rayo Vallecano",
-      "to": "Chelsea",
-      "fee": "£16.3m"
-    },
-    {
-      "date": "11 August 2026",
-      "player": "Dwight McNeil",
-      "from": "Everton",
-      "to": "Crystal Palace",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "11 August 2026",
-      "player": "Gustavo Hamer",
-      "from": "Sheffield United",
-      "to": "Coventry City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "11 August 2026",
-      "player": "Brennan Johnson",
-      "from": "Crystal Palace",
-      "to": "Everton",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "11 August 2026",
-      "player": "Roman Dixon",
-      "from": "Everton",
-      "to": "Walsall",
-      "fee": "Free"
-    },
-    {
-      "date": "11 August 2026",
-      "player": "Ousmane Diomande",
-      "from": "Sporting CP",
-      "to": "Nottingham Forest",
-      "fee": "£34m"
     }
   ]
 }
