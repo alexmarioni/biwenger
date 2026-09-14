@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-09-07T14:54:40.633Z",
+  "generated_at": "2026-09-14T15:46:09.636Z",
   "source": "https://en.wikipedia.org/wiki/List_of_English_football_transfers_summer_2026",
-  "count": 243,
+  "count": 246,
   "transfers": [
+    {
+      "date": "1 September 2026",
+      "player": "Gabriel Martinelli",
+      "from": "Arsenal",
+      "to": "Al-Hilal",
+      "fee": "£60m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Beto",
+      "from": "Everton",
+      "to": "Fiorentina",
+      "fee": "£14.6m"
+    },
+    {
+      "date": "1 September 2026",
+      "player": "Femi Azeez",
+      "from": "Millwall",
+      "to": "Brighton",
+      "fee": "£12.5m"
+    },
     {
       "date": "1 September 2026",
       "player": "Joe Whitworth",
@@ -21,7 +42,7 @@
       "date": "1 September 2026",
       "player": "Fábio Vieira",
       "from": "Arsenal",
-      "to": "Hamburg",
+      "to": "Hamburger SV",
       "fee": "£8.6m"
     },
     {
@@ -401,27 +422,6 @@
       "from": "Wolverhampton Wanderers",
       "to": "Coventry City",
       "fee": "Undisclosed"
-    },
-    {
-      "date": "20 August 2026",
-      "player": "George Hirst",
-      "from": "Ipswich Town",
-      "to": "Stoke City",
-      "fee": "Undisclosed"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Zion Suzuki",
-      "from": "Parma",
-      "to": "Aston Villa",
-      "fee": "£30m"
-    },
-    {
-      "date": "19 August 2026",
-      "player": "Matteo Ruggeri",
-      "from": "Atlético Madrid",
-      "to": "Aston Villa",
-      "fee": "£17m"
     }
   ]
 }
