@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-08T13:23:15.165Z",
+  "generated_at": "2026-09-15T14:13:12.790Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 568,
+  "count": 575,
   "failed_clubs": 0,
   "players": [
     {
@@ -73,6 +73,11 @@
       "name": "Kepa Arrizabalaga",
       "team": "Arsenal",
       "position": "G"
+    },
+    {
+      "name": "Marli Salmon",
+      "team": "Arsenal",
+      "position": "D"
     },
     {
       "name": "Martin Ødegaard",
@@ -327,7 +332,7 @@
     {
       "name": "Djordje Petrovic",
       "team": "Bournemouth",
-      "position": "D"
+      "position": "G"
     },
     {
       "name": "Evanilson",
@@ -560,11 +565,6 @@
       "position": "G"
     },
     {
-      "name": "Billie Lawrence",
-      "team": "Brighton",
-      "position": "M"
-    },
-    {
       "name": "Charalambos Kostoulas",
       "team": "Brighton",
       "position": "F"
@@ -587,7 +587,7 @@
     {
       "name": "Evan Ferguson",
       "team": "Brighton",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Femi Azeez",
@@ -711,6 +711,11 @@
     },
     {
       "name": "Yasin Ayari",
+      "team": "Brighton",
+      "position": "M"
+    },
+    {
+      "name": "Younes Ibrahim",
       "team": "Brighton",
       "position": "M"
     },
@@ -877,7 +882,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "F"
+      "position": "G"
     },
     {
       "name": "Bobby Thomas",
@@ -1425,11 +1430,6 @@
       "position": "G"
     },
     {
-      "name": "Babajide David",
-      "team": "Hull City",
-      "position": "F"
-    },
-    {
       "name": "Brooke Norton-Cuffy",
       "team": "Hull City",
       "position": "D"
@@ -1955,6 +1955,11 @@
       "position": "M"
     },
     {
+      "name": "Jayden Danns",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
       "name": "Jeremie Frimpong",
       "team": "Liverpool",
       "position": "D"
@@ -1978,6 +1983,11 @@
       "name": "Lewis Koumas",
       "team": "Liverpool",
       "position": "F"
+    },
+    {
+      "name": "Luke Chambers",
+      "team": "Liverpool",
+      "position": "D"
     },
     {
       "name": "Milos Kerkez",
@@ -2405,6 +2415,11 @@
       "position": "G"
     },
     {
+      "name": "Mason Miley",
+      "team": "Newcastle United",
+      "position": "M"
+    },
+    {
       "name": "Matias Fernandez-Pardo",
       "team": "Newcastle United",
       "position": "F"
@@ -2610,6 +2625,16 @@
       "position": "M"
     },
     {
+      "name": "Jack Whittaker",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
+      "name": "Jenson Arron Jones",
+      "team": "Sunderland",
+      "position": "D"
+    },
+    {
       "name": "Jocelin Ta Bi",
       "team": "Sunderland",
       "position": "F"
@@ -2690,9 +2715,19 @@
       "position": "D"
     },
     {
+      "name": "Tom Proctor",
+      "team": "Sunderland",
+      "position": "M"
+    },
+    {
       "name": "Trai Hume",
       "team": "Sunderland",
       "position": "D"
+    },
+    {
+      "name": "Tymur Tutierov",
+      "team": "Sunderland",
+      "position": "M"
     },
     {
       "name": "Wilson Isidor",
