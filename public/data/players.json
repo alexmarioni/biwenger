@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-15T14:13:12.790Z",
+  "generated_at": "2026-09-22T13:56:41.872Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 575,
+  "count": 584,
   "failed_clubs": 0,
   "players": [
     {
@@ -53,6 +53,11 @@
       "name": "Gabriel Magalhães",
       "team": "Arsenal",
       "position": "D"
+    },
+    {
+      "name": "Ife Ibrahim",
+      "team": "Arsenal",
+      "position": "M"
     },
     {
       "name": "Illan Meslier",
@@ -118,6 +123,11 @@
       "name": "Riccardo Calafiori",
       "team": "Arsenal",
       "position": "D"
+    },
+    {
+      "name": "Theo Julienne",
+      "team": "Arsenal",
+      "position": "M"
     },
     {
       "name": "Viktor Gyökeres",
@@ -378,6 +388,11 @@
       "name": "Lewis Cook",
       "team": "Bournemouth",
       "position": "M"
+    },
+    {
+      "name": "Mack Allan",
+      "team": "Bournemouth",
+      "position": "G"
     },
     {
       "name": "Marcus Tavernier",
@@ -882,7 +897,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "G"
+      "position": "M"
     },
     {
       "name": "Bobby Thomas",
@@ -1115,6 +1130,11 @@
       "position": "F"
     },
     {
+      "name": "Lucca Benetton",
+      "team": "Crystal Palace",
+      "position": "G"
+    },
+    {
       "name": "Óscar Mingueza",
       "team": "Crystal Palace",
       "position": "D"
@@ -1128,6 +1148,11 @@
       "name": "Remi Matthews",
       "team": "Crystal Palace",
       "position": "G"
+    },
+    {
+      "name": "Sebastian Williams",
+      "team": "Crystal Palace",
+      "position": "M"
     },
     {
       "name": "Takehiro Tomiyasu",
@@ -1231,6 +1256,11 @@
     },
     {
       "name": "Kiernan Dewsbury-Hall",
+      "team": "Everton",
+      "position": "M"
+    },
+    {
+      "name": "Malik Olayiwola",
       "team": "Everton",
       "position": "M"
     },
@@ -1677,7 +1707,7 @@
     {
       "name": "Jack Taylor",
       "team": "Ipswich Town",
-      "position": "D"
+      "position": "M"
     },
     {
       "name": "Jacob Greaves",
@@ -2095,11 +2125,6 @@
       "position": "F"
     },
     {
-      "name": "Josh Wilson-Esbrand",
-      "team": "Manchester City",
-      "position": "D"
-    },
-    {
       "name": "Josko Gvardiol",
       "team": "Manchester City",
       "position": "D"
@@ -2390,9 +2415,14 @@
       "position": "M"
     },
     {
+      "name": "Kyran Thompson",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
       "name": "Lewis Hall",
       "team": "Newcastle United",
-      "position": "M"
+      "position": "D"
     },
     {
       "name": "Lewis Miley",
@@ -2425,6 +2455,16 @@
       "position": "F"
     },
     {
+      "name": "Michael Mills",
+      "team": "Newcastle United",
+      "position": "F"
+    },
+    {
+      "name": "Miodrag Pivas",
+      "team": "Newcastle United",
+      "position": "D"
+    },
+    {
       "name": "Nick Pope",
       "team": "Newcastle United",
       "position": "G"
@@ -2448,6 +2488,11 @@
       "name": "Tino Livramento",
       "team": "Newcastle United",
       "position": "D"
+    },
+    {
+      "name": "Vakho Salia",
+      "team": "Newcastle United",
+      "position": "F"
     },
     {
       "name": "William Osula",
