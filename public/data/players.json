@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-22T13:56:41.872Z",
+  "generated_at": "2026-09-29T15:27:59.496Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
   "count": 584,
   "failed_clubs": 0,
@@ -97,7 +97,7 @@
     {
       "name": "Max Dowman",
       "team": "Arsenal",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Mikel Merino",
@@ -602,7 +602,7 @@
     {
       "name": "Evan Ferguson",
       "team": "Brighton",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Femi Azeez",
@@ -897,7 +897,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "M"
+      "position": "G"
     },
     {
       "name": "Bobby Thomas",
@@ -1707,7 +1707,7 @@
     {
       "name": "Jack Taylor",
       "team": "Ipswich Town",
-      "position": "M"
+      "position": "D"
     },
     {
       "name": "Jacob Greaves",
@@ -2772,7 +2772,7 @@
     {
       "name": "Tymur Tutierov",
       "team": "Sunderland",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Wilson Isidor",
