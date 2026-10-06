@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-29T15:27:59.496Z",
+  "generated_at": "2026-10-06T15:45:30.924Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 584,
+  "count": 585,
   "failed_clubs": 0,
   "players": [
     {
@@ -1051,6 +1051,11 @@
     },
     {
       "name": "Ben Chilwell",
+      "team": "Crystal Palace",
+      "position": "D"
+    },
+    {
+      "name": "Caleb Kporha",
       "team": "Crystal Palace",
       "position": "D"
     },
