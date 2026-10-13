@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-06T15:45:30.924Z",
+  "generated_at": "2026-10-13T16:46:42.484Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 585,
+  "count": 587,
   "failed_clubs": 0,
   "players": [
     {
@@ -897,7 +897,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "G"
+      "position": "M"
     },
     {
       "name": "Bobby Thomas",
@@ -1707,12 +1707,12 @@
     {
       "name": "Jack Clarke",
       "team": "Ipswich Town",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Jack Taylor",
       "team": "Ipswich Town",
-      "position": "D"
+      "position": "M"
     },
     {
       "name": "Jacob Greaves",
@@ -2010,6 +2010,11 @@
       "position": "D"
     },
     {
+      "name": "Joshua Lambie",
+      "team": "Liverpool",
+      "position": "F"
+    },
+    {
       "name": "Kostas Tsimikas",
       "team": "Liverpool",
       "position": "D"
@@ -2068,6 +2073,11 @@
       "name": "Wataru Endo",
       "team": "Liverpool",
       "position": "M"
+    },
+    {
+      "name": "Wellity Lucky",
+      "team": "Liverpool",
+      "position": "D"
     },
     {
       "name": "Abdukodir Khusanov",
@@ -2427,7 +2437,7 @@
     {
       "name": "Lewis Hall",
       "team": "Newcastle United",
-      "position": "D"
+      "position": "M"
     },
     {
       "name": "Lewis Miley",
