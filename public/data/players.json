@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-13T16:46:42.484Z",
+  "generated_at": "2026-10-20T14:10:14.417Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 587,
+  "count": 593,
   "failed_clubs": 0,
   "players": [
     {
@@ -16,6 +16,11 @@
     },
     {
       "name": "Bukayo Saka",
+      "team": "Arsenal",
+      "position": "F"
+    },
+    {
+      "name": "Ceadach O’Neill",
       "team": "Arsenal",
       "position": "F"
     },
@@ -78,6 +83,11 @@
       "name": "Kepa Arrizabalaga",
       "team": "Arsenal",
       "position": "G"
+    },
+    {
+      "name": "Maalik Hashi",
+      "team": "Arsenal",
+      "position": "M"
     },
     {
       "name": "Marli Salmon",
@@ -342,7 +352,7 @@
     {
       "name": "Djordje Petrovic",
       "team": "Bournemouth",
-      "position": "G"
+      "position": "D"
     },
     {
       "name": "Evanilson",
@@ -602,7 +612,7 @@
     {
       "name": "Evan Ferguson",
       "team": "Brighton",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Femi Azeez",
@@ -1083,6 +1093,11 @@
       "name": "Darío Osorio",
       "team": "Crystal Palace",
       "position": "M"
+    },
+    {
+      "name": "Dean Benamar",
+      "team": "Crystal Palace",
+      "position": "D"
     },
     {
       "name": "Dean Henderson",
@@ -2250,6 +2265,11 @@
       "position": "M"
     },
     {
+      "name": "Daniel Armer",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
       "name": "Dermot Mee",
       "team": "Manchester United",
       "position": "G"
@@ -2785,6 +2805,11 @@
       "position": "D"
     },
     {
+      "name": "Trey Ogunsuyi",
+      "team": "Sunderland",
+      "position": "F"
+    },
+    {
       "name": "Tymur Tutierov",
       "team": "Sunderland",
       "position": "F"
@@ -2818,6 +2843,11 @@
       "name": "Brandon Austin",
       "team": "Tottenham Hotspur",
       "position": "G"
+    },
+    {
+      "name": "Callum Olusesi",
+      "team": "Tottenham Hotspur",
+      "position": "M"
     },
     {
       "name": "Conor Gallagher",
