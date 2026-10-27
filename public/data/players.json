@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-20T14:10:14.417Z",
+  "generated_at": "2026-10-27T15:11:36.909Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 593,
+  "count": 598,
   "failed_clubs": 0,
   "players": [
     {
@@ -612,7 +612,7 @@
     {
       "name": "Evan Ferguson",
       "team": "Brighton",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Femi Azeez",
@@ -723,6 +723,11 @@
       "name": "Stefanos Tzimas",
       "team": "Brighton",
       "position": "F"
+    },
+    {
+      "name": "Steven Hall",
+      "team": "Brighton",
+      "position": "G"
     },
     {
       "name": "Tom McGill",
@@ -907,7 +912,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "M"
+      "position": "G"
     },
     {
       "name": "Bobby Thomas",
@@ -1118,6 +1123,11 @@
       "name": "Evann Guessand",
       "team": "Crystal Palace",
       "position": "F"
+    },
+    {
+      "name": "George King",
+      "team": "Crystal Palace",
+      "position": "D"
     },
     {
       "name": "Honest Ahanor",
@@ -1722,7 +1732,7 @@
     {
       "name": "Jack Clarke",
       "team": "Ipswich Town",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Jack Taylor",
@@ -2045,6 +2055,11 @@
       "position": "D"
     },
     {
+      "name": "Michael Laffey",
+      "team": "Liverpool",
+      "position": "M"
+    },
+    {
       "name": "Milos Kerkez",
       "team": "Liverpool",
       "position": "D"
@@ -2055,7 +2070,7 @@
       "position": "F"
     },
     {
-      "name": "Ronald Araújo",
+      "name": "Ronald Araujo",
       "team": "Liverpool",
       "position": "D"
     },
@@ -2295,6 +2310,11 @@
       "position": "M"
     },
     {
+      "name": "Jaydan Kamason",
+      "team": "Manchester United",
+      "position": "D"
+    },
+    {
       "name": "Joshua Zirkzee",
       "team": "Manchester United",
       "position": "F"
@@ -2380,14 +2400,14 @@
       "position": "M"
     },
     {
+      "name": "Tynan Thompson",
+      "team": "Manchester United",
+      "position": "F"
+    },
+    {
       "name": "Youri Tielemans",
       "team": "Manchester United",
       "position": "M"
-    },
-    {
-      "name": "Aidan Harris",
-      "team": "Newcastle United",
-      "position": "G"
     },
     {
       "name": "Aladji Bamba",
@@ -2457,7 +2477,7 @@
     {
       "name": "Lewis Hall",
       "team": "Newcastle United",
-      "position": "M"
+      "position": "D"
     },
     {
       "name": "Lewis Miley",
@@ -2693,6 +2713,11 @@
       "name": "Enzo Le Fée",
       "team": "Sunderland",
       "position": "M"
+    },
+    {
+      "name": "Felix Scott",
+      "team": "Sunderland",
+      "position": "F"
     },
     {
       "name": "Granit Xhaka",
