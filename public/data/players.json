@@ -1,9 +1,14 @@
 {
-  "generated_at": "2026-10-27T15:11:36.909Z",
+  "generated_at": "2026-11-03T16:52:31.040Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 598,
+  "count": 601,
   "failed_clubs": 0,
   "players": [
+    {
+      "name": "Andre Annous",
+      "team": "Arsenal",
+      "position": "F"
+    },
     {
       "name": "Ben White",
       "team": "Arsenal",
@@ -88,6 +93,11 @@
       "name": "Maalik Hashi",
       "team": "Arsenal",
       "position": "M"
+    },
+    {
+      "name": "Marcell Washington",
+      "team": "Arsenal",
+      "position": "D"
     },
     {
       "name": "Marli Salmon",
@@ -912,7 +922,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "G"
+      "position": "M"
     },
     {
       "name": "Bobby Thomas",
@@ -1732,7 +1742,7 @@
     {
       "name": "Jack Clarke",
       "team": "Ipswich Town",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Jack Taylor",
@@ -2126,6 +2136,11 @@
     },
     {
       "name": "Ayyoub Bouaddi",
+      "team": "Manchester City",
+      "position": "M"
+    },
+    {
+      "name": "Dexter Oliver",
       "team": "Manchester City",
       "position": "M"
     },
