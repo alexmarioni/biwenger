@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-03T16:52:31.040Z",
+  "generated_at": "2026-11-10T16:51:15.029Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 601,
+  "count": 603,
   "failed_clubs": 0,
   "players": [
     {
@@ -362,7 +362,7 @@
     {
       "name": "Djordje Petrovic",
       "team": "Bournemouth",
-      "position": "D"
+      "position": "G"
     },
     {
       "name": "Evanilson",
@@ -622,7 +622,7 @@
     {
       "name": "Evan Ferguson",
       "team": "Brighton",
-      "position": "F"
+      "position": "M"
     },
     {
       "name": "Femi Azeez",
@@ -1173,6 +1173,11 @@
       "name": "Lucca Benetton",
       "team": "Crystal Palace",
       "position": "G"
+    },
+    {
+      "name": "Nathanael James Kalembo",
+      "team": "Crystal Palace",
+      "position": "D"
     },
     {
       "name": "Óscar Mingueza",
@@ -2357,7 +2362,7 @@
     {
       "name": "Luke Shaw",
       "team": "Manchester United",
-      "position": "D"
+      "position": "M"
     },
     {
       "name": "Manuel Ugarte",
@@ -2610,7 +2615,7 @@
       "position": "F"
     },
     {
-      "name": "Jair Paula",
+      "name": "Jair Cunha",
       "team": "Nottingham Forest",
       "position": "D"
     },
@@ -2918,6 +2923,11 @@
       "name": "Jan Paul van Hecke",
       "team": "Tottenham Hotspur",
       "position": "D"
+    },
+    {
+      "name": "Luca Gunter",
+      "team": "Tottenham Hotspur",
+      "position": "G"
     },
     {
       "name": "Luca Williams-Barnett",
