@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T16:51:15.029Z",
+  "generated_at": "2026-11-17T18:16:25.134Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
   "count": 603,
   "failed_clubs": 0,
@@ -362,7 +362,7 @@
     {
       "name": "Djordje Petrovic",
       "team": "Bournemouth",
-      "position": "G"
+      "position": "D"
     },
     {
       "name": "Evanilson",
@@ -622,7 +622,7 @@
     {
       "name": "Evan Ferguson",
       "team": "Brighton",
-      "position": "M"
+      "position": "F"
     },
     {
       "name": "Femi Azeez",
@@ -922,7 +922,7 @@
     {
       "name": "Ben Wilson",
       "team": "Coventry City",
-      "position": "M"
+      "position": "G"
     },
     {
       "name": "Bobby Thomas",
@@ -2012,7 +2012,7 @@
     {
       "name": "Giovanni Leoni",
       "team": "Liverpool",
-      "position": "D"
+      "position": "G"
     },
     {
       "name": "Harvey Davies",
@@ -2362,7 +2362,7 @@
     {
       "name": "Luke Shaw",
       "team": "Manchester United",
-      "position": "M"
+      "position": "D"
     },
     {
       "name": "Manuel Ugarte",
@@ -2497,7 +2497,7 @@
     {
       "name": "Lewis Hall",
       "team": "Newcastle United",
-      "position": "D"
+      "position": "M"
     },
     {
       "name": "Lewis Miley",
