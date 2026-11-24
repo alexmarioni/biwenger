@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-17T18:16:25.134Z",
+  "generated_at": "2026-11-24T20:00:16.844Z",
   "source": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/",
-  "count": 603,
+  "count": 605,
   "failed_clubs": 0,
   "players": [
     {
@@ -73,6 +73,11 @@
       "name": "Illan Meslier",
       "team": "Arsenal",
       "position": "G"
+    },
+    {
+      "name": "Josh Ogunnaike",
+      "team": "Arsenal",
+      "position": "D"
     },
     {
       "name": "Jurriën Timber",
@@ -362,7 +367,7 @@
     {
       "name": "Djordje Petrovic",
       "team": "Bournemouth",
-      "position": "D"
+      "position": "G"
     },
     {
       "name": "Evanilson",
@@ -1400,6 +1405,11 @@
       "position": "D"
     },
     {
+      "name": "Dino Kaiser",
+      "team": "Fulham",
+      "position": "G"
+    },
+    {
       "name": "Emile Smith Rowe",
       "team": "Fulham",
       "position": "M"
@@ -2012,7 +2022,7 @@
     {
       "name": "Giovanni Leoni",
       "team": "Liverpool",
-      "position": "G"
+      "position": "D"
     },
     {
       "name": "Harvey Davies",
@@ -2497,7 +2507,7 @@
     {
       "name": "Lewis Hall",
       "team": "Newcastle United",
-      "position": "M"
+      "position": "D"
     },
     {
       "name": "Lewis Miley",
@@ -2787,7 +2797,7 @@
     {
       "name": "Malick Fofana",
       "team": "Sunderland",
-      "position": "F"
+      "position": "D"
     },
     {
       "name": "Melker Ellborg",
